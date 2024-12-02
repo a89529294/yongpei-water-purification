@@ -1,4 +1,4 @@
-const AboutPage = {
+const ContactPage = {
   init: function () {
     this.bindEvents();
     this.loadInitialData();
@@ -27,4 +27,4 @@ const AboutPage = {
   },
 };
 
-document.addEventListener("DOMContentLoaded", () => AboutPage.init());
+document.addEventListener("DOMContentLoaded", () => ContactPage.init());

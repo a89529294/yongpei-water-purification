@@ -1,4 +1,4 @@
-const AboutPage = {
+const Category1Page = {
   init: function () {
     this.bindEvents();
     this.loadInitialData();
@@ -27,4 +27,4 @@ const AboutPage = {
   },
 };
 
-document.addEventListener("DOMContentLoaded", () => AboutPage.init());
+document.addEventListener("DOMContentLoaded", () => Category1Page.init());

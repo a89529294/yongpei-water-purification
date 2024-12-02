@@ -15,7 +15,7 @@ const IndexPage = {
     try {
       console.log("...");
       const response = await fetch("/api/data");
-      const data = await response.json();
+      // const data = await response.json();
       // Handle data
     } catch (error) {
       console.error("Error:", error);
