@@ -13,6 +13,7 @@ const Components = {
             <div class="navbar-nav ms-auto py-4 py-lg-0">
                 <a href="index.html" class="nav-item nav-link">首頁</a>
                 <a href="about.html" class="nav-item nav-link">關於</a>
+                <a href="service.html" class="nav-item nav-link">服務項目</a>
                 <a href="new-products.html" class="nav-item nav-link">最新產品</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">產品分類</a>
