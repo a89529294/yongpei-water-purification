@@ -1,0 +1,11 @@
+{
+  "name": "yongpei-water-purification",
+  "version": "1.0.0",
+  "description": "Yongpei Water Purification Website",
+  "scripts": {
+    "generate-products": "node scripts/generate-product-pages.js"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  }
+}
