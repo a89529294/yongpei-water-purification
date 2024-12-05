@@ -157,16 +157,13 @@ async function generateCategoryPages(categories, products) {
         
         // Generate product cards HTML
         const productsHtml = categoryProducts.map(product => `
-            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                <div class="service-item position-relative h-100">
-                    <div class="service-text rounded p-5">
-                        <div class="mb-4">
-                            <img class="img-fluid" src="${product.images[0]}" alt="${product.name}">
-                        </div>
-                        <h4 class="mb-3">${product.name}</h4>
-                        <p class="mb-4">${product.description.substring(0, 100)}...</p>
-                        <a class="btn btn-light px-3" href="products/product-${product.id}.html">了解更多</a>
-                    </div>
+            <div class="col-6 col-md-3 wow fadeIn" data-wow-delay="0.1s">
+                <div class="bg-light text-center p-3 product-card">
+                    <img class="img-fluid mb-3" src="${product.images[0]}" alt="${product.name}"
+                        style="height: 100px; object-fit: contain;">
+                    <h5 class="mb-1 product-title">${product.name}</h5>
+                    <p class="text-muted mb-2 truncate-2">${product.description.substring(0, 100)}...</p>
+                    <a class="btn btn-sm btn-primary" href="products/product-${product.id}.html">查看細節</a>
                 </div>
             </div>
         `).join('\n');
