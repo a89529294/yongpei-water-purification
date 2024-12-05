@@ -17,7 +17,7 @@ const Components = {
                 <div class="nav-item dropdown" >
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">產品分類</a>
                     <div class="dropdown-menu shadow-sm m-0">
-                        <a href="category-1.html" class="dropdown-item">分類一</a>
+                        <a href="category-template.html" class="dropdown-item">分類一</a>
                         <a href="category-2.html" class="dropdown-item">分類二</a>
                     </div>
                 </div>
