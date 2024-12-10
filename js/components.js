@@ -11,17 +11,17 @@ const Components = {
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto py-4 py-lg-0">
-                <a href="index.html" class="nav-item nav-link">首頁</a>
-                <a href="about.html" class="nav-item nav-link">關於</a>
-                <a href="service.html" class="nav-item nav-link">服務項目</a>
+                <a href="/index.html" class="nav-item nav-link">首頁</a>
+                <a href="/about.html" class="nav-item nav-link">關於</a>
+                <a href="/service.html" class="nav-item nav-link">服務項目</a>
                 <div class="nav-item dropdown" >
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">產品分類</a>
                     <div class="dropdown-menu shadow-sm m-0">
-                        <a href="category-template.html" class="dropdown-item">分類一</a>
-                        <a href="category-2.html" class="dropdown-item">分類二</a>
+                        <a href="/category-template.html" class="dropdown-item">分類一</a>
+                        <a href="/category-2.html" class="dropdown-item">分類二</a>
                     </div>
                 </div>
-                <a href="contact.html" class="nav-item nav-link">聯絡方式</a>
+                <a href="/contact.html" class="nav-item nav-link">聯絡方式</a>
             </div>
             <div class="h-100 d-lg-inline-flex align-items-center d-none">
                 <a class="btn btn-square rounded-circle bg-light text-primary me-2" href=""><i

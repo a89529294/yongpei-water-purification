@@ -72,7 +72,6 @@
             width: 100%;
             height: 100px;
             box-sizing: border-box;
-            padding: 0 40px;
             position: relative;
         }
 
@@ -176,34 +175,22 @@
                             <div class="swiper thumbsSlider">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
-                                        <img src="https://picsum.photos/800/600?random=1" alt="Product Image 1">
+                                        <img src="https://picsum.photos/100/100?random=2" alt="Thumbnail">
                                     </div>
                                     <div class="swiper-slide">
-                                        <img src="https://picsum.photos/800/600?random=2" alt="Product Image 2">
+                                        <img src="https://picsum.photos/100/100?random=3" alt="Thumbnail">
                                     </div>
                                     <div class="swiper-slide">
-                                        <img src="https://picsum.photos/800/600?random=3" alt="Product Image 3">
+                                        <img src="https://picsum.photos/100/100?random=4" alt="Thumbnail">
                                     </div>
                                     <div class="swiper-slide">
-                                        <img src="https://picsum.photos/800/600?random=4" alt="Product Image 4">
+                                        <img src="https://picsum.photos/100/100?random=5" alt="Thumbnail">
                                     </div>
                                     <div class="swiper-slide">
-                                        <img src="https://picsum.photos/800/600?random=5" alt="Product Image 5">
+                                        <img src="https://picsum.photos/100/100?random=6" alt="Thumbnail">
                                     </div>
                                     <div class="swiper-slide">
-                                        <img src="https://picsum.photos/800/600?random=6" alt="Product Image 6">
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img src="https://picsum.photos/800/600?random=7" alt="Product Image 7">
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img src="https://picsum.photos/800/600?random=8" alt="Product Image 8">
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img src="https://picsum.photos/800/600?random=9" alt="Product Image 9">
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img src="https://picsum.photos/800/600?random=10" alt="Product Image 10">
+                                        <img src="https://picsum.photos/100/100?random=7" alt="Thumbnail">
                                     </div>
                                 </div>
                                 <div class="swiper-button-next"></div>
@@ -215,30 +202,46 @@
                 <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
                     <h1 class="display-5 mb-4">產品名稱</h1>
                     <p class="mb-4">產品詳細描述將在這裡顯示。這裡可以包含產品的主要特點、用途和優勢等信息。</p>
-                    <div class="d-flex mb-4">
-                        <div class="flex-shrink-0 btn-square bg-primary rounded-circle">
-                            <i class="fa fa-check text-white"></i>
+                    <div id="features-container">
+                        <div class="d-flex mb-4">
+                            <div class="flex-shrink-0 btn-square bg-primary rounded-circle">
+                                <i class="fa fa-check text-white"></i>
+                            </div>
+                            <div class="ms-4">
+                                <h5>特點一</h5>
+                                <p class="mb-0">特點一的詳細描述</p>
+                            </div>
                         </div>
-                        <div class="ms-4">
-                            <h5>特點一</h5>
-                            <p class="mb-0">特點一的詳細描述</p>
+                        <div class="d-flex mb-4">
+                            <div class="flex-shrink-0 btn-square bg-primary rounded-circle">
+                                <i class="fa fa-check text-white"></i>
+                            </div>
+                            <div class="ms-4">
+                                <h5>特點二</h5>
+                                <p class="mb-0">特點二的詳細描述</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="d-flex mb-4">
-                        <div class="flex-shrink-0 btn-square bg-primary rounded-circle">
-                            <i class="fa fa-check text-white"></i>
-                        </div>
-                        <div class="ms-4">
-                            <h5>特點二</h5>
-                            <p class="mb-0">特點二的詳細描述</p>
-                        </div>
-                    </div>
-                    <a href="#contact" class="btn btn-primary py-3 px-5">聯繫我們</a>
                 </div>
             </div>
 
-            <!-- Product Features -->
+
+
             <div class="row g-4 mt-5">
+                <div class="col-12">
+                    <h2 class="text-center mb-5">產品規格</h2>
+                </div>
+                <!-- Specifications Content -->
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <!-- Specifications will be inserted here -->
+                </div>
+                <!-- End Specifications Content -->
+            </div>
+
+
+
+            <!-- Product Features -->
+            <!-- <div class="row g-4 mt-5">
                 <div class="col-12">
                     <h2 class="text-center mb-5">產品規格</h2>
                 </div>
@@ -260,7 +263,7 @@
                         <p>建議使用環境</p>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
     <!-- Product Detail End -->

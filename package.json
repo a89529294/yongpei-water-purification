@@ -11,5 +11,8 @@
   "keywords": [],
   "author": "Albert Chang",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "jsdom": "^25.0.1"
+  }
 }
