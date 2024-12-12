@@ -105,14 +105,35 @@ async function fetchProducts() {
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
-  console.log(await response.json());
+  // console.log(await response.json());
   // return response.json();
 
   return [
+    // {
+    //   id: 1,
+    //   name: "Product 1",
+    //   description: "Description for Product 1",
+    //   features: [
+    //     { title: "Feature 1", description: "Feature 1 description" },
+    //     { title: "Feature 2", description: "Feature 2 description" },
+    //   ],
+    //   specifications: [
+    //     {
+    //       title: "Specification 1",
+    //       description: "Specification 1 description",
+    //     },
+    //     {
+    //       title: "Specification 2",
+    //       description: "Specification 2 description",
+    //     },
+    //   ],
+    //   images: ["https://picsum.photos/200", "https://picsum.photos/200"],
+    //   category: { id: 1, name: "Category 1" },
+    // },
     {
-      id: 1,
-      name: "Product 1",
-      description: "Description for Product 1",
+      id: 3,
+      name: "Product 3",
+      description: "Description for Product 3",
       features: [
         { title: "Feature 1", description: "Feature 1 description" },
         { title: "Feature 2", description: "Feature 2 description" },
@@ -128,8 +149,29 @@ async function fetchProducts() {
         },
       ],
       images: ["https://picsum.photos/200", "https://picsum.photos/200"],
-      category: { id: 1, name: "Category 1" },
+      category: { id: 2, name: "Category 2" },
     },
+    // {
+    //   id: 4,
+    //   name: "Product 4",
+    //   description: "Description for Product 4",
+    //   features: [
+    //     { title: "Feature 1", description: "Feature 1 description" },
+    //     { title: "Feature 2", description: "Feature 2 description" },
+    //   ],
+    //   specifications: [
+    //     {
+    //       title: "Specification 1",
+    //       description: "Specification 1 description",
+    //     },
+    //     {
+    //       title: "Specification 2",
+    //       description: "Specification 2 description",
+    //     },
+    //   ],
+    //   images: ["https://picsum.photos/200", "https://picsum.photos/200"],
+    //   category: { id: 4, name: "Category 3" },
+    // },
     {
       id: 2,
       name: "Product 2",
@@ -151,25 +193,167 @@ async function fetchProducts() {
       images: ["https://picsum.photos/200", "https://picsum.photos/200"],
       category: { id: 2, name: "Category 2" },
     },
+    {
+      id: 5,
+      name: "Product 5",
+      description: "Description for Product 5",
+      features: [
+        { title: "Feature 1", description: "Feature 1 description" },
+        { title: "Feature 2", description: "Feature 2 description" },
+      ],
+      specifications: [
+        {
+          title: "Specification 1",
+          description: "Specification 1 description",
+        },
+        {
+          title: "Specification 2",
+          description: "Specification 2 description",
+        },
+      ],
+      images: ["https://picsum.photos/200", "https://picsum.photos/200"],
+      category: { id: 2, name: "Category 2" },
+    },
+    {
+      id: 6,
+      name: "Product 6",
+      description: "Description for Product 6",
+      features: [
+        { title: "Feature 1", description: "Feature 1 description" },
+        { title: "Feature 2", description: "Feature 2 description" },
+      ],
+      specifications: [
+        {
+          title: "Specification 1",
+          description: "Specification 1 description",
+        },
+        {
+          title: "Specification 2",
+          description: "Specification 2 description",
+        },
+      ],
+      images: ["https://picsum.photos/200", "https://picsum.photos/200"],
+      category: { id: 2, name: "Category 2" },
+    },
+    {
+      id: 7,
+      name: "Product 7",
+      description: "Description for Product 7",
+      features: [
+        { title: "Feature 1", description: "Feature 1 description" },
+        { title: "Feature 2", description: "Feature 2 description" },
+      ],
+      specifications: [
+        {
+          title: "Specification 1",
+          description: "Specification 1 description",
+        },
+        {
+          title: "Specification 2",
+          description: "Specification 2 description",
+        },
+      ],
+      images: ["https://picsum.photos/200", "https://picsum.photos/200"],
+      category: { id: 2, name: "Category 2" },
+    },
+    {
+      id: 8,
+      name: "Product 8",
+      description: "Description for Product 3",
+      features: [
+        { title: "Feature 1", description: "Feature 1 description" },
+        { title: "Feature 2", description: "Feature 2 description" },
+      ],
+      specifications: [
+        {
+          title: "Specification 1",
+          description: "Specification 1 description",
+        },
+        {
+          title: "Specification 2",
+          description: "Specification 2 description",
+        },
+      ],
+      images: ["https://picsum.photos/200", "https://picsum.photos/200"],
+      category: { id: 2, name: "Category 2" },
+    },
+    {
+      id: 9,
+      name: "Product 9",
+      description: "Description for Product 9",
+      features: [
+        { title: "Feature 1", description: "Feature 1 description" },
+        { title: "Feature 2", description: "Feature 2 description" },
+      ],
+      specifications: [
+        {
+          title: "Specification 1",
+          description: "Specification 1 description",
+        },
+        {
+          title: "Specification 2",
+          description: "Specification 2 description",
+        },
+      ],
+      images: ["https://picsum.photos/200", "https://picsum.photos/200"],
+      category: { id: 2, name: "Category 2" },
+    },
+    {
+      id: 10,
+      name: "Product 10",
+      description: "Description for Product 10",
+      features: [
+        { title: "Feature 1", description: "Feature 1 description" },
+        { title: "Feature 2", description: "Feature 2 description" },
+      ],
+      specifications: [
+        {
+          title: "Specification 1",
+          description: "Specification 1 description",
+        },
+        {
+          title: "Specification 2",
+          description: "Specification 2 description",
+        },
+      ],
+      images: ["https://picsum.photos/200", "https://picsum.photos/200"],
+      category: { id: 2, name: "Category 2" },
+    },
   ];
 }
 
 // Generate components.js with category dropdown
-async function generateComponents(categories) {
+async function generateComponents(categories, products) {
   const componentsContent = await fs.readFile(
     COMPONENTS_TEMPLATE_PATH,
     "utf-8"
   );
-  const dropdownItems = categories
-    .map(
-      (category) =>
-        `<a href="category-${category.id}.html" class="dropdown-item">${category.name}</a>`
-    )
+
+  // Generate dropdown content with categories as headers and products as links
+  const dropdownContent = categories
+    .map((category) => {
+      const categoryProducts = products.filter(
+        (p) => p.category.id === category.id
+      );
+      return `
+        <div class="dropdown-category">
+          <div class="dropdown-header">${category.name}</div>
+          ${categoryProducts
+            .map(
+              (product) =>
+                `<a href="/products/product-${product.id}.html" class="dropdown-item">${product.name}</a>`
+            )
+            .join("\n")}
+        </div>`;
+    })
     .join("\n");
 
+  // Replace the content of the dropdown container
   const updatedContent = componentsContent.replace(
-    /<div class="dropdown-menu shadow-sm m-0">([\s\S]*?)<\/div>/,
-    `<div class="dropdown-menu shadow-sm m-0">\n${dropdownItems}\n</div>`
+    /<div id='category-dropdown-content'[^>]*>([\s\S]*?)<\/div>/,
+    `<div id='category-dropdown-content' class="dropdown-menu shadow-sm m-0">
+      ${dropdownContent}
+    </div>`
   );
 
   await fs.writeFile(path.join(BUILD_JS_DIR, "components.js"), updatedContent);
@@ -178,7 +362,7 @@ async function generateComponents(categories) {
 // Generate category pages
 async function generateCategoryPages(categories, products) {
   const categoryTemplate = await fs.readFile(CATEGORY_TEMPLATE_PATH, "utf-8");
-  console.log(categories, products);
+  // console.log(categories, products);
 
   for (const category of categories) {
     const categoryProducts = products.filter(
@@ -254,7 +438,7 @@ async function generateProductPages(products) {
         (spec) => `
                 <div class="col-sm-6 mb-2">
                     <h6>${spec.title}</h6>
-                    <p class="mb-0">${spec.value}</p>
+                    <p class="mb-0">${spec.description}</p>
                 </div>
             `
       )
@@ -296,6 +480,125 @@ async function generateProductPages(products) {
   }
 }
 
+// Generate index page with categorized products
+async function modifyIndexPage(categories, products) {
+  console.log("Generating index page with categorized products...");
+  const indexPath = path.join(BUILD_DIR, "index.html");
+  const indexContent = await fs.readFile(indexPath, "utf-8");
+  const dom = new JSDOM(indexContent);
+  const document = dom.window.document;
+
+  // Find the products placeholder div
+  const productsPlaceholder = document.getElementById("products-placeholder");
+  if (!productsPlaceholder) {
+    console.warn("Products placeholder not found in index.html");
+    return;
+  }
+
+  // Create the product display section
+  const productSection = document.createElement("div");
+  productSection.className = "product-categories-container container-xxl py-5";
+
+  // Create rows for each category
+  categories.forEach((category, categoryIndex) => {
+    const categoryProducts = products.filter(
+      (p) => p.category.id === category.id
+    );
+    if (categoryProducts.length === 0) return;
+
+    const categoryRow = document.createElement("div");
+    categoryRow.className = "category-row";
+
+    const title = document.createElement("h2");
+    title.className = "category-title";
+    title.textContent = category.name;
+    categoryRow.appendChild(title);
+
+    const sliderContainerContainer = document.createElement("div");
+    sliderContainerContainer.className = "position-relative";
+    const sliderContainer = document.createElement("div");
+    sliderContainer.className = `products-slider category-swiper-${categoryIndex}`;
+
+    // Create Swiper container and wrapper
+    const swiperContainer = document.createElement("div");
+    swiperContainer.className = `swiper `;
+
+    const swiperWrapper = document.createElement("div");
+    swiperWrapper.className = "swiper-wrapper d-flex gap-4";
+
+    categoryProducts.forEach((product, index) => {
+      const swiperSlide = document.createElement("div");
+      swiperSlide.className = "swiper-slide shrink-1";
+
+      const productLink = document.createElement("a");
+      productLink.href = `products/product-${product.id}.html`;
+      productLink.className = "product-link wow fadeInUp";
+      productLink.setAttribute("data-wow-delay", `${index * 0.2}s`);
+      productLink.innerHTML = `
+        <div style="flex: 1; padding: 15px; display: flex; flex-direction: column;">
+          <img src="${product.images[0]}" alt="${
+        product.name
+      }" style="width: 100%; height: 60%; object-fit: cover; margin-bottom: 10px;">
+          <h3 style="margin: 0 0 5px 0; font-size: 16px;">${product.name}</h3>
+          <p style="margin: 0; color: #666; font-size: 14px;">${product.description.substring(
+            0,
+            100
+          )}...</p>
+        </div>
+      `;
+
+      swiperSlide.appendChild(productLink);
+      swiperWrapper.appendChild(swiperSlide);
+    });
+
+    swiperContainer.appendChild(swiperWrapper);
+
+    // Add navigation
+    const prevButton = document.createElement("button");
+    prevButton.className = `swiper-button-prev swiper-button-prev-${categoryIndex} position-absolute top-50 translate-y-[-50%] z-1  bg-primary rounded-circle`;
+    prevButton.style.width = "20px";
+    prevButton.style.height = "20px";
+    prevButton.style.left = "10px";
+    const nextButton = document.createElement("button");
+    nextButton.className = `swiper-button-next swiper-button-next-${categoryIndex} position-absolute top-50 translate-y-[-50%] z-1 bg-primary rounded-circle`;
+    nextButton.style.width = "20px";
+    nextButton.style.height = "20px";
+    nextButton.style.right = "10px";
+
+    sliderContainer.appendChild(swiperContainer);
+    sliderContainerContainer.appendChild(sliderContainer);
+    sliderContainerContainer.appendChild(prevButton);
+    sliderContainerContainer.appendChild(nextButton);
+    categoryRow.appendChild(sliderContainerContainer);
+    productSection.appendChild(categoryRow);
+
+    // Add Swiper initialization script
+    const script = document.createElement("script");
+    script.textContent = `
+      document.addEventListener('DOMContentLoaded', function() {
+        new Swiper('.category-swiper-${categoryIndex}', {
+          slidesPerView: 'auto',
+          navigation: {
+            nextEl: '.swiper-button-next-${categoryIndex}',
+            prevEl: '.swiper-button-prev-${categoryIndex}',
+          },
+          
+        });
+      });
+    `;
+    document.head.appendChild(script);
+  });
+
+  // Replace the placeholder with our new product section
+  productsPlaceholder.parentNode.replaceChild(
+    productSection,
+    productsPlaceholder
+  );
+
+  // Save the modified index.html
+  await fs.writeFile(indexPath, dom.serialize(), "utf-8");
+}
+
 // Main function to run everything
 async function generateAllPages() {
   try {
@@ -323,9 +626,10 @@ async function generateAllPages() {
 
     // Generate all pages
     await Promise.all([
-      generateComponents(categories),
+      generateComponents(categories, products),
       generateCategoryPages(categories, products),
       generateProductPages(products),
+      modifyIndexPage(categories, products),
     ]);
 
     console.log("Successfully generated all pages!");

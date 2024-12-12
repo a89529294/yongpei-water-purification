@@ -14,11 +14,10 @@ const Components = {
                 <a href="/index.html" class="nav-item nav-link">首頁</a>
                 <a href="/about.html" class="nav-item nav-link">關於</a>
                 <a href="/service.html" class="nav-item nav-link">服務項目</a>
-                <div class="nav-item dropdown" >
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">產品分類</a>
-                    <div class="dropdown-menu shadow-sm m-0">
-                        <a href="/category-template.html" class="dropdown-item">分類一</a>
-                        <a href="/category-2.html" class="dropdown-item">分類二</a>
+                <div  class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" >產品分類</a>
+                    <div id='category-dropdown-content' class="dropdown-menu shadow-sm m-0" style="min-width: 200px;">
+                       
                     </div>
                 </div>
                 <a href="/contact.html" class="nav-item nav-link">聯絡方式</a>

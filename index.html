@@ -30,6 +30,64 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+
+    <style>
+        .product-categories-container {
+            padding: 20px;
+        }
+
+        .category-row {
+            margin-bottom: 40px;
+        }
+
+        .category-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .products-slider {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            padding: 10px 0;
+            scrollbar-width: thin;
+        }
+
+        .product-link {
+            flex: 0 0 auto;
+            width: calc((9/16) * 300px);
+            height: 300px;
+            text-decoration: none;
+            color: inherit;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-link:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .products-slider {
+            -ms-overflow-style: none;
+            /* Internet Explorer 10+ */
+            scrollbar-width: none;
+            /* Firefox */
+        }
+
+        .products-slider::-webkit-scrollbar {
+            display: none;
+            /* Safari and Chrome */
+        }
+    </style>
+
 </head>
 
 <body>
@@ -56,9 +114,9 @@
                         我們致力於提供最先進的水處理技術，確保每一滴水都達到最高品質標準。從家庭到工業，我們為您提供全面的水質解決方案。</p>
                     <a href="" class="btn btn-primary py-3 px-4 animated slideInDown">了解更多</a>
                 </div>
-                <div class="col-lg-6 animated fadeIn">
+                <div class="col-lg-6 animated fadeIn d-flex justify-content-center">
                     <img class="img-fluid animated pulse infinite" style="animation-duration: 3s;"
-                        src="img/custom/hero-1.png" alt="">
+                        src="img/custom/hero-2.png" alt="">
                 </div>
             </div>
         </div>
@@ -99,6 +157,11 @@
         </div>
     </div>
     <!-- About End -->
+
+    <!-- Products Start -->
+    <div id="products-placeholder">
+    </div>
+    <!-- Products End -->
 
 
     <!-- Facts Start -->
@@ -455,6 +518,7 @@
     <script src="lib/waypoints/waypoints.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
     <script src="lib/counterup/counterup.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
