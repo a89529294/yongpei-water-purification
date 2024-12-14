@@ -109,31 +109,32 @@ async function fetchProducts() {
   // return response.json();
 
   return [
-    // {
-    //   id: 1,
-    //   name: "Product 1",
-    //   description: "Description for Product 1",
-    //   features: [
-    //     { title: "Feature 1", description: "Feature 1 description" },
-    //     { title: "Feature 2", description: "Feature 2 description" },
-    //   ],
-    //   specifications: [
-    //     {
-    //       title: "Specification 1",
-    //       description: "Specification 1 description",
-    //     },
-    //     {
-    //       title: "Specification 2",
-    //       description: "Specification 2 description",
-    //     },
-    //   ],
-    //   images: ["https://picsum.photos/200", "https://picsum.photos/200"],
-    //   category: { id: 1, name: "Category 1" },
-    // },
+    {
+      id: 1,
+      name: "Product 1",
+      description: "Description for Product 1",
+      features: [
+        { title: "Feature 1", description: "Feature 1 description" },
+        { title: "Feature 2", description: "Feature 2 description" },
+      ],
+      specifications: [
+        {
+          title: "Specification 1",
+          description: "Specification 1 description",
+        },
+        {
+          title: "Specification 2",
+          description: "Specification 2 description",
+        },
+      ],
+      images: ["https://picsum.photos/200", "https://picsum.photos/200"],
+      category: { id: 1, name: "Category 1" },
+    },
     {
       id: 3,
       name: "Product 3",
-      description: "Description for Product 3",
+      description:
+        "Description for Product 3 Description for Product 3 Description for Product 3",
       features: [
         { title: "Feature 1", description: "Feature 1 description" },
         { title: "Feature 2", description: "Feature 2 description" },
@@ -151,27 +152,27 @@ async function fetchProducts() {
       images: ["https://picsum.photos/200", "https://picsum.photos/200"],
       category: { id: 2, name: "Category 2" },
     },
-    // {
-    //   id: 4,
-    //   name: "Product 4",
-    //   description: "Description for Product 4",
-    //   features: [
-    //     { title: "Feature 1", description: "Feature 1 description" },
-    //     { title: "Feature 2", description: "Feature 2 description" },
-    //   ],
-    //   specifications: [
-    //     {
-    //       title: "Specification 1",
-    //       description: "Specification 1 description",
-    //     },
-    //     {
-    //       title: "Specification 2",
-    //       description: "Specification 2 description",
-    //     },
-    //   ],
-    //   images: ["https://picsum.photos/200", "https://picsum.photos/200"],
-    //   category: { id: 4, name: "Category 3" },
-    // },
+    {
+      id: 4,
+      name: "Product 4",
+      description: "Description for Product 4",
+      features: [
+        { title: "Feature 1", description: "Feature 1 description" },
+        { title: "Feature 2", description: "Feature 2 description" },
+      ],
+      specifications: [
+        {
+          title: "Specification 1",
+          description: "Specification 1 description",
+        },
+        {
+          title: "Specification 2",
+          description: "Specification 2 description",
+        },
+      ],
+      images: ["https://picsum.photos/200", "https://picsum.photos/200"],
+      category: { id: 4, name: "Category 3" },
+    },
     {
       id: 2,
       name: "Product 2",
@@ -488,6 +489,78 @@ async function modifyIndexPage(categories, products) {
   const dom = new JSDOM(indexContent);
   const document = dom.window.document;
 
+  // Create and inject the slider script
+  const sliderScript = document.createElement("script");
+  sliderScript.textContent = `
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    function initializeSliders() {
+      document.querySelectorAll('.slider').forEach(slider => {
+        const sliderId = slider.id;
+        const sliderWidth = slider.offsetWidth;
+        const children = slider.children;
+        const childWidth = children[0].offsetWidth;
+        const totalWidth = children.length * childWidth;
+        
+        // Adjust last slide margin
+        slider.lastElementChild.style.marginRight = '0';
+        const visibleSlides = Math.ceil(sliderWidth / childWidth);
+        const targetWidth = visibleSlides * childWidth;
+        const marginRight = childWidth - targetWidth + sliderWidth;
+        slider.lastElementChild.style.marginRight = marginRight + 'px';
+
+        // hide nav buttons if total content width is less than slider width
+        if (totalWidth <= sliderWidth) {
+          document.getElementById('nav-' + sliderId + '-left').style.display = 'none';
+          document.getElementById('nav-' + sliderId + '-right').style.display = 'none';
+        }
+
+        // Add touch event listeners
+        slider.addEventListener('touchstart', handleTouchStart);
+        slider.addEventListener('touchend', handleTouchEnd);
+      });
+    }
+
+    function handleTouchStart(event) {
+      touchStartX = event.touches[0].clientX;
+    }
+
+    function handleTouchEnd(event) {
+      touchEndX = event.changedTouches[0].clientX;
+      handleSwipe(event.currentTarget);
+    }
+
+    function handleSwipe(slider) {
+      const swipeThreshold = 50; // minimum distance for a swipe
+      const swipeDistance = touchEndX - touchStartX;
+      
+      if (Math.abs(swipeDistance) > swipeThreshold) {
+        // Negative swipeDistance means swipe left, positive means swipe right
+        const direction = swipeDistance > 0 ? -1 : 1;
+        scrollSlider(slider.id, direction);
+      }
+    }
+
+    function scrollSlider(sliderId, direction) {
+      const slider = document.getElementById(sliderId);
+      const slideWidth = slider.querySelector('.slide').offsetWidth;
+      slider.scrollBy({
+        left: slideWidth * direction,
+        behavior: 'smooth'
+      });
+    }
+
+    // Initialize sliders when the page loads
+    window.addEventListener('load', initializeSliders);
+    // Also initialize when window is resized
+    window.addEventListener('resize', initializeSliders);
+  `;
+
+  // Find the closing body tag and insert the script before it
+  const body = document.querySelector("body");
+  body.insertBefore(sliderScript, body.lastElementChild);
+
   // Find the products placeholder div
   const productsPlaceholder = document.getElementById("products-placeholder");
   if (!productsPlaceholder) {
@@ -495,105 +568,93 @@ async function modifyIndexPage(categories, products) {
     return;
   }
 
-  // Create the product display section
-  const productSection = document.createElement("div");
-  productSection.className = "product-categories-container container-xxl py-5";
+  // Clear existing content
+  productsPlaceholder.innerHTML = "";
 
-  // Create rows for each category
+  // Generate content for each category
   categories.forEach((category, categoryIndex) => {
-    const categoryProducts = products.filter(
-      (p) => p.category.id === category.id
-    );
-    if (categoryProducts.length === 0) return;
-
+    // Create category row
     const categoryRow = document.createElement("div");
     categoryRow.className = "category-row";
 
-    const title = document.createElement("h2");
-    title.className = "category-title";
-    title.textContent = category.name;
-    categoryRow.appendChild(title);
+    // Add category title
+    const categoryTitle = document.createElement("h2");
+    categoryTitle.className = "category-title";
+    categoryTitle.textContent = category.name;
+    categoryRow.appendChild(categoryTitle);
 
-    const sliderContainerContainer = document.createElement("div");
-    sliderContainerContainer.className = "position-relative";
+    // Create slider container
     const sliderContainer = document.createElement("div");
-    sliderContainer.className = `products-slider category-swiper-${categoryIndex}`;
+    sliderContainer.className = "slider-container wow fadeInUp";
 
-    // Create Swiper container and wrapper
-    const swiperContainer = document.createElement("div");
-    swiperContainer.className = `swiper `;
+    // Create slider
+    const slider = document.createElement("div");
+    slider.className = "slider";
+    const sliderId = `slider-${categoryIndex}`;
+    slider.id = sliderId;
 
-    const swiperWrapper = document.createElement("div");
-    swiperWrapper.className = "swiper-wrapper d-flex gap-4";
+    // Filter products for this category and create slides
+    const categoryProducts = products.filter(
+      (product) => product.category.id === category.id
+    );
 
-    categoryProducts.forEach((product, index) => {
-      const swiperSlide = document.createElement("div");
-      swiperSlide.className = "swiper-slide shrink-1";
+    categoryProducts.forEach((product) => {
+      const slide = document.createElement("div");
+      slide.className = "slide";
 
+      // Create product content
       const productLink = document.createElement("a");
-      productLink.href = `products/product-${product.id}.html`;
-      productLink.className = "product-link wow fadeInUp";
-      productLink.setAttribute("data-wow-delay", `${index * 0.2}s`);
-      productLink.innerHTML = `
-        <div style="flex: 1; padding: 15px; display: flex; flex-direction: column;">
-          <img src="${product.images[0]}" alt="${
-        product.name
-      }" style="width: 100%; height: 60%; object-fit: cover; margin-bottom: 10px;">
-          <h3 style="margin: 0 0 5px 0; font-size: 16px;">${product.name}</h3>
-          <p style="margin: 0; color: #666; font-size: 14px;">${product.description.substring(
-            0,
-            100
-          )}...</p>
-        </div>
-      `;
+      productLink.href = `products/${product.id}.html`;
 
-      swiperSlide.appendChild(productLink);
-      swiperWrapper.appendChild(swiperSlide);
+      const productImage = document.createElement("img");
+      productImage.src = product.images[0];
+      productImage.alt = product.name;
+      productImage.className = "img-fluid mb-3";
+
+      const productDescription = document.createElement("div");
+      productDescription.className = "product-description";
+      const productTitle = document.createElement("h5");
+      productTitle.textContent = product.name;
+      productTitle.className = "product-title";
+      productDescription.appendChild(productTitle);
+
+      const productDescriptionText = document.createElement("p");
+      productDescriptionText.className = "product-description-text";
+      productDescriptionText.textContent = product.description;
+      productDescription.appendChild(productDescriptionText);
+
+      // Assemble product slide
+      productLink.appendChild(productImage);
+      productLink.appendChild(productDescription);
+      slide.appendChild(productLink);
+
+      slider.appendChild(slide);
     });
 
-    swiperContainer.appendChild(swiperWrapper);
+    // Add navigation buttons
+    const leftButton = document.createElement("button");
+    leftButton.id = `nav-${sliderId}-left`;
+    leftButton.className = "nav-button left";
+    leftButton.innerHTML = "&#10094;";
+    leftButton.setAttribute("onclick", `scrollSlider('${sliderId}', -1)`);
 
-    // Add navigation
-    const prevButton = document.createElement("button");
-    prevButton.className = `swiper-button-prev swiper-button-prev-${categoryIndex} position-absolute top-50 translate-y-[-50%] z-1  bg-primary rounded-circle`;
-    prevButton.style.width = "20px";
-    prevButton.style.height = "20px";
-    prevButton.style.left = "10px";
-    const nextButton = document.createElement("button");
-    nextButton.className = `swiper-button-next swiper-button-next-${categoryIndex} position-absolute top-50 translate-y-[-50%] z-1 bg-primary rounded-circle`;
-    nextButton.style.width = "20px";
-    nextButton.style.height = "20px";
-    nextButton.style.right = "10px";
+    const rightButton = document.createElement("button");
+    rightButton.id = `nav-${sliderId}-right`;
+    rightButton.className = "nav-button right";
+    rightButton.innerHTML = "&#10095;";
+    rightButton.setAttribute("onclick", `scrollSlider('${sliderId}', 1)`);
 
-    sliderContainer.appendChild(swiperContainer);
-    sliderContainerContainer.appendChild(sliderContainer);
-    sliderContainerContainer.appendChild(prevButton);
-    sliderContainerContainer.appendChild(nextButton);
-    categoryRow.appendChild(sliderContainerContainer);
-    productSection.appendChild(categoryRow);
+    // Assemble slider container
+    sliderContainer.appendChild(leftButton);
+    sliderContainer.appendChild(slider);
+    sliderContainer.appendChild(rightButton);
 
-    // Add Swiper initialization script
-    const script = document.createElement("script");
-    script.textContent = `
-      document.addEventListener('DOMContentLoaded', function() {
-        new Swiper('.category-swiper-${categoryIndex}', {
-          slidesPerView: 'auto',
-          navigation: {
-            nextEl: '.swiper-button-next-${categoryIndex}',
-            prevEl: '.swiper-button-prev-${categoryIndex}',
-          },
-          
-        });
-      });
-    `;
-    document.head.appendChild(script);
+    // Add slider container to category row
+    categoryRow.appendChild(sliderContainer);
+
+    // Add category row to products placeholder
+    productsPlaceholder.appendChild(categoryRow);
   });
-
-  // Replace the placeholder with our new product section
-  productsPlaceholder.parentNode.replaceChild(
-    productSection,
-    productsPlaceholder
-  );
 
   // Save the modified index.html
   await fs.writeFile(indexPath, dom.serialize(), "utf-8");

@@ -62,7 +62,7 @@ const Components = {
 
   footer: {
     template: `
-            <div class="container-fluid bg-light footer mt-5 pt-5 wow fadeIn" data-wow-delay="0.1s">
+            <div class="container-fluid bg-light footer mt-5 pt-0 pt-md-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container py-5">
             <div class="row g-5">
                 <div class="col-md-6">
