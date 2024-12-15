@@ -15,8 +15,8 @@ const Components = {
                 <a href="/about.html" class="nav-item nav-link">關於</a>
                 <a href="/service.html" class="nav-item nav-link">服務項目</a>
                 <div  class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" >產品分類</a>
-                    <div id='category-dropdown-content' class="dropdown-menu shadow-sm m-0" style="min-width: 200px;">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">產品分類</a>
+                    <div id='category-dropdown-content' class="dropdown-menu dropdown-menu-end">
                        
                     </div>
                 </div>

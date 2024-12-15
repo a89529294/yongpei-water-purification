@@ -6,6 +6,7 @@
     "lib": "lib"
   },
   "scripts": {
+    "dev": "npm run build && cd build && http-server",
     "build": "node scripts/generate-pages.js"
   },
   "keywords": [],

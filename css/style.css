@@ -119,10 +119,13 @@ h6,
 @media (min-width: 992px) {
   .navbar .nav-item .dropdown-menu {
     display: flex;
+    flex-direction: column;
     border: none;
     margin-top: 0;
     top: 150%;
-    opacity: 1;
+    left: auto;
+    right: 0;
+    opacity: 0;
     visibility: hidden;
     transition: 0.5s;
   }
@@ -381,33 +384,33 @@ h6,
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 0px 24px;
   flex-wrap: wrap;
-  max-height: 300px;
+  max-height: 400px;
   width: max-content;
+  min-width: 600px;
+  overflow-y: auto;
 }
 
 .dropdown-header {
   font-size: 1rem;
   font-weight: 500;
   color: #333;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
+  width: 200px;
 }
 
 .dropdown-item {
-  padding-block: 8px;
+  padding: 8px;
   color: #666;
   font-size: 0.95rem;
   transition: all 0.2s ease;
+  white-space: nowrap;
+  width: 200px;
 }
 
 .dropdown-item:hover {
-  background-color: #f8f9fa;
   color: var(--primary);
-  padding-left: 30px;
-}
-
-.dropdown-menu.show {
-  display: block;
-  min-width: 280px;
+  background-color: var(--light);
+  transform: translateX(4px);
 }

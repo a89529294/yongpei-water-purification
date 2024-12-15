@@ -105,222 +105,279 @@ async function fetchProducts() {
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
-  // console.log(await response.json());
-  // return response.json();
 
-  return [
-    {
-      id: 1,
-      name: "Product 1",
-      description: "Description for Product 1",
-      features: [
-        { title: "Feature 1", description: "Feature 1 description" },
-        { title: "Feature 2", description: "Feature 2 description" },
-      ],
-      specifications: [
-        {
-          title: "Specification 1",
-          description: "Specification 1 description",
+  const data = await response.json();
+  // console.log(data);
+
+  let productId = 1;
+  let categoryId = 1;
+  const categoryMap = new Map();
+
+  // Transform the data into the expected format
+  const products = Object.entries(data).flatMap(([categoryName, products]) => {
+    // Get or create category ID
+    if (!categoryMap.has(categoryName)) {
+      categoryMap.set(categoryName, categoryId++);
+    }
+    const currentCategoryId = categoryMap.get(categoryName);
+
+    // Transform each product in the category
+    return products.map((product) => {
+      const price = parseInt(product.price.replace(/[^0-9]/g, ""));
+
+      return {
+        id: productId++,
+        name: product.a_name,
+        description: product.sub_title || product.title,
+        features: [
+          { title: "型號", description: product.roomno },
+          { title: "價格", description: `NT$ ${price}` },
+        ],
+        specifications: [
+          { title: "訂單數", description: `${product.orders} 筆` },
+        ],
+        images: [product.imgSrc],
+        category: {
+          id: currentCategoryId,
+          name: categoryName,
         },
-        {
-          title: "Specification 2",
-          description: "Specification 2 description",
-        },
-      ],
-      images: ["https://picsum.photos/200", "https://picsum.photos/200"],
-      category: { id: 1, name: "Category 1" },
-    },
-    {
-      id: 3,
-      name: "Product 3",
-      description:
-        "Description for Product 3 Description for Product 3 Description for Product 3",
-      features: [
-        { title: "Feature 1", description: "Feature 1 description" },
-        { title: "Feature 2", description: "Feature 2 description" },
-      ],
-      specifications: [
-        {
-          title: "Specification 1",
-          description: "Specification 1 description",
-        },
-        {
-          title: "Specification 2",
-          description: "Specification 2 description",
-        },
-      ],
-      images: ["https://picsum.photos/200", "https://picsum.photos/200"],
-      category: { id: 2, name: "Category 2" },
-    },
-    {
-      id: 4,
-      name: "Product 4",
-      description: "Description for Product 4",
-      features: [
-        { title: "Feature 1", description: "Feature 1 description" },
-        { title: "Feature 2", description: "Feature 2 description" },
-      ],
-      specifications: [
-        {
-          title: "Specification 1",
-          description: "Specification 1 description",
-        },
-        {
-          title: "Specification 2",
-          description: "Specification 2 description",
-        },
-      ],
-      images: ["https://picsum.photos/200", "https://picsum.photos/200"],
-      category: { id: 4, name: "Category 3" },
-    },
-    {
-      id: 2,
-      name: "Product 2",
-      description: "Description for Product 2",
-      features: [
-        { title: "Feature 1", description: "Feature 1 description" },
-        { title: "Feature 2", description: "Feature 2 description" },
-      ],
-      specifications: [
-        {
-          title: "Specification 1",
-          description: "Specification 1 description",
-        },
-        {
-          title: "Specification 2",
-          description: "Specification 2 description",
-        },
-      ],
-      images: ["https://picsum.photos/200", "https://picsum.photos/200"],
-      category: { id: 2, name: "Category 2" },
-    },
-    {
-      id: 5,
-      name: "Product 5",
-      description: "Description for Product 5",
-      features: [
-        { title: "Feature 1", description: "Feature 1 description" },
-        { title: "Feature 2", description: "Feature 2 description" },
-      ],
-      specifications: [
-        {
-          title: "Specification 1",
-          description: "Specification 1 description",
-        },
-        {
-          title: "Specification 2",
-          description: "Specification 2 description",
-        },
-      ],
-      images: ["https://picsum.photos/200", "https://picsum.photos/200"],
-      category: { id: 2, name: "Category 2" },
-    },
-    {
-      id: 6,
-      name: "Product 6",
-      description: "Description for Product 6",
-      features: [
-        { title: "Feature 1", description: "Feature 1 description" },
-        { title: "Feature 2", description: "Feature 2 description" },
-      ],
-      specifications: [
-        {
-          title: "Specification 1",
-          description: "Specification 1 description",
-        },
-        {
-          title: "Specification 2",
-          description: "Specification 2 description",
-        },
-      ],
-      images: ["https://picsum.photos/200", "https://picsum.photos/200"],
-      category: { id: 2, name: "Category 2" },
-    },
-    {
-      id: 7,
-      name: "Product 7",
-      description: "Description for Product 7",
-      features: [
-        { title: "Feature 1", description: "Feature 1 description" },
-        { title: "Feature 2", description: "Feature 2 description" },
-      ],
-      specifications: [
-        {
-          title: "Specification 1",
-          description: "Specification 1 description",
-        },
-        {
-          title: "Specification 2",
-          description: "Specification 2 description",
-        },
-      ],
-      images: ["https://picsum.photos/200", "https://picsum.photos/200"],
-      category: { id: 2, name: "Category 2" },
-    },
-    {
-      id: 8,
-      name: "Product 8",
-      description: "Description for Product 3",
-      features: [
-        { title: "Feature 1", description: "Feature 1 description" },
-        { title: "Feature 2", description: "Feature 2 description" },
-      ],
-      specifications: [
-        {
-          title: "Specification 1",
-          description: "Specification 1 description",
-        },
-        {
-          title: "Specification 2",
-          description: "Specification 2 description",
-        },
-      ],
-      images: ["https://picsum.photos/200", "https://picsum.photos/200"],
-      category: { id: 2, name: "Category 2" },
-    },
-    {
-      id: 9,
-      name: "Product 9",
-      description: "Description for Product 9",
-      features: [
-        { title: "Feature 1", description: "Feature 1 description" },
-        { title: "Feature 2", description: "Feature 2 description" },
-      ],
-      specifications: [
-        {
-          title: "Specification 1",
-          description: "Specification 1 description",
-        },
-        {
-          title: "Specification 2",
-          description: "Specification 2 description",
-        },
-      ],
-      images: ["https://picsum.photos/200", "https://picsum.photos/200"],
-      category: { id: 2, name: "Category 2" },
-    },
-    {
-      id: 10,
-      name: "Product 10",
-      description: "Description for Product 10",
-      features: [
-        { title: "Feature 1", description: "Feature 1 description" },
-        { title: "Feature 2", description: "Feature 2 description" },
-      ],
-      specifications: [
-        {
-          title: "Specification 1",
-          description: "Specification 1 description",
-        },
-        {
-          title: "Specification 2",
-          description: "Specification 2 description",
-        },
-      ],
-      images: ["https://picsum.photos/200", "https://picsum.photos/200"],
-      category: { id: 2, name: "Category 2" },
-    },
-  ];
+      };
+    });
+  });
+
+  // Get unique categories
+  const categories = Array.from(categoryMap.entries()).map(([name, id]) => ({
+    id,
+    name,
+  }));
+
+  // Store categories globally or return them along with products
+  return {
+    products,
+    categories,
+  };
+
+  // return [
+  //   {
+  //     id: 1,
+  //     name: "Product 1",
+  //     description: "Description for Product 1",
+  //     features: [
+  //       { title: "Feature 1", description: "Feature 1 description" },
+  //       { title: "Feature 2", description: "Feature 2 description" },
+  //     ],
+  //     specifications: [
+  //       {
+  //         title: "Specification 1",
+  //         description: "Specification 1 description",
+  //       },
+  //       {
+  //         title: "Specification 2",
+  //         description: "Specification 2 description",
+  //       },
+  //     ],
+  //     images: ["https://picsum.photos/200", "https://picsum.photos/200"],
+  //     category: { id: 1, name: "Category 1" },
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Product 3",
+  //     description:
+  //       "Description for Product 3 Description for Product 3 Description for Product 3",
+  //     features: [
+  //       { title: "Feature 1", description: "Feature 1 description" },
+  //       { title: "Feature 2", description: "Feature 2 description" },
+  //     ],
+  //     specifications: [
+  //       {
+  //         title: "Specification 1",
+  //         description: "Specification 1 description",
+  //       },
+  //       {
+  //         title: "Specification 2",
+  //         description: "Specification 2 description",
+  //       },
+  //     ],
+  //     images: ["https://picsum.photos/200", "https://picsum.photos/200"],
+  //     category: { id: 2, name: "Category 2" },
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "Product 4",
+  //     description: "Description for Product 4",
+  //     features: [
+  //       { title: "Feature 1", description: "Feature 1 description" },
+  //       { title: "Feature 2", description: "Feature 2 description" },
+  //     ],
+  //     specifications: [
+  //       {
+  //         title: "Specification 1",
+  //         description: "Specification 1 description",
+  //       },
+  //       {
+  //         title: "Specification 2",
+  //         description: "Specification 2 description",
+  //       },
+  //     ],
+  //     images: ["https://picsum.photos/200", "https://picsum.photos/200"],
+  //     category: { id: 4, name: "Category 3" },
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Product 2",
+  //     description: "Description for Product 2",
+  //     features: [
+  //       { title: "Feature 1", description: "Feature 1 description" },
+  //       { title: "Feature 2", description: "Feature 2 description" },
+  //     ],
+  //     specifications: [
+  //       {
+  //         title: "Specification 1",
+  //         description: "Specification 1 description",
+  //       },
+  //       {
+  //         title: "Specification 2",
+  //         description: "Specification 2 description",
+  //       },
+  //     ],
+  //     images: ["https://picsum.photos/200", "https://picsum.photos/200"],
+  //     category: { id: 2, name: "Category 2" },
+  //   },
+  //   {
+  //     id: 5,
+  //     name: "Product 5",
+  //     description: "Description for Product 5",
+  //     features: [
+  //       { title: "Feature 1", description: "Feature 1 description" },
+  //       { title: "Feature 2", description: "Feature 2 description" },
+  //     ],
+  //     specifications: [
+  //       {
+  //         title: "Specification 1",
+  //         description: "Specification 1 description",
+  //       },
+  //       {
+  //         title: "Specification 2",
+  //         description: "Specification 2 description",
+  //       },
+  //     ],
+  //     images: ["https://picsum.photos/200", "https://picsum.photos/200"],
+  //     category: { id: 2, name: "Category 2" },
+  //   },
+  //   {
+  //     id: 6,
+  //     name: "Product 6",
+  //     description: "Description for Product 6",
+  //     features: [
+  //       { title: "Feature 1", description: "Feature 1 description" },
+  //       { title: "Feature 2", description: "Feature 2 description" },
+  //     ],
+  //     specifications: [
+  //       {
+  //         title: "Specification 1",
+  //         description: "Specification 1 description",
+  //       },
+  //       {
+  //         title: "Specification 2",
+  //         description: "Specification 2 description",
+  //       },
+  //     ],
+  //     images: ["https://picsum.photos/200", "https://picsum.photos/200"],
+  //     category: { id: 2, name: "Category 2" },
+  //   },
+  //   {
+  //     id: 7,
+  //     name: "Product 7",
+  //     description: "Description for Product 7",
+  //     features: [
+  //       { title: "Feature 1", description: "Feature 1 description" },
+  //       { title: "Feature 2", description: "Feature 2 description" },
+  //     ],
+  //     specifications: [
+  //       {
+  //         title: "Specification 1",
+  //         description: "Specification 1 description",
+  //       },
+  //       {
+  //         title: "Specification 2",
+  //         description: "Specification 2 description",
+  //       },
+  //     ],
+  //     images: ["https://picsum.photos/200", "https://picsum.photos/200"],
+  //     category: { id: 2, name: "Category 2" },
+  //   },
+  //   {
+  //     id: 8,
+  //     name: "Product 8",
+  //     description: "Description for Product 3",
+  //     features: [
+  //       { title: "Feature 1", description: "Feature 1 description" },
+  //       { title: "Feature 2", description: "Feature 2 description" },
+  //     ],
+  //     specifications: [
+  //       {
+  //         title: "Specification 1",
+  //         description: "Specification 1 description",
+  //       },
+  //       {
+  //         title: "Specification 2",
+  //         description: "Specification 2 description",
+  //       },
+  //     ],
+  //     images: ["https://picsum.photos/200", "https://picsum.photos/200"],
+  //     category: { id: 2, name: "Category 2" },
+  //   },
+  //   {
+  //     id: 9,
+  //     name: "Product 9",
+  //     description: "Description for Product 9",
+  //     features: [
+  //       { title: "Feature 1", description: "Feature 1 description" },
+  //       { title: "Feature 2", description: "Feature 2 description" },
+  //     ],
+  //     specifications: [
+  //       {
+  //         title: "Specification 1",
+  //         description: "Specification 1 description",
+  //       },
+  //       {
+  //         title: "Specification 2",
+  //         description: "Specification 2 description",
+  //       },
+  //     ],
+  //     images: ["https://picsum.photos/200", "https://picsum.photos/200"],
+  //     category: { id: 2, name: "Category 2" },
+  //   },
+  //   {
+  //     id: 10,
+  //     name: "Product 10",
+  //     description: "Description for Product 10",
+  //     features: [
+  //       { title: "Feature 1", description: "Feature 1 description" },
+  //       { title: "Feature 2", description: "Feature 2 description" },
+  //     ],
+  //     specifications: [
+  //       {
+  //         title: "Specification 1",
+  //         description: "Specification 1 description",
+  //       },
+  //       {
+  //         title: "Specification 2",
+  //         description: "Specification 2 description",
+  //       },
+  //     ],
+  //     images: ["https://picsum.photos/200", "https://picsum.photos/200"],
+  //     category: { id: 2, name: "Category 2" },
+  //   },
+  // ];
+}
+
+// Helper function to generate random image URLs
+function getRandomImages(count) {
+  return Array.from(
+    { length: count },
+    (_, i) => `https://picsum.photos/800/600?random=${Math.random()}`
+  );
 }
 
 // Generate components.js with category dropdown
@@ -337,22 +394,32 @@ async function generateComponents(categories, products) {
         (p) => p.category.id === category.id
       );
       return `
-        <div class="dropdown-category">
           <div class="dropdown-header">${category.name}</div>
-          ${categoryProducts
-            .map(
-              (product) =>
-                `<a href="/products/product-${product.id}.html" class="dropdown-item">${product.name}</a>`
-            )
-            .join("\n")}
-        </div>`;
+          ${
+            categoryProducts.length > 3
+              ? [
+                  ...categoryProducts
+                    .slice(0, 3)
+                    .map(
+                      (product) =>
+                        `<a href="/products/product-${product.id}.html" class="dropdown-item">${product.name}</a>`
+                    ),
+                  `<a href=${`#category-${category.id}`} class="dropdown-item">更多...</a>`,
+                ].join("\n")
+              : categoryProducts
+                  .map(
+                    (product) =>
+                      `<a href="/products/product-${product.id}.html" class="dropdown-item">${product.name}</a>`
+                  )
+                  .join("\n")
+          }`;
     })
     .join("\n");
 
   // Replace the content of the dropdown container
   const updatedContent = componentsContent.replace(
     /<div id='category-dropdown-content'[^>]*>([\s\S]*?)<\/div>/,
-    `<div id='category-dropdown-content' class="dropdown-menu shadow-sm m-0">
+    `<div id='category-dropdown-content' class="dropdown-menu dropdown-menu-end">
       ${dropdownContent}
     </div>`
   );
@@ -420,16 +487,16 @@ async function generateProductPages(products) {
     const featuresHtml = product.features
       .map(
         (feature) => `
-                 <div class="d-flex mb-4">
-                        <div class="flex-shrink-0 btn-square bg-primary rounded-circle">
-                            <i class="fa fa-check text-white"></i>
-                        </div>
-                        <div class="ms-4">
-                            <h5>${feature.title}</h5>
-                            <p class="mb-0">${feature.description}</p>
-                        </div>
-                    </div>
-            `
+          <div class="d-flex mb-4">
+            <div class="flex-shrink-0 btn-square bg-primary rounded-circle">
+              <i class="fa fa-check text-white"></i>
+            </div>
+            <div class="ms-4">
+              <h5>${feature.title}</h5>
+              <p class="mb-0">${feature.description}</p>
+            </div>
+          </div>
+        `
       )
       .join("\n");
 
@@ -437,32 +504,223 @@ async function generateProductPages(products) {
     const specificationsHtml = product.specifications
       .map(
         (spec) => `
-                <div class="col-sm-6 mb-2">
-                    <h6>${spec.title}</h6>
-                    <p class="mb-0">${spec.description}</p>
-                </div>
-            `
+          <div class="col-sm-6 mb-2">
+            <h5>${spec.title}</h5>
+            <p class="mb-0">${spec.description}</p>
+          </div>
+        `
       )
       .join("\n");
 
-    // Generate image carousel items
-    // const carouselItems = product.images
-    //   .map(
-    //     (img, index) => `
-    //             <div class="carousel-item ${index === 0 ? "active" : ""}">
-    //                 <img class="w-100" src="${img}" alt="Image">
-    //             </div>
-    //         `
-    //   )
-    //   .join("\n");
+    // Get random images (10-13) and combine with product image
+    const randomImageCount = Math.floor(Math.random() * 10) + 5; // Random number between 9 and 14
+    const allImages = [product.images[0], ...getRandomImages(randomImageCount)];
 
     const dom = new JSDOM(productContent);
     const doc = dom.window.document;
+
+    // Create gallery HTML
+    const galleryHtml = `
+      <div class="product-gallery">
+        <div class="gallery-main mb-3">
+          <img id="mainImage" src="${allImages[0]}" alt="${
+      product.name
+    } - Main Image" class="img-fluid">
+        </div>
+        <div class="gallery-thumbs-container">
+        <button class="nav-btn prev" onclick="scrollGallery(-1)">
+            <i class="bi bi-chevron-left"></i>
+          </button>
+        <div class="gallery-thumbs">
+            <div class="thumb-container" id="thumbContainer">
+            ${allImages
+              .map(
+                (img, index) => `
+                <div class="thumb${
+                  index === 0 ? " active" : ""
+                }" onclick="selectImage(this, '${img}')">
+                  <img src="${img}" alt="${product.name} - Thumbnail ${
+                  index + 1
+                }">
+                </div>
+              `
+              )
+              .join("")}
+          </div>
+
+          
+        </div>
+        <button class="nav-btn next" onclick="scrollGallery(1)">
+            <i class="bi bi-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    `;
+
+    // Create gallery script
+    const galleryScript = `
+      <script>
+        let currentScrollPosition = 0;
+        const thumbWidth = document.querySelector('.thumb').offsetWidth + 10;
+        const visibleThumbs = 6;
+
+        function selectImage(thumb, imgSrc) {
+          document.getElementById('mainImage').src = imgSrc;
+          document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+          thumb.classList.add('active');
+        }
+
+        function scrollGallery(direction) {
+          const container = document.getElementById('thumbContainer');
+          const maxScroll = Math.max(0, (${allImages.length} - visibleThumbs) * thumbWidth);
+          
+          currentScrollPosition = Math.max(0, Math.min(maxScroll, currentScrollPosition + direction * thumbWidth));
+          container.style.transform = \`translateX(-\${currentScrollPosition}px)\`;
+          
+          // Update button states
+          document.querySelector('.prev').disabled = currentScrollPosition === 0;
+          document.querySelector('.next').disabled = currentScrollPosition >= maxScroll;
+        }
+
+        function initGallery() {
+          // Initial button state
+          document.querySelector('.prev').disabled = true;
+          document.querySelector('.next').disabled = ${allImages.length} <= visibleThumbs;
+        }
+
+        window.addEventListener('load', initGallery);
+      </script>
+    `;
+
+    // Add gallery styles
+    const galleryStyles = `
+      <style>
+        .product-gallery {
+          max-width: 100%;
+          margin: 0 auto;
+          padding: 0 15px;
+        }
+        .gallery-main {
+          width: 100%;
+          height: 500px; 
+          margin-bottom: 1rem;
+        }
+        @media (max-width: 768px) {
+          .gallery-main {
+            height: 300px;
+          }
+        }
+        .gallery-main img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+        .gallery-thumbs-container {
+          position: relative;
+          max-width: 100%;
+          margin: 0 auto;
+        }
+        .gallery-thumbs {
+          width: 600px;
+          max-width: calc(100% - 80px);
+          margin: 0 auto;
+          overflow: hidden;
+          display: flex;
+          align-items: center;
+        }
+        @media (max-width: 768px) {
+          .gallery-thumbs {
+            width: 100%;
+          }
+          .thumb {
+            width: 60px !important;
+            height: 60px !important;
+          }
+        }
+        .thumb-container {
+          width: 100%;
+          display: flex;
+          gap: 10px;
+          transition: transform 0.3s ease;
+        }
+        .thumb {
+          flex: 0 0 auto;
+          width: 80px;
+          height: 80px;
+          border: 2px solid transparent;
+          cursor: pointer;
+          transition: border-color 0.3s;
+        }
+        .thumb.active {
+          border-color: var(--primary);
+        }
+        .thumb img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        .nav-btn {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 32px;
+          height: 32px;
+          border: none;
+          border-radius: 50%;
+          background: var(--primary);
+          color: white;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          z-index: 1;
+          padding: 0;
+        }
+        .nav-btn:disabled {
+          background: #ccc;
+          cursor: not-allowed;
+        }
+        .nav-btn.prev {
+          left: 0;
+        }
+        .nav-btn.next {
+          right: 0;
+        }
+        @media (min-width: 769px) {
+          .nav-btn.prev {
+            left: -40px;
+          }
+          .nav-btn.next {
+            right: -40px;
+          }
+        }
+      </style>
+    `;
+
+    // Update the content
+    const productGallery = doc.querySelector(".product-gallery");
+    if (productGallery) {
+      productGallery.outerHTML = galleryHtml;
+    }
+
+    // Add script and styles to head
+    const head = doc.querySelector("head");
+    head.insertAdjacentHTML("beforeend", galleryStyles);
+
+    // Add script before closing body tag
+    const body = doc.querySelector("body");
+    body.insertAdjacentHTML("beforeend", galleryScript);
+
     doc.getElementById("features-container").innerHTML = featuresHtml;
+
+    // Update title
+    const titleElement = doc.querySelector("title");
+    if (titleElement) titleElement.textContent = `湧沛淨水 - ${product.name}`;
 
     // Serialize the document back to a string
     let productString = dom.serialize();
 
+    // Replace any remaining placeholders
     productString = productString
       .replace("產品名稱", product.name)
       .replace(
@@ -576,6 +834,7 @@ async function modifyIndexPage(categories, products) {
     // Create category row
     const categoryRow = document.createElement("div");
     categoryRow.className = "category-row";
+    categoryRow.id = `category-${category.id}`;
 
     // Add category title
     const categoryTitle = document.createElement("h2");
@@ -585,7 +844,7 @@ async function modifyIndexPage(categories, products) {
 
     // Create slider container
     const sliderContainer = document.createElement("div");
-    sliderContainer.className = "slider-container wow fadeInUp";
+    sliderContainer.className = "slider-container";
 
     // Create slider
     const slider = document.createElement("div");
@@ -598,13 +857,15 @@ async function modifyIndexPage(categories, products) {
       (product) => product.category.id === category.id
     );
 
-    categoryProducts.forEach((product) => {
+    categoryProducts.forEach((product, i) => {
       const slide = document.createElement("div");
       slide.className = "slide";
 
       // Create product content
       const productLink = document.createElement("a");
-      productLink.href = `products/${product.id}.html`;
+      productLink.href = `products/product-${product.id}.html`;
+      productLink.className = "wow fadeInUp";
+      productLink.setAttribute("data-wow-delay", `${i * 0.1}s`);
 
       const productImage = document.createElement("img");
       productImage.src = product.images[0];
@@ -675,15 +936,15 @@ async function generateAllPages() {
     await copyStaticFiles();
 
     // Fetch products data
-    const products = await fetchProducts();
+    const { products, categories } = await fetchProducts();
 
     // Extract unique categories
-    const categories = [...new Set(products.map((p) => p.category.id))].map(
-      (id) => ({
-        id,
-        name: products.find((p) => p.category.id === id).category.name,
-      })
-    );
+    // const categories = [...new Set(products.map((p) => p.category.id))].map(
+    //   (id) => ({
+    //     id,
+    //     name: products.find((p) => p.category.id === id).category.name,
+    //   })
+    // );
 
     // Generate all pages
     await Promise.all([
