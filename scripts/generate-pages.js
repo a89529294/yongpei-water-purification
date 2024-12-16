@@ -5,7 +5,6 @@ const { JSDOM } = require("jsdom");
 // Constants for file paths
 const BUILD_DIR = path.join(__dirname, "../build");
 const BUILD_JS_DIR = path.join(BUILD_DIR, "js");
-const BUILD_PRODUCTS_DIR = path.join(BUILD_DIR, "products");
 const COMPONENTS_TEMPLATE_PATH = path.join(__dirname, "../js/components.js");
 const CATEGORY_TEMPLATE_PATH = path.join(
   __dirname,
@@ -48,7 +47,6 @@ async function cleanBuild() {
 async function ensureDirectories() {
   await fs.mkdir(BUILD_DIR, { recursive: true });
   await fs.mkdir(BUILD_JS_DIR, { recursive: true });
-  await fs.mkdir(BUILD_PRODUCTS_DIR, { recursive: true });
 }
 
 // Helper function to copy directory recursively
@@ -402,7 +400,7 @@ async function generateComponents(categories, products) {
                     .slice(0, 3)
                     .map(
                       (product) =>
-                        `<a href="products/product-${product.id}.html" class="dropdown-item">${product.name}</a>`
+                        `<a href="product-${product.id}.html" class="dropdown-item">${product.name}</a>`
                     ),
                   `<a href=${`#category-${category.id}`} class="dropdown-item">更多...</a>`,
                 ].join("\n")
@@ -733,7 +731,7 @@ async function generateProductPages(products) {
       );
 
     await fs.writeFile(
-      path.join(BUILD_PRODUCTS_DIR, `product-${product.id}.html`),
+      path.join(BUILD_DIR, `product-${product.id}.html`),
       productString
     );
   }
