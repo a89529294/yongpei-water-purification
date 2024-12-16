@@ -450,7 +450,7 @@ async function generateCategoryPages(categories, products) {
                       0,
                       100
                     )}...</p>
-                    <a class="btn btn-sm btn-primary" href="products/product-${
+                    <a class="btn btn-sm btn-primary" href="product-${
                       product.id
                     }.html">查看細節</a>
                 </div>
