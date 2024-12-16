@@ -409,7 +409,7 @@ async function generateComponents(categories, products) {
               : categoryProducts
                   .map(
                     (product) =>
-                      `<a href="/products/product-${product.id}.html" class="dropdown-item">${product.name}</a>`
+                      `<a href="product-${product.id}.html" class="dropdown-item">${product.name}</a>`
                   )
                   .join("\n")
           }`;
@@ -863,7 +863,7 @@ async function modifyIndexPage(categories, products) {
 
       // Create product content
       const productLink = document.createElement("a");
-      productLink.href = `products/product-${product.id}.html`;
+      productLink.href = `product-${product.id}.html`;
       productLink.className = "wow fadeInUp";
       productLink.setAttribute("data-wow-delay", `${i * 0.1}s`);
 
