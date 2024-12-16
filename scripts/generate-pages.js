@@ -402,7 +402,7 @@ async function generateComponents(categories, products) {
                     .slice(0, 3)
                     .map(
                       (product) =>
-                        `<a href="/products/product-${product.id}.html" class="dropdown-item">${product.name}</a>`
+                        `<a href="products/product-${product.id}.html" class="dropdown-item">${product.name}</a>`
                     ),
                   `<a href=${`#category-${category.id}`} class="dropdown-item">更多...</a>`,
                 ].join("\n")
