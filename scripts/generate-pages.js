@@ -99,7 +99,10 @@ async function copyStaticFiles() {
 
 // Fetch all products from the API
 async function fetchProducts() {
-  const response = await fetch("http://17go.com.tw/api/products.asp");
+  const response = await fetch(
+    "http://wait.mi-great.com.tw/yp/api/products.asp"
+  );
+  // const response = await fetch("http://17go.com.tw/api/products.asp");
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
@@ -739,6 +742,7 @@ async function generateProductPages(products) {
 
 // Generate index page with categorized products
 async function modifyIndexPage(categories, products) {
+  console.log(products[0]);
   console.log("Generating index page with categorized products...");
   const indexPath = path.join(BUILD_DIR, "index.html");
   const indexContent = await fs.readFile(indexPath, "utf-8");
