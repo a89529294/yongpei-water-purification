@@ -947,7 +947,7 @@ async function generateAllPages() {
     // Generate all pages
     await Promise.all([
       generateComponents(categories, products),
-      generateCategoryPages(categories, products),
+      // generateCategoryPages(categories, products),
       generateProductPages(products),
       modifyIndexPage(categories, products),
     ]);
