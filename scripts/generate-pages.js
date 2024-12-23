@@ -100,7 +100,7 @@ async function copyStaticFiles() {
 // Fetch all products from the API
 async function fetchProducts() {
   const response = await fetch(
-    "http://wait.mi-great.com.tw/yp/api/products.asp"
+    "https://wait.mi-great.com.tw/yp/api/products.asp"
   );
   // const response = await fetch("http://17go.com.tw/api/products.asp");
   if (!response.ok) {
