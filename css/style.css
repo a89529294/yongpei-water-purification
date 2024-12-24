@@ -1,6 +1,6 @@
 /********** Template CSS **********/
 :root {
-  --primary: #16d5ff;
+  --primary: #1e72b5;
   --secondary: #999999;
   --light: #f2f8fe;
   --dark: #111111;
@@ -413,4 +413,19 @@ h6,
   color: var(--primary);
   background-color: var(--light);
   transform: translateX(4px);
+}
+
+.text-primary {
+  color: var(--primary) !important;
+}
+
+.bg-primary {
+  background-color: var(--primary) !important;
+  color: #ffffff;
+}
+
+.btn-primary {
+  color: white;
+  background-color: var(--primary);
+  border-color: var(--primary);
 }
