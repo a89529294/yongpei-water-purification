@@ -17,6 +17,22 @@ const PRODUCT_TEMPLATE_PATH = path.join(
 const ROOT_DIR = path.join(__dirname, "..");
 const API_URL = "YOUR_API_ENDPOINT/products"; // TODO: Replace with actual API endpoint
 
+function cleanJSONData(data) {
+  // Step 1: Decode Unicode escape sequences to actual characters
+  const decodedData = decodeURIComponent(JSON.stringify(data));
+
+  // Step 2: Clean up the price field (remove extra commas and spaces)
+  const cleanedData = decodedData.replace(/"price":"([^"]+)"/, (match, p1) => {
+    return `"price":"${p1.replace(/\s+/g, "").replace(/,+$/, "")}"`; // Remove spaces and trailing commas
+  });
+
+  // Step 3: Parse the JSON data
+  const jsonData = JSON.parse(cleanedData);
+
+  // Step 4: Return the cleaned data without altering the HTML in the contents
+  return JSON.parse(jsonData);
+}
+
 // Helper function to remove directory recursively
 async function removeDir(dir) {
   try {
@@ -127,19 +143,9 @@ async function fetchProducts() {
 
     // Transform each product in the category
     return products.map((product) => {
-      const price = parseInt(product.price.replace(/[^0-9]/g, ""));
-
       return {
-        id: productId++,
+        id: product.product,
         name: product.a_name,
-        description: product.sub_title || product.title,
-        features: [
-          { title: "型號", description: product.roomno },
-          { title: "價格", description: `NT$ ${price}` },
-        ],
-        specifications: [
-          { title: "訂單數", description: `${product.orders} 筆` },
-        ],
         images: [product.imgSrc],
         category: {
           id: currentCategoryId,
@@ -431,315 +437,220 @@ async function generateComponents(categories, products) {
   await fs.writeFile(path.join(BUILD_JS_DIR, "components.js"), updatedContent);
 }
 
-// Generate category pages
-async function generateCategoryPages(categories, products) {
-  const categoryTemplate = await fs.readFile(CATEGORY_TEMPLATE_PATH, "utf-8");
-  // console.log(categories, products);
-
-  for (const category of categories) {
-    const categoryProducts = products.filter(
-      (p) => p.category.id === category.id
-    );
-
-    // Generate product cards HTML
-    const productsHtml = categoryProducts
-      .map(
-        (product) => `
-            <div class="col-6 col-md-3 wow fadeIn" data-wow-delay="0.1s">
-                <div class="bg-light text-center p-3 product-card">
-                    <img class="img-fluid mb-3" src="${
-                      product.images[0]
-                    }" alt="${product.name}"
-                        style="height: 100px; object-fit: contain;">
-                    <h5 class="mb-1 product-title">${product.name}</h5>
-                    <p class="text-muted mb-2 truncate-2">${product.description.substring(
-                      0,
-                      100
-                    )}...</p>
-                    <a class="btn btn-sm btn-primary" href="product-${
-                      product.id
-                    }.html">查看細節</a>
-                </div>
-            </div>
-        `
-      )
-      .join("\n");
-
-    // Use JSDOM to manipulate the HTML content
-    const dom = new JSDOM(categoryTemplate);
-    const doc = dom.window.document;
-    doc.getElementById("products-container").innerHTML = productsHtml;
-
-    // Serialize the document back to a string
-    const categoryContent = dom.serialize();
-
-    await fs.writeFile(
-      path.join(BUILD_DIR, `category-${category.id}.html`),
-      categoryContent
-    );
-  }
-}
-
 // Generate individual product pages
 async function generateProductPages(products) {
   const productTemplate = await fs.readFile(PRODUCT_TEMPLATE_PATH, "utf-8");
 
   for (const product of products) {
-    let productContent = productTemplate;
-
-    // Generate features HTML
-    const featuresHtml = product.features
-      .map(
-        (feature) => `
-          <div class="d-flex mb-4">
-            <div class="flex-shrink-0 btn-square bg-primary rounded-circle">
-              <i class="fa fa-check text-white"></i>
-            </div>
-            <div class="ms-4">
-              <h5>${feature.title}</h5>
-              <p class="mb-0">${feature.description}</p>
-            </div>
-          </div>
-        `
-      )
-      .join("\n");
-
-    // Generate specifications HTML
-    const specificationsHtml = product.specifications
-      .map(
-        (spec) => `
-          <div class="col-sm-6 mb-2">
-            <h5>${spec.title}</h5>
-            <p class="mb-0">${spec.description}</p>
-          </div>
-        `
-      )
-      .join("\n");
-
-    // Get random images (10-13) and combine with product image
-    const randomImageCount = Math.floor(Math.random() * 10) + 5; // Random number between 9 and 14
-    const allImages = [product.images[0], ...getRandomImages(randomImageCount)];
-
-    const dom = new JSDOM(productContent);
-    const doc = dom.window.document;
-
-    // Create gallery HTML
-    const galleryHtml = `
-      <div class="product-gallery">
-        <div class="gallery-main mb-3">
-          <img id="mainImage" src="${allImages[0]}" alt="${
-      product.name
-    } - Main Image" class="img-fluid">
-        </div>
-        <div class="gallery-thumbs-container">
-        <button class="nav-btn prev" onclick="scrollGallery(-1)">
-            <i class="bi bi-chevron-left"></i>
-          </button>
-        <div class="gallery-thumbs">
-            <div class="thumb-container" id="thumbContainer">
-            ${allImages
-              .map(
-                (img, index) => `
-                <div class="thumb${
-                  index === 0 ? " active" : ""
-                }" onclick="selectImage(this, '${img}')">
-                  <img src="${img}" alt="${product.name} - Thumbnail ${
-                  index + 1
-                }">
-                </div>
-              `
-              )
-              .join("")}
-          </div>
-
-          
-        </div>
-        <button class="nav-btn next" onclick="scrollGallery(1)">
-            <i class="bi bi-chevron-right"></i>
-          </button>
-        </div>
-      </div>
-    `;
-
-    // Create gallery script
-    const galleryScript = `
-      <script>
-        let currentScrollPosition = 0;
-        const thumbWidth = document.querySelector('.thumb').offsetWidth + 10;
-        const visibleThumbs = 6;
-
-        function selectImage(thumb, imgSrc) {
-          document.getElementById('mainImage').src = imgSrc;
-          document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
-          thumb.classList.add('active');
-        }
-
-        function scrollGallery(direction) {
-          const container = document.getElementById('thumbContainer');
-          const maxScroll = Math.max(0, (${allImages.length} - visibleThumbs) * thumbWidth);
-          
-          currentScrollPosition = Math.max(0, Math.min(maxScroll, currentScrollPosition + direction * thumbWidth));
-          container.style.transform = \`translateX(-\${currentScrollPosition}px)\`;
-          
-          // Update button states
-          document.querySelector('.prev').disabled = currentScrollPosition === 0;
-          document.querySelector('.next').disabled = currentScrollPosition >= maxScroll;
-        }
-
-        function initGallery() {
-          // Initial button state
-          document.querySelector('.prev').disabled = true;
-          document.querySelector('.next').disabled = ${allImages.length} <= visibleThumbs;
-        }
-
-        window.addEventListener('load', initGallery);
-      </script>
-    `;
-
-    // Add gallery styles
-    const galleryStyles = `
-      <style>
-        .product-gallery {
-          max-width: 100%;
-          margin: 0 auto;
-          padding: 0 15px;
-        }
-        .gallery-main {
-          width: 100%;
-          height: 500px; 
-          margin-bottom: 1rem;
-        }
-        @media (max-width: 768px) {
-          .gallery-main {
-            height: 300px;
-          }
-        }
-        .gallery-main img {
-          width: 100%;
-          height: 100%;
-          object-fit: contain;
-        }
-        .gallery-thumbs-container {
-          position: relative;
-          max-width: 100%;
-          margin: 0 auto;
-        }
-        .gallery-thumbs {
-          width: 600px;
-          max-width: calc(100% - 80px);
-          margin: 0 auto;
-          overflow: hidden;
-          display: flex;
-          align-items: center;
-        }
-        @media (max-width: 768px) {
-          .gallery-thumbs {
-            width: 100%;
-          }
-          .thumb {
-            width: 60px !important;
-            height: 60px !important;
-          }
-        }
-        .thumb-container {
-          width: 100%;
-          display: flex;
-          gap: 10px;
-          transition: transform 0.3s ease;
-        }
-        .thumb {
-          flex: 0 0 auto;
-          width: 80px;
-          height: 80px;
-          border: 2px solid transparent;
-          cursor: pointer;
-          transition: border-color 0.3s;
-        }
-        .thumb.active {
-          border-color: var(--primary);
-        }
-        .thumb img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-        .nav-btn {
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          width: 32px;
-          height: 32px;
-          border: none;
-          border-radius: 50%;
-          background: var(--primary);
-          color: white;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          z-index: 1;
-          padding: 0;
-        }
-        .nav-btn:disabled {
-          background: #ccc;
-          cursor: not-allowed;
-        }
-        .nav-btn.prev {
-          left: 0;
-        }
-        .nav-btn.next {
-          right: 0;
-        }
-        @media (min-width: 769px) {
-          .nav-btn.prev {
-            left: -40px;
-          }
-          .nav-btn.next {
-            right: -40px;
-          }
-        }
-      </style>
-    `;
-
-    // Update the content
-    const productGallery = doc.querySelector(".product-gallery");
-    if (productGallery) {
-      productGallery.outerHTML = galleryHtml;
-    }
-
-    // Add script and styles to head
-    const head = doc.querySelector("head");
-    head.insertAdjacentHTML("beforeend", galleryStyles);
-
-    // Add script before closing body tag
-    const body = doc.querySelector("body");
-    body.insertAdjacentHTML("beforeend", galleryScript);
-
-    doc.getElementById("features-container").innerHTML = featuresHtml;
-
-    // Update title
-    const titleElement = doc.querySelector("title");
-    if (titleElement) titleElement.textContent = `湧沛淨水 - ${product.name}`;
-
-    // Serialize the document back to a string
-    let productString = dom.serialize();
-
-    // Replace any remaining placeholders
-    productString = productString
-      .replace("產品名稱", product.name)
-      .replace(
-        "產品詳細描述將在這裡顯示。這裡可以包含產品的主要特點、用途和優勢等信息。",
-        product.description
-      )
-      .replace(
-        /<!-- Specifications Content -->[\s\S]*?<!-- End Specifications Content -->/m,
-        specificationsHtml
+    try {
+      // Fetch detailed product data from API
+      const response = await fetch(
+        `https://wait.mi-great.com.tw/yp/api/Details.asp?product=${product.id}`
       );
+      const textData = await response.text();
+      const detailedProduct = cleanJSONData(textData);
 
-    await fs.writeFile(
-      path.join(BUILD_DIR, `product-${product.id}.html`),
-      productString
-    );
+      let productContent = productTemplate;
+      const dom = new JSDOM(productContent);
+      const doc = dom.window.document;
+
+      // Update product details in template
+      doc.title = `湧沛淨水 - ${detailedProduct.title} ${detailedProduct.a_name}`;
+      doc.querySelector(".product-title").textContent = detailedProduct.title;
+      doc.querySelector(".product-name").textContent = detailedProduct.a_name;
+      doc.querySelector(
+        ".product-price"
+      ).textContent = `NT$ ${detailedProduct.price}`;
+      doc.querySelector(".product-model").textContent = detailedProduct.roomno;
+
+      // Generate product content HTML
+      const contentHtml = `<div class="content-item mb-3">${detailedProduct.contents}</div>`;
+
+      doc.querySelector(".product-contents").innerHTML = contentHtml;
+
+      // const productImageSrcArray = detailedProduct.images || [];
+      const productImageSrcArray = Array(10)
+        .fill("")
+        .map((_, index) => `https://picsum.photos/200?random=${index}`);
+
+      // Generate gallery HTML
+      const galleryHtml = `
+        <div class="product-gallery">
+          <div class="gallery-main mb-3">
+            <img id="mainImage" src="${productImageSrcArray[0]}" alt="${
+        detailedProduct.title
+      } - Main Image" class="img-fluid">
+          </div>
+          <div class="gallery-thumbs-container">
+            <button class="nav-btn prev">
+              <i class="bi bi-chevron-left"></i>
+            </button>
+            <div class="gallery-thumbs">
+              <div class="thumb-container" id="thumbContainer">
+                ${productImageSrcArray
+                  .map(
+                    (img, index) => `
+                    <div class="thumb${index === 0 ? " active" : ""}">
+                      <img src="${img}" alt="${
+                      detailedProduct.title
+                    } - Thumbnail ${index + 1}">
+                    </div>
+                  `
+                  )
+                  .join("")}
+              </div>
+            </div>
+            <button class="nav-btn next">
+              <i class="bi bi-chevron-right"></i>
+            </button>
+          </div>
+          <style>
+            .product-gallery {
+              max-width: 100%;
+              margin: 0 auto;
+            }
+            .gallery-main {
+              width: 100%;
+              max-height: 400px;
+              margin-bottom: 1rem;
+              text-align: center;
+            }
+            .gallery-main img {
+              max-width: 100%;
+              max-height: 400px;
+              object-fit: contain;
+            }
+            .gallery-thumbs-container {
+              position: relative;
+              max-width: 100%;
+              margin: 0 auto;
+              padding: 0 40px;
+            }
+            .gallery-thumbs {
+              width: 100%;
+              overflow: hidden;
+            }
+            .thumb-container {
+              display: flex;
+              gap: 10px;
+              transition: transform 0.3s ease;
+            }
+            .thumb {
+              flex: 0 0 80px;
+              height: 80px;
+              border: 2px solid transparent;
+              cursor: pointer;
+              transition: border-color 0.3s;
+            }
+            .thumb.active {
+              border-color: var(--primary);
+            }
+            .thumb img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+            .nav-btn {
+              position: absolute;
+              top: 50%;
+              transform: translateY(-50%);
+              width: 32px;
+              height: 32px;
+              border: none;
+              border-radius: 50%;
+              background: var(--primary);
+              color: white;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              cursor: pointer;
+              z-index: 1;
+              padding: 0;
+            }
+            .nav-btn:disabled {
+              background: #ccc;
+              cursor: not-allowed;
+            }
+            .nav-btn.prev {
+              left: 0;
+            }
+            .nav-btn.next {
+              right: 0;
+            }
+          </style>
+        </div>
+      `;
+
+      doc.querySelector(".product-gallery").outerHTML = galleryHtml;
+
+      // Add gallery script
+      const galleryScript = `
+          document.addEventListener('DOMContentLoaded', function() {
+            let currentScrollPosition = 0;
+            const thumbWidth = 90; // 80px width + 10px gap
+            const visibleThumbs = 6;
+            const container = document.getElementById('thumbContainer');
+            const mainImage = document.getElementById('mainImage');
+            const prevBtn = document.querySelector('.nav-btn.prev');
+            const nextBtn = document.querySelector('.nav-btn.next');
+            const maxScroll = Math.max(0, (${productImageSrcArray.length} - visibleThumbs) * thumbWidth);
+
+            // Initialize thumbnail click handlers
+            document.querySelectorAll('.thumb').forEach(thumb => {
+              thumb.addEventListener('click', function() {
+                const imgSrc = this.querySelector('img').src;
+                mainImage.src = imgSrc;
+                document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                console.log('Current scroll position:', currentScrollPosition);
+              });
+            });
+
+            // Initialize navigation buttons
+            prevBtn.addEventListener('click', () => scrollGallery(-1));
+            nextBtn.addEventListener('click', () => scrollGallery(1));
+
+            function scrollGallery(direction) {
+              currentScrollPosition = Math.max(0, Math.min(maxScroll, currentScrollPosition + direction * thumbWidth));
+              container.style.transform = \`translateX(-\${currentScrollPosition}px)\`;
+              
+              // Update button states
+              prevBtn.disabled = currentScrollPosition === 0;
+              nextBtn.disabled = currentScrollPosition >= maxScroll;
+            }
+
+            // Initialize touch events for mobile swipe
+            let touchStartX = 0;
+            container.addEventListener('touchstart', (e) => {
+              touchStartX = e.touches[0].clientX;
+            }, { passive: true });
+
+            container.addEventListener('touchend', (e) => {
+              const touchEndX = e.changedTouches[0].clientX;
+              const swipeDistance = touchEndX - touchStartX;
+              
+              if (Math.abs(swipeDistance) > 50) { // minimum distance for a swipe
+                scrollGallery(swipeDistance > 0 ? -1 : 1);
+              }
+            }, { passive: true });
+
+            // Initial setup
+            prevBtn.disabled = true;
+            nextBtn.disabled = ${productImageSrcArray.length} <= visibleThumbs;
+          });
+      `;
+
+      // Insert the gallery script before </body>
+      const scriptElement = doc.createElement("script");
+      scriptElement.textContent = galleryScript;
+      doc.body.appendChild(scriptElement);
+
+      // Save the generated HTML
+      const outputPath = path.join(BUILD_DIR, `product-${product.id}.html`);
+      await fs.writeFile(outputPath, dom.serialize(), "utf-8");
+    } catch (error) {
+      console.error(`Error generating page for product ${product.id}:`, error);
+    }
   }
 }
 
