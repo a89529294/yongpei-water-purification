@@ -401,31 +401,13 @@ async function generateComponents(categories, products) {
 
   // Generate dropdown content with categories as headers and products as links
   const dropdownContent = categories
-    .filter((c) => c.name !== "濾心耗材")
     .map((category) => {
       const categoryProducts = products.filter(
         (p) => p.category.id === category.id
       );
       return `
-          <div class="dropdown-header">${category.name}</div>
-          ${
-            categoryProducts.length > 3
-              ? [
-                  ...categoryProducts
-                    .slice(0, 3)
-                    .map(
-                      (product) =>
-                        `<a href="product-${product.id}.html" class="dropdown-item">${product.name}</a>`
-                    ),
-                  `<a href=${`#category-${category.id}`} class="dropdown-item">更多...</a>`,
-                ].join("\n")
-              : categoryProducts
-                  .map(
-                    (product) =>
-                      `<a href="product-${product.id}.html" class="dropdown-item">${product.name}</a>`
-                  )
-                  .join("\n")
-          }`;
+          <a href="#category-${category.id}" class="dropdown-header">${category.name}</a>
+          `;
     })
     .join("\n");
 

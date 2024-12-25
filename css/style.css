@@ -387,8 +387,8 @@ h6,
   gap: 0px 24px;
   flex-wrap: wrap;
   max-height: 400px;
-  width: max-content;
-  min-width: 600px;
+  /* width: max-content; */
+  /* min-width: 600px; */
   overflow-y: auto;
 }
 
@@ -397,7 +397,7 @@ h6,
   font-weight: 500;
   color: #333;
   margin-bottom: 8px;
-  width: 200px;
+  /* width: 200px; */
 }
 
 .dropdown-item {
