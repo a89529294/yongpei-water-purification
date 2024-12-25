@@ -397,8 +397,11 @@ async function generateComponents(categories, products) {
     "utf-8"
   );
 
+  console.log(categories);
+
   // Generate dropdown content with categories as headers and products as links
   const dropdownContent = categories
+    .filter((c) => c.name !== "濾心耗材")
     .map((category) => {
       const categoryProducts = products.filter(
         (p) => p.category.id === category.id
