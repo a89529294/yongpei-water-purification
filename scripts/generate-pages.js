@@ -21,16 +21,13 @@ function cleanJSONData(data) {
   // Step 1: Decode Unicode escape sequences to actual characters
   const decodedData = decodeURIComponent(JSON.stringify(data));
 
-  // Step 2: Clean up the price field (remove extra commas and spaces)
-  const cleanedData = decodedData.replace(/"price":"([^"]+)"/, (match, p1) => {
-    return `"price":"${p1.replace(/\s+/g, "").replace(/,+$/, "")}"`; // Remove spaces and trailing commas
-  });
+  const jsonData = JSON.parse(decodedData);
 
-  // Step 3: Parse the JSON data
-  const jsonData = JSON.parse(cleanedData);
+  const jsObject = JSON.parse(jsonData);
 
-  // Step 4: Return the cleaned data without altering the HTML in the contents
-  return JSON.parse(jsonData);
+  jsObject.price = jsObject.price.split(",")[0];
+
+  return jsObject;
 }
 
 // Helper function to remove directory recursively
@@ -444,10 +441,10 @@ async function generateProductPages(products) {
 
       doc.querySelector(".product-contents").innerHTML = contentHtml;
 
-      // const productImageSrcArray = detailedProduct.images || [];
-      const productImageSrcArray = Array(10)
-        .fill("")
-        .map((_, index) => `https://picsum.photos/200?random=${index}`);
+      const productImageSrcArray = detailedProduct.imgSrc || [];
+      // const productImageSrcArray = Array(10)
+      //   .fill("")
+      //   .map((_, index) => `https://picsum.photos/200?random=${index}`);
 
       // Generate gallery HTML
       const galleryHtml = `

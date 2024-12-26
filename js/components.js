@@ -66,7 +66,7 @@ const Components = {
         <div class="container py-5">
             <div class="row g-5">
                 <div class="col-md-6">
-                    <h1 class="text-primary mb-4"><img class="img-fluid me-2" src="img/icon-1.png" alt=""
+                    <h1 class="text-primary mb-4"><img class="img-fluid me-2" src="img/custom/logo.jpg" alt=""
                             style="width: 45px;">湧沛淨水</h1>
                     <span>專注於水質淨化與水資源永續發展，為客戶提供最專業、最安全的水處理解決方案。我們相信乾淨的水是生命的根本，致力於改善水質，守護健康。</span>
                 </div>
@@ -80,7 +80,7 @@ const Components = {
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
-                    <h5 class="mb-4">>聯絡我們</h5>
+                    <h5 class="mb-4">聯絡我們</h5>
                     <p><i class="fa fa-map-marker-alt me-3"></i>台北市信義區大安路123號</p>
                     <p><i class="fa fa-phone-alt me-3"></i>+886 2 1234 5678</p>
                     <p><i class="fa fa-envelope me-3"></i>service@watertechnology.com.tw</p>

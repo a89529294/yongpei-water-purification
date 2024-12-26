@@ -429,3 +429,7 @@ h6,
   background-color: var(--primary);
   border-color: var(--primary);
 }
+
+.breadcrumb-item > a {
+  color: var(--primary);
+}
