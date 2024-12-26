@@ -81,16 +81,16 @@ const Components = {
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <h5 class="mb-4">聯絡我們</h5>
-                    <p><i class="fa fa-map-marker-alt me-3"></i>台北市信義區大安路123號</p>
-                    <p><i class="fa fa-phone-alt me-3"></i>+886 2 1234 5678</p>
-                    <p><i class="fa fa-envelope me-3"></i>service@watertechnology.com.tw</p>
+                    <p style="margin-bottom:0px;"><i class="fa fa-map-marker-alt me-3"></i>臺中市豐原區</p><p style="padding-left: 28px">豐原大道三段239巷19號</p>
+                    <p><i class="fa fa-phone-alt me-3"></i>+886 4 2529 6608</p>
+                    <!--<p><i class="fa fa-envelope me-3"></i>service@watertechnology.com.tw</p>-->
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <h5 class="mb-4">我們的服務</h5>
-                    <a class="btn btn-link" href="">家用淨水系統</a>
-                    <a class="btn btn-link" href="">商業淨水解決方案</a>
-                    <a class="btn btn-link" href="">水質檢測服務</a>
-                    <a class="btn btn-link" href="">濾水設備維護</a>
+                    <div class="btn btn-link" style="cursor:auto;">家用淨水系統</div>
+                    <div class="btn btn-link" style="cursor:auto;">商業淨水解決方案</div>
+                    <div class="btn btn-link" style="cursor:auto;">水質檢測服務</div>
+                    <div class="btn btn-link" style="cursor:auto;">濾水設備維護</div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <h5 class="mb-4">快速連結</h5>
