@@ -8,7 +8,7 @@ const BUILD_JS_DIR = path.join(BUILD_DIR, "js");
 const COMPONENTS_TEMPLATE_PATH = path.join(__dirname, "../js/components.js");
 const CATEGORY_TEMPLATE_PATH = path.join(
   __dirname,
-  "../category-template.html"
+  "../product-category-template.html"
 );
 const PRODUCT_TEMPLATE_PATH = path.join(
   __dirname,
@@ -102,7 +102,8 @@ async function copyStaticFiles() {
     (file) =>
       file.endsWith(".html") &&
       file !== "category-template.html" &&
-      file !== "product-detail-template.html"
+      file !== "product-detail-template.html" &&
+      file !== "product-category-template.html"
   );
 
   // Copy HTML files
@@ -382,22 +383,12 @@ async function fetchProducts() {
   // ];
 }
 
-// Helper function to generate random image URLs
-function getRandomImages(count) {
-  return Array.from(
-    { length: count },
-    (_, i) => `https://picsum.photos/800/600?random=${Math.random()}`
-  );
-}
-
 // Generate components.js with category dropdown
 async function generateComponents(categories, products) {
   const componentsContent = await fs.readFile(
     COMPONENTS_TEMPLATE_PATH,
     "utf-8"
   );
-
-  console.log(categories);
 
   // Generate dropdown content with categories as headers and products as links
   const dropdownContent = categories
@@ -406,7 +397,7 @@ async function generateComponents(categories, products) {
         (p) => p.category.id === category.id
       );
       return `
-          <a href="#category-${category.id}" class="dropdown-header">${category.name}</a>
+          <a href="/category-${category.id}" class="dropdown-header">${category.name}</a>
           `;
     })
     .join("\n");
@@ -639,6 +630,80 @@ async function generateProductPages(products) {
   }
 }
 
+// Generate category pages
+async function generateCategoryPages(categories, products) {
+  const categoryTemplate = await fs.readFile(CATEGORY_TEMPLATE_PATH, "utf-8");
+
+  // Create category pages for each category
+  for (const category of categories) {
+    try {
+      let categoryContent = categoryTemplate;
+      const dom = new JSDOM(categoryContent);
+      const doc = dom.window.document;
+
+      // Update category details in template
+      doc.title = `湧沛淨水 - ${category.name}`;
+      doc.querySelector("#category-name").textContent = category.name;
+      doc.querySelector("#breadcrumb-category").textContent = category.name;
+      doc.querySelector("#category-title").textContent = category.name;
+      doc.querySelector(
+        "#category-description"
+      ).textContent = `探索我們的${category.name}系列產品`;
+
+      // Clear the product container
+      const productsContainer = doc.querySelector("#products-container");
+      productsContainer.innerHTML = "";
+
+      // Filter products for this category
+      const categoryProducts = products.filter(
+        (product) => product.category.id === category.id
+      );
+
+      // Add products to the container
+      categoryProducts.forEach((product, index) => {
+        const productCard = doc.createElement("div");
+        productCard.className = "col-lg-4 col-md-6 wow fadeInUp";
+        productCard.setAttribute("data-wow-delay", `${0.1 * (index + 1)}s`);
+
+        productCard.innerHTML = `
+          <div class="product-card">
+            <div class="product-image-container">
+              <img class="product-image" src="${
+                product.images[0] || "img/placeholder.jpg"
+              }" alt="${product.name}" id="product-image-${index + 1}">
+            </div>
+            <div class="product-details">
+              <h3 class="product-title" id="product-title-${index + 1}">${
+          product.name
+        }</h3>
+              <p class="product-description" id="product-description-${
+                index + 1
+              }">${product.name}</p>
+              <a class="btn btn-primary py-3 px-5" href="product-${
+                product.id
+              }.html" id="product-link-${index + 1}">了解更多</a>
+            </div>
+          </div>
+        `;
+
+        productsContainer.appendChild(productCard);
+      });
+
+      // Save the category page
+      const categoryFileName = `category-${category.id}.html`;
+      const outputPath = path.join(BUILD_DIR, categoryFileName);
+      await fs.writeFile(outputPath, dom.serialize(), "utf-8");
+
+      console.log(`Generated category page: ${categoryFileName}`);
+    } catch (error) {
+      console.error(
+        `Error generating category page for ${category.name}:`,
+        error
+      );
+    }
+  }
+}
+
 // Generate index page with categorized products
 async function modifyIndexPage(categories, products) {
   console.log(products[0]);
@@ -839,6 +904,8 @@ async function generateAllPages() {
     // Fetch products data
     const { products, categories } = await fetchProducts();
 
+    console.log(categories);
+    console.log(products);
     // Extract unique categories
     // const categories = [...new Set(products.map((p) => p.category.id))].map(
     //   (id) => ({
@@ -847,11 +914,11 @@ async function generateAllPages() {
     //   })
     // );
 
-    // Generate all pages
+    //  Generate all pages
     await Promise.all([
       generateComponents(categories, products),
-      // generateCategoryPages(categories, products),
       generateProductPages(products),
+      generateCategoryPages(categories, products),
       modifyIndexPage(categories, products),
     ]);
 
