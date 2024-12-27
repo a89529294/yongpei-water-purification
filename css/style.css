@@ -4,6 +4,22 @@
   --secondary: #999999;
   --light: #f2f8fe;
   --dark: #111111;
+  --font-family: "Helvetica Neue", "Helvetica", Arial, 文泉驛正黑,
+    "WenQuanYi Zen Hei", "Hiragino Sans GB", "儷黑 Pro", "LiHei Pro", Heiti TC,
+    微軟正黑體, "Microsoft JhengHei UI", "Microsoft JhengHei", sans-serif;
+}
+
+body {
+  font-family: var(--font-family);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-family);
 }
 
 .back-to-top {
