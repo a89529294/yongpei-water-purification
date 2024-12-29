@@ -1,6 +1,7 @@
 /********** Template CSS **********/
 :root {
   --primary: #1e72b5;
+  --primary-hover: #186496;
   --secondary: #999999;
   --light: #f2f8fe;
   --dark: #111111;
@@ -448,4 +449,8 @@ h6,
 
 .breadcrumb-item > a {
   color: var(--primary);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
 }
