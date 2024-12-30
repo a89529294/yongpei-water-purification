@@ -434,6 +434,8 @@ async function generateProductPages(products) {
       doc.querySelector(
         "#breadcrumb-category"
       ).innerHTML = `<a href="/category-${product.category.id}">${product.category.name}</a>`;
+      doc.querySelector("#breadcrumb-product-name").textContent =
+        detailedProduct.a_name;
 
       const productImageSrcArray = detailedProduct.imgSrc || [];
 
