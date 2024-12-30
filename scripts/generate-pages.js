@@ -431,6 +431,9 @@ async function generateProductPages(products) {
       doc.title = `湧沛淨水 - ${detailedProduct.title} ${detailedProduct.a_name}`;
       doc.querySelector(".product-title").textContent = detailedProduct.title;
       doc.querySelector(".product-name").textContent = detailedProduct.a_name;
+      doc.querySelector(
+        "#breadcrumb-category"
+      ).innerHTML = `<a href="/category-${product.category.id}">${product.category.name}</a>`;
 
       const productImageSrcArray = detailedProduct.imgSrc || [];
 
