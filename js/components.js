@@ -20,7 +20,7 @@ const Components = {
                        
                     </div>
                 </div>
-                <a href="contact.html" class="nav-item nav-link">聯絡方式</a>
+                <a href="contact.html" class="nav-item nav-link">聯絡我們</a>
             </div>
             <div class="h-100 d-lg-inline-flex align-items-center d-none">
                 <a class="btn btn-square rounded-circle bg-light text-primary me-2" href=""><i
