@@ -431,20 +431,8 @@ async function generateProductPages(products) {
       doc.title = `湧沛淨水 - ${detailedProduct.title} ${detailedProduct.a_name}`;
       doc.querySelector(".product-title").textContent = detailedProduct.title;
       doc.querySelector(".product-name").textContent = detailedProduct.a_name;
-      doc.querySelector(
-        ".product-price"
-      ).textContent = `NT$ ${detailedProduct.price}`;
-      doc.querySelector(".product-model").textContent = detailedProduct.roomno;
-
-      // Generate product content HTML
-      const contentHtml = `<div class="content-item mb-3">${detailedProduct.contents}</div>`;
-
-      doc.querySelector(".product-contents").innerHTML = contentHtml;
 
       const productImageSrcArray = detailedProduct.imgSrc || [];
-      // const productImageSrcArray = Array(10)
-      //   .fill("")
-      //   .map((_, index) => `https://picsum.photos/200?random=${index}`);
 
       // Generate gallery HTML
       const galleryHtml = `
@@ -554,7 +542,40 @@ async function generateProductPages(products) {
         </div>
       `;
 
-      doc.querySelector(".product-gallery").outerHTML = galleryHtml;
+      // Add product description
+      const descriptionHtml = `
+          <h5>介紹</h5>
+          <p class="mb-0 product-contents">${detailedProduct.contents}</p>
+      `;
+
+      // Update the left column with gallery and description
+      const leftColumn = doc.querySelector(
+        "#product-image-and-description-container"
+      );
+      leftColumn.innerHTML = galleryHtml + descriptionHtml;
+
+      // Update features container
+      const featuresContainer = doc.getElementById("features-container");
+      featuresContainer.innerHTML = `
+        <div class="d-flex mb-4">
+          <div class="flex-shrink-0 btn-square bg-primary rounded-circle">
+            <i class="fa fa-check text-white"></i>
+          </div>
+          <div class="ms-4">
+            <h5>型號</h5>
+            <p class="mb-0 product-model">${detailedProduct.roomno}</p>
+          </div>
+        </div>
+        <div class="d-flex mb-4">
+          <div class="flex-shrink-0 btn-square bg-primary rounded-circle">
+            <i class="fa fa-check text-white"></i>
+          </div>
+          <div class="ms-4">
+            <h5>價格</h5>
+            <p class="mb-0 product-price">NT$ ${detailedProduct.price}</p>
+          </div>
+        </div>
+      `;
 
       // Add gallery script
       const galleryScript = `

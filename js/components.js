@@ -13,7 +13,7 @@ const Components = {
             <div class="navbar-nav ms-auto py-4 py-lg-0">
                 <a href="index.html" class="nav-item nav-link">首頁</a>
                 <a href="about.html" class="nav-item nav-link">關於</a>
-                <a href="service.html" class="nav-item nav-link">服務項目</a>
+                <!-- <a href="service.html" class="nav-item nav-link">服務項目</a> -->
                 <div  class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">產品分類</a>
                     <div id='category-dropdown-content' class="dropdown-menu dropdown-menu-end">
@@ -96,7 +96,7 @@ const Components = {
                     <h5 class="mb-4">快速連結</h5>
                     <a class="btn btn-link" href="about.html">關於我們</a>
                     <a class="btn btn-link" href="contact.html">聯絡我們</a>
-                    <a class="btn btn-link" href="service.html">服務項目</a>
+                    <!--<a class="btn btn-link" href="service.html">服務項目</a> -->
                     <!-- <a class="btn btn-link" href="">Terms & Condition</a> -->
                 </div>
                 <div class="col-lg-3 col-md-6">
