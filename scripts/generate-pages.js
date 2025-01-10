@@ -954,3 +954,5 @@ async function generateAllPages() {
 
 // Run the script
 generateAllPages();
+
+console.log("Done!");
