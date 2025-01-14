@@ -729,7 +729,6 @@ async function generateCategoryPages(categories, products) {
 
 // Generate index page with categorized products
 async function modifyIndexPage(categories, products) {
-  console.log(products[0]);
   console.log("Generating index page with categorized products...");
   const indexPath = path.join(BUILD_DIR, "index.html");
   const indexContent = await fs.readFile(indexPath, "utf-8");
@@ -818,6 +817,21 @@ async function modifyIndexPage(categories, products) {
   // Clear existing content
   productsPlaceholder.innerHTML = "";
 
+  const productsDetails = [];
+
+  for (product of products) {
+    try {
+      const response = await fetch(
+        `https://wait.mi-great.com.tw/yp/api/Details.asp?product=${product.id}`
+      );
+      const textData = await response.text();
+      const detailedProduct = cleanJSONData(textData);
+      productsDetails.push(detailedProduct);
+    } catch (e) {
+      console.log(product.id, product.title);
+    }
+  }
+
   // Generate content for each category
   categories.forEach((category, categoryIndex) => {
     // Create category row
@@ -870,7 +884,10 @@ async function modifyIndexPage(categories, products) {
 
       const productDescriptionText = document.createElement("p");
       productDescriptionText.className = "product-description-text";
-      productDescriptionText.textContent = product.description;
+      productDescriptionText.textContent = `$ ${
+        productsDetails.find((p) => p.a_name === product.name)?.price
+      }`;
+
       productDescription.appendChild(productDescriptionText);
 
       // Assemble product slide
