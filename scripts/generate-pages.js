@@ -380,6 +380,26 @@ async function fetchProducts() {
   // ];
 }
 
+// Generate products details
+async function getProductsDetails(products) {
+  const productsDetails = [];
+
+  for (product of products) {
+    try {
+      const response = await fetch(
+        `https://wait.mi-great.com.tw/yp/api/Details.asp?product=${product.id}`
+      );
+      const textData = await response.text();
+      const detailedProduct = cleanJSONData(textData);
+      productsDetails.push(detailedProduct);
+    } catch (e) {
+      console.log(product.id, product.title);
+    }
+  }
+
+  return productsDetails;
+}
+
 // Generate components.js with category dropdown
 async function generateComponents(categories, products) {
   const componentsContent = await fs.readFile(
@@ -657,6 +677,8 @@ async function generateProductPages(products) {
 async function generateCategoryPages(categories, products) {
   const categoryTemplate = await fs.readFile(CATEGORY_TEMPLATE_PATH, "utf-8");
 
+  const productsDetails = await getProductsDetails(products);
+
   // Create category pages for each category
   for (const category of categories) {
     try {
@@ -688,6 +710,13 @@ async function generateCategoryPages(categories, products) {
         productCard.className = "col-lg-4 col-md-6 wow fadeInUp";
         productCard.setAttribute("data-wow-delay", `${0.1 * (index + 1)}s`);
 
+        const productPrice = productsDetails.find(
+          (p) => p.name === product.a_name
+        )?.price;
+        const productNo = productsDetails.find(
+          (p) => p.name === product.a_name
+        )?.roomno;
+
         productCard.innerHTML = `
           <div class="product-card">
             <div class="product-image-container">
@@ -701,7 +730,9 @@ async function generateCategoryPages(categories, products) {
         }</h3>
               <p class="product-description" id="product-description-${
                 index + 1
-              }">${product.name}</p>
+              }" style="display: flex; justify-content: space-between;">
+              <span>${productNo}</span>
+              <span>$ ${productPrice}</span></p>
               <a class="btn btn-primary py-3 px-5" href="product-${
                 product.id
               }.html" id="product-link-${index + 1}">了解更多</a>
@@ -817,20 +848,7 @@ async function modifyIndexPage(categories, products) {
   // Clear existing content
   productsPlaceholder.innerHTML = "";
 
-  const productsDetails = [];
-
-  for (product of products) {
-    try {
-      const response = await fetch(
-        `https://wait.mi-great.com.tw/yp/api/Details.asp?product=${product.id}`
-      );
-      const textData = await response.text();
-      const detailedProduct = cleanJSONData(textData);
-      productsDetails.push(detailedProduct);
-    } catch (e) {
-      console.log(product.id, product.title);
-    }
-  }
+  const productsDetails = await getProductsDetails(products);
 
   // Generate content for each category
   categories.forEach((category, categoryIndex) => {
