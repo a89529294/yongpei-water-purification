@@ -711,11 +711,15 @@ async function generateCategoryPages(categories, products) {
         productCard.setAttribute("data-wow-delay", `${0.1 * (index + 1)}s`);
 
         const productPrice = productsDetails.find(
-          (p) => p.name === product.a_name
+          (p) => p.a_name === product.name
         )?.price;
         const productNo = productsDetails.find(
-          (p) => p.name === product.a_name
+          (p) => p.a_name === product.name
         )?.roomno;
+
+        console.log(product);
+        console.log(productPrice);
+        console.log(productNo);
 
         productCard.innerHTML = `
           <div class="product-card">
@@ -962,8 +966,6 @@ async function generateAllPages() {
     // Fetch products data
     const { products, categories } = await fetchProducts();
 
-    console.log(categories);
-    console.log(products);
     // Extract unique categories
     // const categories = [...new Set(products.map((p) => p.category.id))].map(
     //   (id) => ({
