@@ -710,39 +710,50 @@ async function generateCategoryPages(categories, products) {
         productCard.className = "col-lg-4 col-md-6 wow fadeInUp";
         productCard.setAttribute("data-wow-delay", `${0.1 * (index + 1)}s`);
 
-        const productPrice = productsDetails.find(
+        const foundProduct = productsDetails.find(
           (p) => p.a_name === product.name
-        )?.price;
-        const productNo = productsDetails.find(
-          (p) => p.a_name === product.name
-        )?.roomno;
+        );
+        const productPrice = foundProduct?.price;
+        const productNo = foundProduct?.roomno;
 
-        console.log(product);
-        console.log(productPrice);
-        console.log(productNo);
+        const productDescription = document.createElement("div");
+        productDescription.className = "product-description";
 
-        productCard.innerHTML = `
-          <div class="product-card">
-            <div class="product-image-container">
-              <img class="product-image" src="${
-                product.images[0] || "img/placeholder.jpg"
-              }" alt="${product.name}" id="product-image-${index + 1}">
-            </div>
-            <div class="product-details">
-              <h3 class="product-title" id="product-title-${index + 1}">${
-          product.name
-        }</h3>
-              <p class="product-description" id="product-description-${
-                index + 1
-              }" style="display: flex; justify-content: space-between;">
-              <span>${productNo}</span>
-              <span>$ ${productPrice}</span></p>
-              <a class="btn btn-primary py-3 px-5" href="product-${
-                product.id
-              }.html" id="product-link-${index + 1}">了解更多</a>
-            </div>
-          </div>
-        `;
+        const productTitle = document.createElement("h5");
+        productTitle.textContent = product.name;
+        productTitle.className = "product-title";
+        productDescription.appendChild(productTitle);
+
+        const priceContainer = document.createElement("div");
+        priceContainer.style.marginTop = "8px";
+
+        const roomNumber = document.createElement("div");
+        roomNumber.className = "room-number";
+        roomNumber.style.color = "#666";
+        roomNumber.style.textAlign = "left";
+        roomNumber.textContent = `Room ${productNo || "N/A"}`;
+
+        const productPriceElement = document.createElement("div");
+        productPriceElement.className = "product-price";
+        productPriceElement.style.color = "#2c5282";
+        productPriceElement.style.textAlign = "right";
+        productPriceElement.textContent = `$ ${productPrice}`;
+
+        priceContainer.appendChild(roomNumber);
+        priceContainer.appendChild(productPriceElement);
+        productDescription.appendChild(priceContainer);
+
+        const productImage = document.createElement("img");
+        productImage.src = product.images[0];
+        productImage.alt = product.name;
+        productImage.className = "img-fluid mb-3";
+
+        const productLink = document.createElement("a");
+        productLink.href = `product-${product.id}.html`;
+        productLink.appendChild(productImage);
+        productLink.appendChild(productDescription);
+
+        productCard.appendChild(productLink);
 
         productsContainer.appendChild(productCard);
       });
@@ -899,18 +910,34 @@ async function modifyIndexPage(categories, products) {
 
       const productDescription = document.createElement("div");
       productDescription.className = "product-description";
+
       const productTitle = document.createElement("h5");
       productTitle.textContent = product.name;
       productTitle.className = "product-title";
       productDescription.appendChild(productTitle);
 
-      const productDescriptionText = document.createElement("p");
-      productDescriptionText.className = "product-description-text";
-      productDescriptionText.textContent = `$ ${
+      const priceContainer = document.createElement("div");
+      priceContainer.style.marginTop = "8px";
+
+      const roomNumber = document.createElement("div");
+      roomNumber.className = "room-number";
+      roomNumber.style.color = "#ddd";
+      roomNumber.style.textAlign = "left";
+      roomNumber.textContent = productsDetails.find(
+        (p) => p.a_name === product.name
+      )?.roomno;
+
+      const productPrice = document.createElement("div");
+      productPrice.className = "product-price";
+      productPrice.style.color = "#eee";
+      productPrice.style.textAlign = "right";
+      productPrice.textContent = `$ ${
         productsDetails.find((p) => p.a_name === product.name)?.price
       }`;
 
-      productDescription.appendChild(productDescriptionText);
+      priceContainer.appendChild(roomNumber);
+      priceContainer.appendChild(productPrice);
+      productDescription.appendChild(priceContainer);
 
       // Assemble product slide
       productLink.appendChild(productImage);
