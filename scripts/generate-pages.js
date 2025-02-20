@@ -163,243 +163,56 @@ async function fetchProducts() {
 		products,
 		categories,
 	};
-
-	// return [
-	//   {
-	//     id: 1,
-	//     name: "Product 1",
-	//     description: "Description for Product 1",
-	//     features: [
-	//       { title: "Feature 1", description: "Feature 1 description" },
-	//       { title: "Feature 2", description: "Feature 2 description" },
-	//     ],
-	//     specifications: [
-	//       {
-	//         title: "Specification 1",
-	//         description: "Specification 1 description",
-	//       },
-	//       {
-	//         title: "Specification 2",
-	//         description: "Specification 2 description",
-	//       },
-	//     ],
-	//     images: ["https://picsum.photos/200", "https://picsum.photos/200"],
-	//     category: { id: 1, name: "Category 1" },
-	//   },
-	//   {
-	//     id: 3,
-	//     name: "Product 3",
-	//     description:
-	//       "Description for Product 3 Description for Product 3 Description for Product 3",
-	//     features: [
-	//       { title: "Feature 1", description: "Feature 1 description" },
-	//       { title: "Feature 2", description: "Feature 2 description" },
-	//     ],
-	//     specifications: [
-	//       {
-	//         title: "Specification 1",
-	//         description: "Specification 1 description",
-	//       },
-	//       {
-	//         title: "Specification 2",
-	//         description: "Specification 2 description",
-	//       },
-	//     ],
-	//     images: ["https://picsum.photos/200", "https://picsum.photos/200"],
-	//     category: { id: 2, name: "Category 2" },
-	//   },
-	//   {
-	//     id: 4,
-	//     name: "Product 4",
-	//     description: "Description for Product 4",
-	//     features: [
-	//       { title: "Feature 1", description: "Feature 1 description" },
-	//       { title: "Feature 2", description: "Feature 2 description" },
-	//     ],
-	//     specifications: [
-	//       {
-	//         title: "Specification 1",
-	//         description: "Specification 1 description",
-	//       },
-	//       {
-	//         title: "Specification 2",
-	//         description: "Specification 2 description",
-	//       },
-	//     ],
-	//     images: ["https://picsum.photos/200", "https://picsum.photos/200"],
-	//     category: { id: 4, name: "Category 3" },
-	//   },
-	//   {
-	//     id: 2,
-	//     name: "Product 2",
-	//     description: "Description for Product 2",
-	//     features: [
-	//       { title: "Feature 1", description: "Feature 1 description" },
-	//       { title: "Feature 2", description: "Feature 2 description" },
-	//     ],
-	//     specifications: [
-	//       {
-	//         title: "Specification 1",
-	//         description: "Specification 1 description",
-	//       },
-	//       {
-	//         title: "Specification 2",
-	//         description: "Specification 2 description",
-	//       },
-	//     ],
-	//     images: ["https://picsum.photos/200", "https://picsum.photos/200"],
-	//     category: { id: 2, name: "Category 2" },
-	//   },
-	//   {
-	//     id: 5,
-	//     name: "Product 5",
-	//     description: "Description for Product 5",
-	//     features: [
-	//       { title: "Feature 1", description: "Feature 1 description" },
-	//       { title: "Feature 2", description: "Feature 2 description" },
-	//     ],
-	//     specifications: [
-	//       {
-	//         title: "Specification 1",
-	//         description: "Specification 1 description",
-	//       },
-	//       {
-	//         title: "Specification 2",
-	//         description: "Specification 2 description",
-	//       },
-	//     ],
-	//     images: ["https://picsum.photos/200", "https://picsum.photos/200"],
-	//     category: { id: 2, name: "Category 2" },
-	//   },
-	//   {
-	//     id: 6,
-	//     name: "Product 6",
-	//     description: "Description for Product 6",
-	//     features: [
-	//       { title: "Feature 1", description: "Feature 1 description" },
-	//       { title: "Feature 2", description: "Feature 2 description" },
-	//     ],
-	//     specifications: [
-	//       {
-	//         title: "Specification 1",
-	//         description: "Specification 1 description",
-	//       },
-	//       {
-	//         title: "Specification 2",
-	//         description: "Specification 2 description",
-	//       },
-	//     ],
-	//     images: ["https://picsum.photos/200", "https://picsum.photos/200"],
-	//     category: { id: 2, name: "Category 2" },
-	//   },
-	//   {
-	//     id: 7,
-	//     name: "Product 7",
-	//     description: "Description for Product 7",
-	//     features: [
-	//       { title: "Feature 1", description: "Feature 1 description" },
-	//       { title: "Feature 2", description: "Feature 2 description" },
-	//     ],
-	//     specifications: [
-	//       {
-	//         title: "Specification 1",
-	//         description: "Specification 1 description",
-	//       },
-	//       {
-	//         title: "Specification 2",
-	//         description: "Specification 2 description",
-	//       },
-	//     ],
-	//     images: ["https://picsum.photos/200", "https://picsum.photos/200"],
-	//     category: { id: 2, name: "Category 2" },
-	//   },
-	//   {
-	//     id: 8,
-	//     name: "Product 8",
-	//     description: "Description for Product 3",
-	//     features: [
-	//       { title: "Feature 1", description: "Feature 1 description" },
-	//       { title: "Feature 2", description: "Feature 2 description" },
-	//     ],
-	//     specifications: [
-	//       {
-	//         title: "Specification 1",
-	//         description: "Specification 1 description",
-	//       },
-	//       {
-	//         title: "Specification 2",
-	//         description: "Specification 2 description",
-	//       },
-	//     ],
-	//     images: ["https://picsum.photos/200", "https://picsum.photos/200"],
-	//     category: { id: 2, name: "Category 2" },
-	//   },
-	//   {
-	//     id: 9,
-	//     name: "Product 9",
-	//     description: "Description for Product 9",
-	//     features: [
-	//       { title: "Feature 1", description: "Feature 1 description" },
-	//       { title: "Feature 2", description: "Feature 2 description" },
-	//     ],
-	//     specifications: [
-	//       {
-	//         title: "Specification 1",
-	//         description: "Specification 1 description",
-	//       },
-	//       {
-	//         title: "Specification 2",
-	//         description: "Specification 2 description",
-	//       },
-	//     ],
-	//     images: ["https://picsum.photos/200", "https://picsum.photos/200"],
-	//     category: { id: 2, name: "Category 2" },
-	//   },
-	//   {
-	//     id: 10,
-	//     name: "Product 10",
-	//     description: "Description for Product 10",
-	//     features: [
-	//       { title: "Feature 1", description: "Feature 1 description" },
-	//       { title: "Feature 2", description: "Feature 2 description" },
-	//     ],
-	//     specifications: [
-	//       {
-	//         title: "Specification 1",
-	//         description: "Specification 1 description",
-	//       },
-	//       {
-	//         title: "Specification 2",
-	//         description: "Specification 2 description",
-	//       },
-	//     ],
-	//     images: ["https://picsum.photos/200", "https://picsum.photos/200"],
-	//     category: { id: 2, name: "Category 2" },
-	//   },
-	// ];
 }
 
 // Generate products details
 async function getProductsDetails(products) {
 	const productsDetails = [];
 
-	for (product of products) {
-		try {
-			const response = await fetch(
-				`https://wait.mi-great.com.tw/yp/api/Details.asp?product=${product.id}`
-			);
-			const textData = await response.text();
-			const detailedProduct = cleanJSONData(textData);
-			productsDetails.push({
-				...detailedProduct,
-				id: product.id,
-			});
-		} catch (e) {
-			console.log(product.id, product.title);
-		}
-	}
+	// console.log("wtf", products);
 
-	return productsDetails;
+	const promises = products.map((product) => {
+		return fetch(
+			`https://wait.mi-great.com.tw/yp/api/Details.asp?product=${product.id}`
+		)
+			.then((response) => response.text())
+			.then((textData) => {
+				const detailedProduct = cleanJSONData(textData);
+				return {
+					...detailedProduct,
+					id: product.id,
+				};
+			});
+	});
+
+	const results = await Promise.allSettled(promises);
+
+	// for (product of products.slice(0, 10)) {
+	// 	try {
+	// 		const response = await fetch(
+	// 			`https://wait.mi-great.com.tw/yp/api/Details.asp?product=${product.id}`
+	// 		);
+	// 		const textData = await response.text();
+	// 		const detailedProduct = cleanJSONData(textData);
+	// 		productsDetails.push({
+	// 			...detailedProduct,
+	// 			id: product.id,
+	// 		});
+
+	// 		console.log("wtf,", {
+	// 			...detailedProduct,
+	// 			id: product.id,
+	// 		});
+	// 	} catch (e) {
+	// 		console.log(product.id, product.title);
+	// 	}
+	// }
+
+	return results
+		.map((r) => (r.status === "fulfilled" ? r.value : null))
+		.filter(Boolean);
+
+	// return productsDetails;
 }
 
 // Generate components.js with category dropdown
@@ -680,7 +493,7 @@ async function generateCategoryPages(categories, products) {
 
 	const productsDetails = await getProductsDetails(products);
 
-	console.log("Generated products details:", productsDetails);
+	// console.log("Generated products details:", productsDetails);
 
 	// Create category pages for each category
 	for (const category of categories) {
