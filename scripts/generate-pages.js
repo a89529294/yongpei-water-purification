@@ -125,7 +125,6 @@ async function fetchProducts() {
 	}
 
 	const data = await response.json();
-	// console.log(data);
 
 	let productId = 1;
 	let categoryId = 1;
@@ -391,7 +390,10 @@ async function getProductsDetails(products) {
 			);
 			const textData = await response.text();
 			const detailedProduct = cleanJSONData(textData);
-			productsDetails.push(detailedProduct);
+			productsDetails.push({
+				...detailedProduct,
+				id: product.id,
+			});
 		} catch (e) {
 			console.log(product.id, product.title);
 		}
@@ -446,7 +448,6 @@ async function generateProductPages(products) {
 			let productContent = productTemplate;
 			const dom = new JSDOM(productContent);
 			const doc = dom.window.document;
-			console.log("document in generateProductPages", doc);
 
 			// Update product details in template
 			doc.title = `湧沛淨水 - ${detailedProduct.title} ${detailedProduct.a_name}`;
@@ -622,7 +623,6 @@ async function generateProductPages(products) {
                 mainImage.src = imgSrc;
                 document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
                 this.classList.add('active');
-                console.log('Current scroll position:', currentScrollPosition);
               });
             });
 
@@ -680,13 +680,14 @@ async function generateCategoryPages(categories, products) {
 
 	const productsDetails = await getProductsDetails(products);
 
+	console.log("Generated products details:", productsDetails);
+
 	// Create category pages for each category
 	for (const category of categories) {
 		try {
 			let categoryContent = categoryTemplate;
 			const dom = new JSDOM(categoryContent);
 			const doc = dom.window.document;
-			console.log("document in generateCategoryPages", doc);
 
 			// Update category details in template
 			doc.title = `湧沛淨水 - ${category.name}`;
@@ -712,9 +713,7 @@ async function generateCategoryPages(categories, products) {
 				productCard.className = "col-lg-4 col-md-6 wow fadeInUp";
 				productCard.setAttribute("data-wow-delay", `${0.1 * (index + 1)}s`);
 
-				const foundProduct = productsDetails.find(
-					(p) => p.a_name === product.name
-				);
+				const foundProduct = productsDetails.find((p) => p.id === product.id);
 				const productPrice = foundProduct?.price;
 				const productNo = foundProduct?.roomno;
 
@@ -764,8 +763,6 @@ async function generateCategoryPages(categories, products) {
 			const categoryFileName = `category-${category.id}.html`;
 			const outputPath = path.join(BUILD_DIR, categoryFileName);
 			await fs.writeFile(outputPath, dom.serialize(), "utf-8");
-
-			console.log(`Generated category page: ${categoryFileName}`);
 		} catch (error) {
 			console.error(
 				`Error generating category page for ${category.name}:`,
@@ -777,12 +774,10 @@ async function generateCategoryPages(categories, products) {
 
 // Generate index page with categorized products
 async function modifyIndexPage(categories, products) {
-	console.log("Generating index page with categorized products...");
 	const indexPath = path.join(BUILD_DIR, "index.html");
 	const indexContent = await fs.readFile(indexPath, "utf-8");
 	const dom = new JSDOM(indexContent);
 	const document = dom.window.document;
-	console.log("document in modifyIndexPage", document);
 
 	// Create and inject the slider script
 	const sliderScript = document.createElement("script");
@@ -982,8 +977,6 @@ async function modifyIndexPage(categories, products) {
 // Main function to run everything
 async function generateAllPages() {
 	try {
-		console.log("Starting page generation process...");
-
 		// Clean and recreate build directory
 		await cleanBuild();
 
@@ -1021,5 +1014,3 @@ async function generateAllPages() {
 
 // Run the script
 generateAllPages();
-
-console.log("Done!");
