@@ -7,280 +7,269 @@ const BUILD_DIR = path.join(__dirname, "../build");
 const BUILD_JS_DIR = path.join(BUILD_DIR, "js");
 const COMPONENTS_TEMPLATE_PATH = path.join(__dirname, "../js/components.js");
 const CATEGORY_TEMPLATE_PATH = path.join(
-	__dirname,
-	"../product-category-template.html"
+  __dirname,
+  "../product-category-template.html"
 );
 const PRODUCT_TEMPLATE_PATH = path.join(
-	__dirname,
-	"../product-detail-template.html"
+  __dirname,
+  "../product-detail-template.html"
 );
 const ROOT_DIR = path.join(__dirname, "..");
 const API_URL = "YOUR_API_ENDPOINT/products"; // TODO: Replace with actual API endpoint
 
 function cleanJSONData(data) {
-	// Step 1: Decode Unicode escape sequences to actual characters
-	const decodedData = decodeURIComponent(JSON.stringify(data));
+  // Step 1: Decode Unicode escape sequences to actual characters
+  const decodedData = decodeURIComponent(JSON.stringify(data));
 
-	const jsonData = JSON.parse(decodedData);
+  const jsonData = JSON.parse(decodedData);
 
-	const jsObject = JSON.parse(jsonData);
+  const jsObject = JSON.parse(jsonData);
 
-	jsObject.price = jsObject.price.split(",")[0];
+  jsObject.price = jsObject.price.split(",")[0];
 
-	return jsObject;
+  return jsObject;
 }
 
 // Helper function to remove directory recursively
 async function removeDir(dir) {
-	try {
-		const entries = await fs.readdir(dir, { withFileTypes: true });
+  try {
+    const entries = await fs.readdir(dir, { withFileTypes: true });
 
-		await Promise.all(
-			entries.map(async (entry) => {
-				const fullPath = path.join(dir, entry.name);
-				return entry.isDirectory() ? removeDir(fullPath) : fs.unlink(fullPath);
-			})
-		);
+    await Promise.all(
+      entries.map(async (entry) => {
+        const fullPath = path.join(dir, entry.name);
+        return entry.isDirectory() ? removeDir(fullPath) : fs.unlink(fullPath);
+      })
+    );
 
-		await fs.rmdir(dir);
-	} catch (error) {
-		if (error.code !== "ENOENT") {
-			throw error;
-		}
-	}
+    await fs.rmdir(dir);
+  } catch (error) {
+    if (error.code !== "ENOENT") {
+      throw error;
+    }
+  }
 }
 
 // Clean build directory
 async function cleanBuild() {
-	console.log("Cleaning build directory...");
-	await removeDir(BUILD_DIR);
+  console.log("Cleaning build directory...");
+  await removeDir(BUILD_DIR);
 }
 
 // Ensure build directories exist
 async function ensureDirectories() {
-	await fs.mkdir(BUILD_DIR, { recursive: true });
-	await fs.mkdir(BUILD_JS_DIR, { recursive: true });
+  await fs.mkdir(BUILD_DIR, { recursive: true });
+  await fs.mkdir(BUILD_JS_DIR, { recursive: true });
 }
 
 // Helper function to copy directory recursively
 async function copyDir(src, dest) {
-	const entries = await fs.readdir(src, { withFileTypes: true });
-	await fs.mkdir(dest, { recursive: true });
+  const entries = await fs.readdir(src, { withFileTypes: true });
+  await fs.mkdir(dest, { recursive: true });
 
-	for (let entry of entries) {
-		const srcPath = path.join(src, entry.name);
-		const destPath = path.join(dest, entry.name);
+  for (let entry of entries) {
+    const srcPath = path.join(src, entry.name);
+    const destPath = path.join(dest, entry.name);
 
-		if (entry.isDirectory()) {
-			await copyDir(srcPath, destPath);
-		} else {
-			await fs.copyFile(srcPath, destPath);
-		}
-	}
+    if (entry.isDirectory()) {
+      await copyDir(srcPath, destPath);
+    } else {
+      await fs.copyFile(srcPath, destPath);
+    }
+  }
 }
 
 // Copy all necessary files and folders to build directory
 async function copyStaticFiles() {
-	console.log("Copying static files to build directory...");
+  console.log("Copying static files to build directory...");
 
-	// List of directories to copy
-	const dirsToCopy = ["css", "img", "js", "lib", "scss"];
+  // List of directories to copy
+  const dirsToCopy = ["css", "img", "js", "lib", "scss"];
 
-	// Copy directories
-	for (const dir of dirsToCopy) {
-		const srcDir = path.join(ROOT_DIR, dir);
-		const destDir = path.join(BUILD_DIR, dir);
-		await copyDir(srcDir, destDir);
-	}
+  // Copy directories
+  for (const dir of dirsToCopy) {
+    const srcDir = path.join(ROOT_DIR, dir);
+    const destDir = path.join(BUILD_DIR, dir);
+    await copyDir(srcDir, destDir);
+  }
 
-	// Get all HTML files from root directory
-	const files = await fs.readdir(ROOT_DIR);
-	const htmlFiles = files.filter(
-		(file) =>
-			file.endsWith(".html") &&
-			file !== "category-template.html" &&
-			file !== "product-detail-template.html" &&
-			file !== "product-category-template.html"
-	);
+  // Get all HTML files from root directory
+  const files = await fs.readdir(ROOT_DIR);
+  const htmlFiles = files.filter(
+    (file) =>
+      file.endsWith(".html") &&
+      file !== "category-template.html" &&
+      file !== "product-detail-template.html" &&
+      file !== "product-category-template.html"
+  );
 
-	// Copy HTML files
-	for (const file of htmlFiles) {
-		const srcPath = path.join(ROOT_DIR, file);
-		const destPath = path.join(BUILD_DIR, file);
-		await fs.copyFile(srcPath, destPath);
-	}
+  // Copy HTML files
+  for (const file of htmlFiles) {
+    const srcPath = path.join(ROOT_DIR, file);
+    const destPath = path.join(BUILD_DIR, file);
+    await fs.copyFile(srcPath, destPath);
+  }
 }
 
 // Fetch all products from the API
 async function fetchProducts() {
-	// individual product details
-	// https://wait.mi-great.com.tw/yp/api/Details.asp?product=2
+  // individual product details
+  // https://wait.mi-great.com.tw/yp/api/Details.asp?product=2
 
-	const response = await fetch(
-		"https://wait.mi-great.com.tw/yp/api/products.asp"
-	);
-	// const response = await fetch("http://17go.com.tw/api/products.asp");
-	if (!response.ok) {
-		throw new Error(`HTTP error! status: ${response.status}`);
-	}
+  //   const response = await fetch(
+  //     "https://wait.mi-great.com.tw/yp/api/products.asp"
+  //   );
 
-	const data = await response.json();
+  const response = await fetch("https://17go.com.tw/api/products.asp");
 
-	let productId = 1;
-	let categoryId = 1;
-	const categoryMap = new Map();
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
 
-	// Transform the data into the expected format
-	const products = Object.entries(data).flatMap(([categoryName, products]) => {
-		// Get or create category ID
-		if (!categoryMap.has(categoryName)) {
-			categoryMap.set(categoryName, categoryId++);
-		}
-		const currentCategoryId = categoryMap.get(categoryName);
+  const data = await response.json();
 
-		// Transform each product in the category
-		return products.map((product) => {
-			return {
-				id: product.product,
-				name: product.a_name,
-				images: [product.imgSrc],
-				category: {
-					id: currentCategoryId,
-					name: categoryName,
-				},
-			};
-		});
-	});
+  let productId = 1;
+  let categoryId = 1;
+  const categoryMap = new Map();
 
-	// Get unique categories
-	const categories = Array.from(categoryMap.entries()).map(([name, id]) => ({
-		id,
-		name,
-	}));
+  // Transform the data into the expected format
+  const products = Object.entries(data).flatMap(([categoryName, products]) => {
+    // Get or create category ID
+    if (!categoryMap.has(categoryName)) {
+      categoryMap.set(categoryName, categoryId++);
+    }
+    const currentCategoryId = categoryMap.get(categoryName);
 
-	// Store categories globally or return them along with products
-	return {
-		products,
-		categories,
-	};
+    // Transform each product in the category
+    return products.map((product) => {
+      return {
+        id: product.product,
+        name: product.a_name,
+        images: [product.imgSrc.replace("https", "http")],
+        category: {
+          id: currentCategoryId,
+          name: categoryName,
+        },
+      };
+    });
+  });
+
+  // Get unique categories
+  const categories = Array.from(categoryMap.entries()).map(([name, id]) => ({
+    id,
+    name,
+  }));
+
+  // Store categories globally or return them along with products
+  return {
+    products,
+    categories,
+  };
 }
 
 // Generate products details
 async function getProductsDetails(products) {
-	const productsDetails = [];
+  const productsDetails = [];
 
-	// console.log("wtf", products);
+  // console.log("wtf", products);
 
-	const promises = products.map((product) => {
-		return fetch(
-			`https://wait.mi-great.com.tw/yp/api/Details.asp?product=${product.id}`
-		)
-			.then((response) => response.text())
-			.then((textData) => {
-				const detailedProduct = cleanJSONData(textData);
-				return {
-					...detailedProduct,
-					id: product.id,
-				};
-			});
-	});
+  const promises = products.map((product) => {
+    return (
+      // fetch(
+      //   `https://wait.mi-great.com.tw/yp/api/Details.asp?product=${product.id}`
+      // )
+      fetch(`https://17go.com.tw/api/Details.asp?product=${product.id}`)
+        .then((response) => response.text())
+        .then((textData) => {
+          const detailedProduct = cleanJSONData(textData);
 
-	const results = await Promise.allSettled(promises);
+          if (product.id === 7) {
+            console.log(detailedProduct);
+          }
 
-	// for (product of products.slice(0, 10)) {
-	// 	try {
-	// 		const response = await fetch(
-	// 			`https://wait.mi-great.com.tw/yp/api/Details.asp?product=${product.id}`
-	// 		);
-	// 		const textData = await response.text();
-	// 		const detailedProduct = cleanJSONData(textData);
-	// 		productsDetails.push({
-	// 			...detailedProduct,
-	// 			id: product.id,
-	// 		});
+          return {
+            ...detailedProduct,
+            id: product.id,
+          };
+        })
+    );
+  });
 
-	// 		console.log("wtf,", {
-	// 			...detailedProduct,
-	// 			id: product.id,
-	// 		});
-	// 	} catch (e) {
-	// 		console.log(product.id, product.title);
-	// 	}
-	// }
+  const results = await Promise.allSettled(promises);
 
-	return results
-		.map((r) => (r.status === "fulfilled" ? r.value : null))
-		.filter(Boolean);
-
-	// return productsDetails;
+  return results
+    .map((r) => (r.status === "fulfilled" ? r.value : null))
+    .filter(Boolean);
 }
 
 // Generate components.js with category dropdown
 async function generateComponents(categories, products) {
-	const componentsContent = await fs.readFile(
-		COMPONENTS_TEMPLATE_PATH,
-		"utf-8"
-	);
+  const componentsContent = await fs.readFile(
+    COMPONENTS_TEMPLATE_PATH,
+    "utf-8"
+  );
 
-	// Generate dropdown content with categories as headers and products as links
-	const dropdownContent = categories
-		.map((category) => {
-			const categoryProducts = products.filter(
-				(p) => p.category.id === category.id
-			);
-			return `
+  // Generate dropdown content with categories as headers and products as links
+  const dropdownContent = categories
+    .map((category) => {
+      const categoryProducts = products.filter(
+        (p) => p.category.id === category.id
+      );
+      return `
           <a href="/category-${category.id}" class="dropdown-header">${category.name}</a>
           `;
-		})
-		.join("\n");
+    })
+    .join("\n");
 
-	// Replace the content of the dropdown container
-	const updatedContent = componentsContent.replace(
-		/<div id='category-dropdown-content'[^>]*>([\s\S]*?)<\/div>/,
-		`<div id='category-dropdown-content' class="dropdown-menu dropdown-menu-end">
+  // Replace the content of the dropdown container
+  const updatedContent = componentsContent.replace(
+    /<div id='category-dropdown-content'[^>]*>([\s\S]*?)<\/div>/,
+    `<div id='category-dropdown-content' class="dropdown-menu dropdown-menu-end">
       ${dropdownContent}
     </div>`
-	);
+  );
 
-	await fs.writeFile(path.join(BUILD_JS_DIR, "components.js"), updatedContent);
+  await fs.writeFile(path.join(BUILD_JS_DIR, "components.js"), updatedContent);
 }
 
 // Generate individual product pages
 async function generateProductPages(products) {
-	const productTemplate = await fs.readFile(PRODUCT_TEMPLATE_PATH, "utf-8");
+  const productTemplate = await fs.readFile(PRODUCT_TEMPLATE_PATH, "utf-8");
 
-	for (const product of products) {
-		try {
-			// Fetch detailed product data from API
-			const response = await fetch(
-				`https://wait.mi-great.com.tw/yp/api/Details.asp?product=${product.id}`
-			);
-			const textData = await response.text();
-			const detailedProduct = cleanJSONData(textData);
+  for (const product of products) {
+    try {
+      // const response = await fetch(
+      //   `https://wait.mi-great.com.tw/yp/api/Details.asp?product=${product.id}`
+      // );
+      const response = await fetch(
+        `https://17go.com.tw/api/Details.asp?product=${product.id}`
+      );
+      const textData = await response.text();
+      const detailedProduct = cleanJSONData(textData);
 
-			let productContent = productTemplate;
-			const dom = new JSDOM(productContent);
-			const doc = dom.window.document;
+      let productContent = productTemplate;
+      const dom = new JSDOM(productContent);
+      const doc = dom.window.document;
 
-			// Update product details in template
-			doc.title = `湧沛淨水 - ${detailedProduct.title} ${detailedProduct.a_name}`;
-			doc.querySelector(".product-title").textContent = detailedProduct.title;
-			doc.querySelector(".product-name").textContent = detailedProduct.a_name;
-			doc.querySelector(
-				"#breadcrumb-category"
-			).innerHTML = `<a href="/category-${product.category.id}">${product.category.name}</a>`;
-			doc.querySelector("#breadcrumb-product-name").textContent =
-				detailedProduct.a_name;
+      // Update product details in template
+      doc.title = `湧沛淨水 - ${detailedProduct.title} ${detailedProduct.a_name}`;
+      doc.querySelector(".product-title").textContent = detailedProduct.title;
+      doc.querySelector(".product-name").textContent = detailedProduct.a_name;
+      doc.querySelector(
+        "#breadcrumb-category"
+      ).innerHTML = `<a href="/category-${product.category.id}">${product.category.name}</a>`;
+      doc.querySelector("#breadcrumb-product-name").textContent =
+        detailedProduct.a_name;
 
-			const productImageSrcArray = detailedProduct.imgSrc || [];
+      const productImageSrcArray = detailedProduct.imgSrc || [];
 
-			// Generate gallery HTML
-			const galleryHtml = `
+      // Generate gallery HTML
+      const galleryHtml = `
         <div class="product-gallery">
           <div class="gallery-main mb-3">
             <img id="mainImage" src="${productImageSrcArray[0]}" alt="${
-				detailedProduct.title
-			} - Main Image" class="img-fluid">
+        detailedProduct.title
+      } - Main Image" class="img-fluid">
           </div>
           <div class="gallery-thumbs-container">
             <button class="nav-btn prev">
@@ -289,16 +278,16 @@ async function generateProductPages(products) {
             <div class="gallery-thumbs">
               <div class="thumb-container" id="thumbContainer">
                 ${productImageSrcArray
-									.map(
-										(img, index) => `
+                  .map(
+                    (img, index) => `
                     <div class="thumb${index === 0 ? " active" : ""}">
                       <img src="${img}" alt="${
-											detailedProduct.title
-										} - Thumbnail ${index + 1}">
+                      detailedProduct.title
+                    } - Thumbnail ${index + 1}">
                     </div>
                   `
-									)
-									.join("")}
+                  )
+                  .join("")}
               </div>
             </div>
             <button class="nav-btn next">
@@ -382,21 +371,21 @@ async function generateProductPages(products) {
         </div>
       `;
 
-			// Add product description
-			const descriptionHtml = `
+      // Add product description
+      const descriptionHtml = `
           <h5>介紹</h5>
           <p class="mb-0 product-contents">${detailedProduct.contents}</p>
       `;
 
-			// Update the left column with gallery and description
-			const leftColumn = doc.querySelector(
-				"#product-image-and-description-container"
-			);
-			leftColumn.innerHTML = galleryHtml + descriptionHtml;
+      // Update the left column with gallery and description
+      const leftColumn = doc.querySelector(
+        "#product-image-and-description-container"
+      );
+      leftColumn.innerHTML = galleryHtml + descriptionHtml;
 
-			// Update features container
-			const featuresContainer = doc.getElementById("features-container");
-			featuresContainer.innerHTML = `
+      // Update features container
+      const featuresContainer = doc.getElementById("features-container");
+      featuresContainer.innerHTML = `
         <div class="d-flex mb-4">
           <div class="flex-shrink-0 btn-square bg-primary rounded-circle">
             <i class="fa fa-check text-white"></i>
@@ -417,8 +406,8 @@ async function generateProductPages(products) {
         </div>
       `;
 
-			// Add gallery script
-			const galleryScript = `
+      // Add gallery script
+      const galleryScript = `
           document.addEventListener('DOMContentLoaded', function() {
             let currentScrollPosition = 0;
             const thumbWidth = 90; // 80px width + 10px gap
@@ -473,128 +462,128 @@ async function generateProductPages(products) {
           });
       `;
 
-			// Insert the gallery script before </body>
-			const scriptElement = doc.createElement("script");
-			scriptElement.textContent = galleryScript;
-			doc.body.appendChild(scriptElement);
+      // Insert the gallery script before </body>
+      const scriptElement = doc.createElement("script");
+      scriptElement.textContent = galleryScript;
+      doc.body.appendChild(scriptElement);
 
-			// Save the generated HTML
-			const outputPath = path.join(BUILD_DIR, `product-${product.id}.html`);
-			await fs.writeFile(outputPath, dom.serialize(), "utf-8");
-		} catch (error) {
-			console.error(`Error generating page for product ${product.id}:`, error);
-		}
-	}
+      // Save the generated HTML
+      const outputPath = path.join(BUILD_DIR, `product-${product.id}.html`);
+      await fs.writeFile(outputPath, dom.serialize(), "utf-8");
+    } catch (error) {
+      console.error(`Error generating page for product ${product.id}:`, error);
+    }
+  }
 }
 
 // Generate category pages
 async function generateCategoryPages(categories, products) {
-	const categoryTemplate = await fs.readFile(CATEGORY_TEMPLATE_PATH, "utf-8");
+  const categoryTemplate = await fs.readFile(CATEGORY_TEMPLATE_PATH, "utf-8");
 
-	const productsDetails = await getProductsDetails(products);
+  const productsDetails = await getProductsDetails(products);
 
-	// console.log("Generated products details:", productsDetails);
+  // console.log("Generated products details:", productsDetails);
 
-	// Create category pages for each category
-	for (const category of categories) {
-		try {
-			let categoryContent = categoryTemplate;
-			const dom = new JSDOM(categoryContent);
-			const doc = dom.window.document;
+  // Create category pages for each category
+  for (const category of categories) {
+    try {
+      let categoryContent = categoryTemplate;
+      const dom = new JSDOM(categoryContent);
+      const doc = dom.window.document;
 
-			// Update category details in template
-			doc.title = `湧沛淨水 - ${category.name}`;
-			doc.querySelector("#category-name").textContent = category.name;
-			doc.querySelector("#breadcrumb-category").textContent = category.name;
-			doc.querySelector("#category-title").textContent = category.name;
-			doc.querySelector(
-				"#category-description"
-			).textContent = `探索我們的${category.name}系列產品`;
+      // Update category details in template
+      doc.title = `湧沛淨水 - ${category.name}`;
+      doc.querySelector("#category-name").textContent = category.name;
+      doc.querySelector("#breadcrumb-category").textContent = category.name;
+      doc.querySelector("#category-title").textContent = category.name;
+      doc.querySelector(
+        "#category-description"
+      ).textContent = `探索我們的${category.name}系列產品`;
 
-			// Clear the product container
-			const productsContainer = doc.querySelector("#products-container");
-			productsContainer.innerHTML = "";
+      // Clear the product container
+      const productsContainer = doc.querySelector("#products-container");
+      productsContainer.innerHTML = "";
 
-			// Filter products for this category
-			const categoryProducts = products.filter(
-				(product) => product.category.id === category.id
-			);
+      // Filter products for this category
+      const categoryProducts = products.filter(
+        (product) => product.category.id === category.id
+      );
 
-			// Add products to the container
-			categoryProducts.forEach((product, index) => {
-				const productCard = doc.createElement("div");
-				productCard.className = "col-lg-4 col-md-6 wow fadeInUp";
-				productCard.setAttribute("data-wow-delay", `${0.1 * (index + 1)}s`);
+      // Add products to the container
+      categoryProducts.forEach((product, index) => {
+        const productCard = doc.createElement("div");
+        productCard.className = "col-lg-4 col-md-6 wow fadeInUp";
+        productCard.setAttribute("data-wow-delay", `${0.1 * (index + 1)}s`);
 
-				const foundProduct = productsDetails.find((p) => p.id === product.id);
-				const productPrice = foundProduct?.price;
-				const productNo = foundProduct?.roomno;
+        const foundProduct = productsDetails.find((p) => p.id === product.id);
+        const productPrice = foundProduct?.price;
+        const productNo = foundProduct?.roomno;
 
-				const productDescription = doc.createElement("div");
-				productDescription.className = "product-description";
+        const productDescription = doc.createElement("div");
+        productDescription.className = "product-description";
 
-				const productTitle = doc.createElement("h5");
-				productTitle.textContent = product.name;
-				productTitle.className = "product-title";
-				productDescription.appendChild(productTitle);
+        const productTitle = doc.createElement("h5");
+        productTitle.textContent = product.name;
+        productTitle.className = "product-title";
+        productDescription.appendChild(productTitle);
 
-				const priceContainer = doc.createElement("div");
-				priceContainer.style.marginTop = "8px";
+        const priceContainer = doc.createElement("div");
+        priceContainer.style.marginTop = "8px";
 
-				const roomNumber = doc.createElement("div");
-				roomNumber.className = "room-number";
-				roomNumber.style.color = "#666";
-				roomNumber.style.textAlign = "left";
-				roomNumber.textContent = `Room ${productNo || "N/A"}`;
+        const roomNumber = doc.createElement("div");
+        roomNumber.className = "room-number";
+        roomNumber.style.color = "#666";
+        roomNumber.style.textAlign = "left";
+        roomNumber.textContent = `Room ${productNo || "N/A"}`;
 
-				const productPriceElement = doc.createElement("div");
-				productPriceElement.className = "product-price";
-				productPriceElement.style.color = "#2c5282";
-				productPriceElement.style.textAlign = "right";
-				productPriceElement.textContent = `$ ${productPrice}`;
+        const productPriceElement = doc.createElement("div");
+        productPriceElement.className = "product-price";
+        productPriceElement.style.color = "#2c5282";
+        productPriceElement.style.textAlign = "right";
+        productPriceElement.textContent = `$ ${productPrice}`;
 
-				priceContainer.appendChild(roomNumber);
-				priceContainer.appendChild(productPriceElement);
-				productDescription.appendChild(priceContainer);
+        priceContainer.appendChild(roomNumber);
+        priceContainer.appendChild(productPriceElement);
+        productDescription.appendChild(priceContainer);
 
-				const productImage = doc.createElement("img");
-				productImage.src = product.images[0];
-				productImage.alt = product.name;
-				productImage.className = "img-fluid mb-3";
+        const productImage = doc.createElement("img");
+        productImage.src = product.images[0];
+        productImage.alt = product.name;
+        productImage.className = "img-fluid mb-3";
 
-				const productLink = doc.createElement("a");
-				productLink.href = `product-${product.id}.html`;
-				productLink.appendChild(productImage);
-				productLink.appendChild(productDescription);
+        const productLink = doc.createElement("a");
+        productLink.href = `product-${product.id}.html`;
+        productLink.appendChild(productImage);
+        productLink.appendChild(productDescription);
 
-				productCard.appendChild(productLink);
+        productCard.appendChild(productLink);
 
-				productsContainer.appendChild(productCard);
-			});
+        productsContainer.appendChild(productCard);
+      });
 
-			// Save the category page
-			const categoryFileName = `category-${category.id}.html`;
-			const outputPath = path.join(BUILD_DIR, categoryFileName);
-			await fs.writeFile(outputPath, dom.serialize(), "utf-8");
-		} catch (error) {
-			console.error(
-				`Error generating category page for ${category.name}:`,
-				error
-			);
-		}
-	}
+      // Save the category page
+      const categoryFileName = `category-${category.id}.html`;
+      const outputPath = path.join(BUILD_DIR, categoryFileName);
+      await fs.writeFile(outputPath, dom.serialize(), "utf-8");
+    } catch (error) {
+      console.error(
+        `Error generating category page for ${category.name}:`,
+        error
+      );
+    }
+  }
 }
 
 // Generate index page with categorized products
 async function modifyIndexPage(categories, products) {
-	const indexPath = path.join(BUILD_DIR, "index.html");
-	const indexContent = await fs.readFile(indexPath, "utf-8");
-	const dom = new JSDOM(indexContent);
-	const document = dom.window.document;
+  const indexPath = path.join(BUILD_DIR, "index.html");
+  const indexContent = await fs.readFile(indexPath, "utf-8");
+  const dom = new JSDOM(indexContent);
+  const document = dom.window.document;
 
-	// Create and inject the slider script
-	const sliderScript = document.createElement("script");
-	sliderScript.textContent = `
+  // Create and inject the slider script
+  const sliderScript = document.createElement("script");
+  sliderScript.textContent = `
     let touchStartX = 0;
     let touchEndX = 0;
 
@@ -660,169 +649,169 @@ async function modifyIndexPage(categories, products) {
     window.addEventListener('resize', initializeSliders);
   `;
 
-	// Find the closing body tag and insert the script before it
-	const body = document.querySelector("body");
-	body.insertBefore(sliderScript, body.lastElementChild);
+  // Find the closing body tag and insert the script before it
+  const body = document.querySelector("body");
+  body.insertBefore(sliderScript, body.lastElementChild);
 
-	// Find the products placeholder div
-	const productsPlaceholder = document.getElementById("products-placeholder");
-	if (!productsPlaceholder) {
-		console.warn("Products placeholder not found in index.html");
-		return;
-	}
+  // Find the products placeholder div
+  const productsPlaceholder = document.getElementById("products-placeholder");
+  if (!productsPlaceholder) {
+    console.warn("Products placeholder not found in index.html");
+    return;
+  }
 
-	// Clear existing content
-	productsPlaceholder.innerHTML = "";
+  // Clear existing content
+  productsPlaceholder.innerHTML = "";
 
-	const productsDetails = await getProductsDetails(products);
+  const productsDetails = await getProductsDetails(products);
 
-	// Generate content for each category
-	categories.forEach((category, categoryIndex) => {
-		// Create category row
-		const categoryRow = document.createElement("div");
-		categoryRow.className = "category-row";
-		categoryRow.id = `category-${category.id}`;
+  // Generate content for each category
+  categories.forEach((category, categoryIndex) => {
+    // Create category row
+    const categoryRow = document.createElement("div");
+    categoryRow.className = "category-row";
+    categoryRow.id = `category-${category.id}`;
 
-		// Add category title
-		const categoryTitle = document.createElement("h2");
-		categoryTitle.className = "category-title";
-		categoryTitle.textContent = category.name;
-		categoryRow.appendChild(categoryTitle);
+    // Add category title
+    const categoryTitle = document.createElement("h2");
+    categoryTitle.className = "category-title";
+    categoryTitle.textContent = category.name;
+    categoryRow.appendChild(categoryTitle);
 
-		// Create slider container
-		const sliderContainer = document.createElement("div");
-		sliderContainer.className = "slider-container";
+    // Create slider container
+    const sliderContainer = document.createElement("div");
+    sliderContainer.className = "slider-container";
 
-		// Create slider
-		const slider = document.createElement("div");
-		slider.className = "slider";
-		const sliderId = `slider-${categoryIndex}`;
-		slider.id = sliderId;
+    // Create slider
+    const slider = document.createElement("div");
+    slider.className = "slider";
+    const sliderId = `slider-${categoryIndex}`;
+    slider.id = sliderId;
 
-		// Filter products for this category and create slides
-		const categoryProducts = products.filter(
-			(product) => product.category.id === category.id
-		);
+    // Filter products for this category and create slides
+    const categoryProducts = products.filter(
+      (product) => product.category.id === category.id
+    );
 
-		categoryProducts.forEach((product, i) => {
-			const slide = document.createElement("div");
-			slide.className = "slide";
+    categoryProducts.forEach((product, i) => {
+      const slide = document.createElement("div");
+      slide.className = "slide";
 
-			// Create product content
-			const productLink = document.createElement("a");
-			productLink.href = `product-${product.id}.html`;
-			productLink.className = "wow fadeInUp";
-			productLink.setAttribute("data-wow-delay", `${i * 0.1}s`);
+      // Create product content
+      const productLink = document.createElement("a");
+      productLink.href = `product-${product.id}.html`;
+      productLink.className = "wow fadeInUp";
+      productLink.setAttribute("data-wow-delay", `${i * 0.1}s`);
 
-			const productImage = document.createElement("img");
-			productImage.src = product.images[0];
-			productImage.alt = product.name;
-			productImage.className = "img-fluid mb-3";
+      const productImage = document.createElement("img");
+      productImage.src = product.images[0];
+      productImage.alt = product.name;
+      productImage.className = "img-fluid mb-3";
 
-			const productDescription = document.createElement("div");
-			productDescription.className = "product-description";
+      const productDescription = document.createElement("div");
+      productDescription.className = "product-description";
 
-			const productTitle = document.createElement("h5");
-			productTitle.textContent = product.name;
-			productTitle.className = "product-title";
-			productDescription.appendChild(productTitle);
+      const productTitle = document.createElement("h5");
+      productTitle.textContent = product.name;
+      productTitle.className = "product-title";
+      productDescription.appendChild(productTitle);
 
-			const priceContainer = document.createElement("div");
-			priceContainer.style.marginTop = "8px";
+      const priceContainer = document.createElement("div");
+      priceContainer.style.marginTop = "8px";
 
-			const roomNumber = document.createElement("div");
-			roomNumber.className = "room-number";
-			roomNumber.style.color = "#ddd";
-			roomNumber.style.textAlign = "left";
-			roomNumber.textContent = productsDetails.find(
-				(p) => p.a_name === product.name
-			)?.roomno;
+      const roomNumber = document.createElement("div");
+      roomNumber.className = "room-number";
+      roomNumber.style.color = "#ddd";
+      roomNumber.style.textAlign = "left";
+      roomNumber.textContent = productsDetails.find(
+        (p) => p.a_name === product.name
+      )?.roomno;
 
-			const productPrice = document.createElement("div");
-			productPrice.className = "product-price";
-			productPrice.style.color = "#eee";
-			productPrice.style.textAlign = "right";
-			productPrice.textContent = `$ ${
-				productsDetails.find((p) => p.a_name === product.name)?.price
-			}`;
+      const productPrice = document.createElement("div");
+      productPrice.className = "product-price";
+      productPrice.style.color = "#eee";
+      productPrice.style.textAlign = "right";
+      productPrice.textContent = `$ ${
+        productsDetails.find((p) => p.a_name === product.name)?.price
+      }`;
 
-			priceContainer.appendChild(roomNumber);
-			priceContainer.appendChild(productPrice);
-			productDescription.appendChild(priceContainer);
+      priceContainer.appendChild(roomNumber);
+      priceContainer.appendChild(productPrice);
+      productDescription.appendChild(priceContainer);
 
-			// Assemble product slide
-			productLink.appendChild(productImage);
-			productLink.appendChild(productDescription);
-			slide.appendChild(productLink);
+      // Assemble product slide
+      productLink.appendChild(productImage);
+      productLink.appendChild(productDescription);
+      slide.appendChild(productLink);
 
-			slider.appendChild(slide);
-		});
+      slider.appendChild(slide);
+    });
 
-		// Add navigation buttons
-		const leftButton = document.createElement("button");
-		leftButton.id = `nav-${sliderId}-left`;
-		leftButton.className = "nav-button left";
-		leftButton.innerHTML = "&#10094;";
-		leftButton.setAttribute("onclick", `scrollSlider('${sliderId}', -1)`);
+    // Add navigation buttons
+    const leftButton = document.createElement("button");
+    leftButton.id = `nav-${sliderId}-left`;
+    leftButton.className = "nav-button left";
+    leftButton.innerHTML = "&#10094;";
+    leftButton.setAttribute("onclick", `scrollSlider('${sliderId}', -1)`);
 
-		const rightButton = document.createElement("button");
-		rightButton.id = `nav-${sliderId}-right`;
-		rightButton.className = "nav-button right";
-		rightButton.innerHTML = "&#10095;";
-		rightButton.setAttribute("onclick", `scrollSlider('${sliderId}', 1)`);
+    const rightButton = document.createElement("button");
+    rightButton.id = `nav-${sliderId}-right`;
+    rightButton.className = "nav-button right";
+    rightButton.innerHTML = "&#10095;";
+    rightButton.setAttribute("onclick", `scrollSlider('${sliderId}', 1)`);
 
-		// Assemble slider container
-		sliderContainer.appendChild(leftButton);
-		sliderContainer.appendChild(slider);
-		sliderContainer.appendChild(rightButton);
+    // Assemble slider container
+    sliderContainer.appendChild(leftButton);
+    sliderContainer.appendChild(slider);
+    sliderContainer.appendChild(rightButton);
 
-		// Add slider container to category row
-		categoryRow.appendChild(sliderContainer);
+    // Add slider container to category row
+    categoryRow.appendChild(sliderContainer);
 
-		// Add category row to products placeholder
-		productsPlaceholder.appendChild(categoryRow);
-	});
+    // Add category row to products placeholder
+    productsPlaceholder.appendChild(categoryRow);
+  });
 
-	// Save the modified index.html
-	await fs.writeFile(indexPath, dom.serialize(), "utf-8");
+  // Save the modified index.html
+  await fs.writeFile(indexPath, dom.serialize(), "utf-8");
 }
 
 // Main function to run everything
 async function generateAllPages() {
-	try {
-		// Clean and recreate build directory
-		await cleanBuild();
+  try {
+    // Clean and recreate build directory
+    await cleanBuild();
 
-		// Ensure directories exist
-		await ensureDirectories();
+    // Ensure directories exist
+    await ensureDirectories();
 
-		// Copy static files first
-		await copyStaticFiles();
+    // Copy static files first
+    await copyStaticFiles();
 
-		// Fetch products data
-		const { products, categories } = await fetchProducts();
+    // Fetch products data
+    const { products, categories } = await fetchProducts();
 
-		// Extract unique categories
-		// const categories = [...new Set(products.map((p) => p.category.id))].map(
-		//   (id) => ({
-		//     id,
-		//     name: products.find((p) => p.category.id === id).category.name,
-		//   })
-		// );
+    // Extract unique categories
+    // const categories = [...new Set(products.map((p) => p.category.id))].map(
+    //   (id) => ({
+    //     id,
+    //     name: products.find((p) => p.category.id === id).category.name,
+    //   })
+    // );
 
-		//  Generate all pages
-		await Promise.all([
-			generateComponents(categories, products),
-			generateProductPages(products),
-			generateCategoryPages(categories, products),
-			modifyIndexPage(categories, products),
-		]);
+    //  Generate all pages
+    await Promise.all([
+      generateComponents(categories, products),
+      generateProductPages(products),
+      generateCategoryPages(categories, products),
+      modifyIndexPage(categories, products),
+    ]);
 
-		console.log("Successfully generated all pages!");
-	} catch (error) {
-		console.error("Error generating pages:", error);
-		process.exit(1);
-	}
+    console.log("Successfully generated all pages!");
+  } catch (error) {
+    console.error("Error generating pages:", error);
+    process.exit(1);
+  }
 }
 
 // Run the script
