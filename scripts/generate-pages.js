@@ -145,7 +145,7 @@ async function fetchProducts() {
       return {
         id: product.product,
         name: product.a_name,
-        images: [product.imgSrc.replace("https", "http")],
+        images: [product.imgSrc],
         category: {
           id: currentCategoryId,
           name: categoryName,
@@ -183,9 +183,7 @@ async function getProductsDetails(products) {
         .then((textData) => {
           const detailedProduct = cleanJSONData(textData);
 
-          if (product.id === 7) {
-            console.log(detailedProduct);
-          }
+          console.log(detailedProduct);
 
           return {
             ...detailedProduct,
