@@ -183,8 +183,6 @@ async function getProductsDetails(products) {
         .then((textData) => {
           const detailedProduct = cleanJSONData(textData);
 
-          console.log(detailedProduct);
-
           return {
             ...detailedProduct,
             id: product.id,
@@ -381,6 +379,8 @@ async function generateProductPages(products) {
       );
       leftColumn.innerHTML = galleryHtml + descriptionHtml;
 
+      if (detailedProduct.roomno === "hm6991") console.log(detailedProduct);
+
       // Update features container
       const featuresContainer = doc.getElementById("features-container");
       featuresContainer.innerHTML = `
@@ -574,6 +574,7 @@ async function generateCategoryPages(categories, products) {
 
 // Generate index page with categorized products
 async function modifyIndexPage(categories, products) {
+  // console.log(categories, products);
   const indexPath = path.join(BUILD_DIR, "index.html");
   const indexContent = await fs.readFile(indexPath, "utf-8");
   const dom = new JSDOM(indexContent);
@@ -662,6 +663,9 @@ async function modifyIndexPage(categories, products) {
   productsPlaceholder.innerHTML = "";
 
   const productsDetails = await getProductsDetails(products);
+  for (const p of productsDetails) {
+    if (p.id === 11) console.log(p);
+  }
 
   // Generate content for each category
   categories.forEach((category, categoryIndex) => {
@@ -690,6 +694,10 @@ async function modifyIndexPage(categories, products) {
     const categoryProducts = products.filter(
       (product) => product.category.id === category.id
     );
+
+    for (const c of categoryProducts) {
+      if (category.id === 2) console.log(c);
+    }
 
     categoryProducts.forEach((product, i) => {
       const slide = document.createElement("div");
@@ -722,7 +730,7 @@ async function modifyIndexPage(categories, products) {
       roomNumber.style.color = "#ddd";
       roomNumber.style.textAlign = "left";
       roomNumber.textContent = productsDetails.find(
-        (p) => p.a_name === product.name
+        (p) => p.id === product.id
       )?.roomno;
 
       const productPrice = document.createElement("div");
