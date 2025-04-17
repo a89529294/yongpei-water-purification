@@ -738,7 +738,7 @@ async function modifyIndexPage(categories, products) {
       productPrice.style.color = "#eee";
       productPrice.style.textAlign = "right";
       productPrice.textContent = `$ ${
-        productsDetails.find((p) => p.a_name === product.name)?.price
+        productsDetails.find((p) => p.id === product.id)?.price
       }`;
 
       priceContainer.appendChild(roomNumber);
