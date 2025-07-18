@@ -122,10 +122,32 @@ async function fetchProducts() {
   //     "https://wait.mi-great.com.tw/yp/api/products.asp"
   //   );
 
-  const response = await fetch("https://17go.com.tw/api/products.asp");
+  // const response = await fetch("https://17go.com.tw/api/products.asp");
 
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
+  // if (!response.ok) {
+  //   throw new Error(`HTTP error! status: ${response.status}`);
+  // }
+
+  const timeout = 30000; // 30 seconds
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+  let response;
+  try {
+    response = await fetch("https://17go.com.tw/api/products.asp", {
+      signal: controller.signal
+    });
+
+    clearTimeout(timeoutId); // Clear the timeout if fetch completes
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+  } catch (error) {
+    if (error.name === 'AbortError') {
+      throw new Error(`Fetch timeout after ${timeout}ms: https://17go.com.tw/api/products.asp`);
+    }
+    throw error;
   }
 
   const data = await response.json();
