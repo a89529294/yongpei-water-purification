@@ -2,6 +2,8 @@ const fs = require("fs").promises;
 const path = require("path");
 const { JSDOM } = require("jsdom");
 
+console.log('hi')
+
 // Constants for file paths
 const BUILD_DIR = path.join(__dirname, "../build");
 const BUILD_JS_DIR = path.join(BUILD_DIR, "js");
