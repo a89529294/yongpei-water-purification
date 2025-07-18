@@ -7,7 +7,8 @@
   },
   "scripts": {
     "dev": "npm run build && cd build && http-server",
-    "build": "node scripts/generate-pages.js"
+    "build": "node scripts/generate-pages.js",
+    "fetch-data": "node scripts/fetch-and-save-data.js"
   },
   "keywords": [],
   "author": "Albert Chang",

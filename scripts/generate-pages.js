@@ -111,91 +111,146 @@ async function copyStaticFiles() {
   }
 }
 
-// Fetch all products from the API
+// Load products from local data file instead of API
 async function fetchProducts() {
-  // individual product details
-  // https://wait.mi-great.com.tw/yp/api/Details.asp?product=2
+  console.log("Loading products from local data file...");
+  try {
+    // Try to load the processed products data
+    const dataPath = path.join(__dirname, "../data/processed-products.json");
+    const fileData = await fs.readFile(dataPath, "utf-8");
+    const { products, categories } = JSON.parse(fileData);
 
-  //   const response = await fetch(
-  //     "https://wait.mi-great.com.tw/yp/api/products.asp"
-  //   );
+    console.log(`Loaded ${products.length} products and ${categories.length} categories from local data file`);
 
-  const response = await fetch("https://17go.com.tw/api/products.asp");
+    // Return the data directly in the expected format
+    return { products, categories };
+  } catch (error) {
+    console.error("Error loading local data file:", error);
+    console.log("Falling back to API fetch...");
 
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
+    // If local data file doesn't exist or is invalid, fall back to API fetch
+    // Set a longer timeout (30 seconds) for GitHub builds
+    const timeout = 30000; // 30 seconds
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeout);
 
-  const data = await response.json();
+    let response;
+    try {
+      response = await fetch("https://17go.com.tw/api/products.asp", {
+        signal: controller.signal
+      });
 
-  let productId = 1;
-  let categoryId = 1;
-  const categoryMap = new Map();
+      clearTimeout(timeoutId); // Clear the timeout if fetch completes
 
-  // Transform the data into the expected format
-  const products = Object.entries(data).flatMap(([categoryName, products]) => {
-    // Get or create category ID
-    if (!categoryMap.has(categoryName)) {
-      categoryMap.set(categoryName, categoryId++);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+    } catch (error) {
+      if (error.name === 'AbortError') {
+        throw new Error(`Fetch timeout after ${timeout}ms: https://17go.com.tw/api/products.asp`);
+      }
+      throw error;
     }
-    const currentCategoryId = categoryMap.get(categoryName);
 
-    // Transform each product in the category
-    return products.map((product) => {
-      return {
-        id: product.product,
-        name: product.a_name,
-        images: [product.imgSrc],
-        category: {
-          id: currentCategoryId,
-          name: categoryName,
-        },
-      };
+    const data = await response.json();
+
+    let productId = 1;
+    let categoryId = 1;
+    const categoryMap = new Map();
+
+    // Transform the data into the expected format
+    const products = Object.entries(data).flatMap(([categoryName, products]) => {
+      // Get or create category ID
+      if (!categoryMap.has(categoryName)) {
+        categoryMap.set(categoryName, categoryId++);
+      }
+      const currentCategoryId = categoryMap.get(categoryName);
+
+      // Transform each product in the category
+      return products.map((product) => {
+        return {
+          id: product.product,
+          name: product.a_name,
+          images: [product.imgSrc],
+          category: {
+            id: currentCategoryId,
+            name: categoryName,
+          },
+        };
+      });
     });
-  });
 
-  // Get unique categories
-  const categories = Array.from(categoryMap.entries()).map(([name, id]) => ({
-    id,
-    name,
-  }));
+    // Get unique categories
+    const categories = Array.from(categoryMap.entries()).map(([name, id]) => ({
+      id,
+      name,
+    }));
 
-  // Store categories globally or return them along with products
-  return {
-    products,
-    categories,
-  };
+    // Store categories globally or return them along with products
+    return {
+      products,
+      categories,
+    };
+  }
 }
-
 // Generate products details
 async function getProductsDetails(products) {
-  const productsDetails = [];
+  try {
+    // Try to load product details from local data file first
+    const dataPath = path.join(__dirname, "../data/product-details.json");
+    const fileData = await fs.readFile(dataPath, "utf-8");
+    const productDetails = JSON.parse(fileData);
 
-  // console.log("wtf", products);
+    console.log(`Loaded ${productDetails.length} product details from local data file`);
+    return productDetails;
+  } catch (error) {
+    console.error("Error loading product details from local file:", error);
+    console.log("Falling back to API fetch for product details...");
 
-  const promises = products.map((product) => {
-    return (
-      // fetch(
-      //   `https://wait.mi-great.com.tw/yp/api/Details.asp?product=${product.id}`
-      // )
-      fetch(`https://17go.com.tw/api/Details.asp?product=${product.id}`)
-        .then((response) => response.text())
-        .then((textData) => {
-          const detailedProduct = cleanJSONData(textData);
+    const productsDetails = [];
 
-          return {
-            ...detailedProduct,
-            id: product.id,
-          };
+    // Set a longer timeout (30 seconds) for GitHub builds
+    const timeout = 30000; // 30 seconds
+
+    const promises = products.map((product) => {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+      return (
+        // fetch(
+        //   `https://wait.mi-great.com.tw/yp/api/Details.asp?product=${product.id}`
+        // )
+        fetch(`https://17go.com.tw/api/Details.asp?product=${product.id}`, {
+          signal: controller.signal
         })
-    );
-  });
+          .then((response) => {
+            clearTimeout(timeoutId); // Clear the timeout if fetch completes
+            return response.text();
+          })
+          .then((textData) => {
+            const detailedProduct = cleanJSONData(textData);
 
-  const results = await Promise.allSettled(promises);
+            return {
+              ...detailedProduct,
+              id: product.id,
+            };
+          })
+          .catch(error => {
+            if (error.name === 'AbortError') {
+              console.error(`Fetch timeout after ${timeout}ms for product ${product.id}`);
+              return null;
+            }
+            throw error;
+          })
+      );
+    });
 
-  return results
-    .map((r) => (r.status === "fulfilled" ? r.value : null))
-    .filter(Boolean);
+    const results = await Promise.allSettled(promises);
+
+    return results
+      .map((r) => (r.status === "fulfilled" ? r.value : null))
+      .filter(Boolean);
+  }
 }
 
 // Generate components.js with category dropdown
@@ -232,16 +287,18 @@ async function generateComponents(categories, products) {
 async function generateProductPages(products) {
   const productTemplate = await fs.readFile(PRODUCT_TEMPLATE_PATH, "utf-8");
 
+  // Get all product details from the local file or API
+  const productsDetails = await getProductsDetails(products);
+
   for (const product of products) {
     try {
-      // const response = await fetch(
-      //   `https://wait.mi-great.com.tw/yp/api/Details.asp?product=${product.id}`
-      // );
-      const response = await fetch(
-        `https://17go.com.tw/api/Details.asp?product=${product.id}`
-      );
-      const textData = await response.text();
-      const detailedProduct = cleanJSONData(textData);
+      // Find the product details from the pre-loaded data
+      const detailedProduct = productsDetails.find(p => p.id === product.id);
+
+      if (!detailedProduct) {
+        console.error(`No details found for product ${product.id}, skipping page generation`);
+        continue;
+      }
 
       let productContent = productTemplate;
       const dom = new JSDOM(productContent);
@@ -263,9 +320,8 @@ async function generateProductPages(products) {
       const galleryHtml = `
         <div class="product-gallery">
           <div class="gallery-main mb-3">
-            <img id="mainImage" src="${productImageSrcArray[0]}" alt="${
-        detailedProduct.title
-      } - Main Image" class="img-fluid">
+            <img id="mainImage" src="${productImageSrcArray[0]}" alt="${detailedProduct.title
+        } - Main Image" class="img-fluid">
           </div>
           <div class="gallery-thumbs-container">
             <button class="nav-btn prev">
@@ -274,16 +330,15 @@ async function generateProductPages(products) {
             <div class="gallery-thumbs">
               <div class="thumb-container" id="thumbContainer">
                 ${productImageSrcArray
-                  .map(
-                    (img, index) => `
+          .map(
+            (img, index) => `
                     <div class="thumb${index === 0 ? " active" : ""}">
-                      <img src="${img}" alt="${
-                      detailedProduct.title
-                    } - Thumbnail ${index + 1}">
+                      <img src="${img}" alt="${detailedProduct.title
+              } - Thumbnail ${index + 1}">
                     </div>
                   `
-                  )
-                  .join("")}
+          )
+          .join("")}
               </div>
             </div>
             <button class="nav-btn next">
@@ -737,9 +792,8 @@ async function modifyIndexPage(categories, products) {
       productPrice.className = "product-price";
       productPrice.style.color = "#eee";
       productPrice.style.textAlign = "right";
-      productPrice.textContent = `$ ${
-        productsDetails.find((p) => p.id === product.id)?.price
-      }`;
+      productPrice.textContent = `$ ${productsDetails.find((p) => p.id === product.id)?.price
+        }`;
 
       priceContainer.appendChild(roomNumber);
       priceContainer.appendChild(productPrice);

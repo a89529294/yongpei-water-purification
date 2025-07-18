@@ -1,0 +1,604 @@
+{
+  "立地式": [
+    {
+      "product": 1,
+      "title": "豪星",
+      "a_name": "智慧熱交換飲水機",
+      "price": "46800, , ",
+      "sub_title": "",
+      "orders": 1,
+      "roomno": "H1-DR H1-WR",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/7/2024-12/202412494526_0.jpg"
+    },
+    {
+      "product": 2,
+      "title": "豪星",
+      "a_name": "智慧熱交換飲水機",
+      "price": "30800, , ",
+      "sub_title": "",
+      "orders": 3,
+      "roomno": "HM-900 ",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/7/2024-12/202412495227_0.jpg"
+    },
+    {
+      "product": 3,
+      "title": "豪星",
+      "a_name": "數位熱交換飲水機",
+      "price": "24800, , ",
+      "sub_title": "",
+      "orders": 6,
+      "roomno": "HM-1687",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/7/2024-12/20241210142821_0.jpg"
+    },
+    {
+      "product": 4,
+      "title": "豪星",
+      "a_name": "商用冰冷熱飲水機",
+      "price": "19800, , ",
+      "sub_title": "",
+      "orders": 10,
+      "roomno": "HM-2681",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/7/2024-12/2024121014308_0.jpg"
+    },
+    {
+      "product": 5,
+      "title": "豪星",
+      "a_name": "智慧熱交換飲水機",
+      "price": "33800, , ",
+      "sub_title": "",
+      "orders": 11,
+      "roomno": "HM-3187",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/7/2024-12/20241210143154_0.jpg"
+    },
+    {
+      "product": 6,
+      "title": "豪星",
+      "a_name": "數位龍頭式飲水機",
+      "price": "21800, , ",
+      "sub_title": "",
+      "orders": 8,
+      "roomno": "HM-3687",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/7/2024-12/20241210144112_0.jpg"
+    },
+    {
+      "product": 7,
+      "title": "豪星",
+      "a_name": "智慧熱交換飲水機",
+      "price": "38800, , ",
+      "sub_title": "",
+      "orders": 2,
+      "roomno": "HS-A990FR",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/7/2024-12/20241210144243_0.jpg"
+    },
+    {
+      "product": 48,
+      "title": "豪星",
+      "a_name": "智慧熱交換飲水機",
+      "price": "28800, , ",
+      "sub_title": "",
+      "orders": 5,
+      "roomno": "HM-920",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/7/2025-1/202518202436_0.jpg"
+    },
+    {
+      "product": 49,
+      "title": "豪星",
+      "a_name": "數位熱交換飲水機",
+      "price": "22800, , ",
+      "sub_title": "",
+      "orders": 7,
+      "roomno": "HM-1688",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/7/2025-1/202518202814_0.jpg"
+    },
+    {
+      "product": 50,
+      "title": "豪星",
+      "a_name": "智慧熱交換飲水機",
+      "price": "30800, , ",
+      "sub_title": "",
+      "orders": 4,
+      "roomno": " HM-900 ",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/7/2025-1/202518203912_0.jpg"
+    },
+    {
+      "product": 51,
+      "title": "豪星",
+      "a_name": "數位龍頭式飲水機",
+      "price": "19800, , ",
+      "sub_title": "",
+      "orders": 9,
+      "roomno": "HM-3688",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/7/2025-1/202518204331_0.jpg"
+    },
+    {
+      "product": 53,
+      "title": "豪星",
+      "a_name": "立地型飲水機",
+      "price": "23800, , ",
+      "sub_title": "",
+      "orders": 12,
+      "roomno": "HM-290",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/7/2025-1/20251101113_0.jpg"
+    },
+    {
+      "product": 54,
+      "title": "豪星",
+      "a_name": "立地型飲水機",
+      "price": "21800, , ",
+      "sub_title": "",
+      "orders": 13,
+      "roomno": "HM-292",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/7/2025-1/20251101157_0.jpg"
+    },
+    {
+      "product": 55,
+      "title": "豪星",
+      "a_name": "商用龍頭雙溫飲水機",
+      "price": "30800, , ",
+      "sub_title": "",
+      "orders": 14,
+      "roomno": "HS-3888",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/7/2025-7/2025717144858_0.jpg"
+    },
+    {
+      "product": 56,
+      "title": "豪星",
+      "a_name": "商用龍頭三溫飲水機",
+      "price": "32800, , ",
+      "sub_title": "",
+      "orders": 15,
+      "roomno": "HS-3887",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/7/2025-7/2025717145147_0.jpg"
+    },
+    {
+      "product": 58,
+      "title": "豪星",
+      "a_name": "商用龍頭雙溫飲水機",
+      "price": "26800, , ",
+      "sub_title": "",
+      "orders": 16,
+      "roomno": "HS-1688S",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/7/2025-7/202571714547_0.jpg"
+    },
+    {
+      "product": 59,
+      "title": "豪星",
+      "a_name": "商用龍頭三溫飲水機",
+      "price": "28800, , ",
+      "sub_title": "",
+      "orders": 17,
+      "roomno": "HS-1687S",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/7/2025-7/2025717145515_0.jpg"
+    }
+  ],
+  "桌上型": [
+    {
+      "product": 8,
+      "title": "豪星",
+      "a_name": "桌上型RO飲水機",
+      "price": "22800, , ",
+      "sub_title": "",
+      "orders": 1,
+      "roomno": "HM-190",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/8/2024-12/2024121015429_0.jpg"
+    },
+    {
+      "product": 9,
+      "title": "豪星",
+      "a_name": "桌上自補式飲水機",
+      "price": "20800, , ",
+      "sub_title": "桌上自補式飲水機",
+      "orders": 2,
+      "roomno": "HM-192",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/8/2024-12/20241210151228_0.jpg"
+    },
+    {
+      "product": 11,
+      "title": "豪星",
+      "a_name": "桌上型RO飲水機",
+      "price": "19800, , ",
+      "sub_title": "桌上型RO飲水機",
+      "orders": 3,
+      "roomno": "HM-6991",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/8/2024-12/20241210151547_0.jpg"
+    },
+    {
+      "product": 52,
+      "title": "豪星",
+      "a_name": "桌上型RO飲水機",
+      "price": "17800, , ",
+      "sub_title": "",
+      "orders": 4,
+      "roomno": "HM-6992",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/8/2025-1/202511005910_0.jpg"
+    },
+    {
+      "product": 60,
+      "title": "豪星",
+      "a_name": "桌上型溫熱飲水機",
+      "price": "17800, , ",
+      "sub_title": "",
+      "orders": 5,
+      "roomno": "HS-888",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/8/2025-7/20257171505_0.jpg"
+    },
+    {
+      "product": 61,
+      "title": "豪星",
+      "a_name": "桌上型冰溫熱飲水機",
+      "price": "19800, , ",
+      "sub_title": "",
+      "orders": 6,
+      "roomno": "HS-887",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/8/2025-7/202571715052_0.jpg"
+    }
+  ],
+  "開水機": [
+    {
+      "product": 12,
+      "title": "豪星",
+      "a_name": "立地式電開水機",
+      "price": "27800, , ",
+      "sub_title": "立地式電開水機",
+      "orders": 1,
+      "roomno": "HS-15GB",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/9/2024-12/20241210151631_0.jpg"
+    },
+    {
+      "product": 13,
+      "title": "豪星",
+      "a_name": "立地式電開水機",
+      "price": "29800, , ",
+      "sub_title": "立地式電開水機",
+      "orders": 2,
+      "roomno": "HS-30GB ",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/9/2024-12/2024121015170_0.jpg"
+    },
+    {
+      "product": 14,
+      "title": "豪星",
+      "a_name": "立地式電開水機",
+      "price": "34800, , ",
+      "sub_title": "立地式電開水機",
+      "orders": 3,
+      "roomno": "HS-40GB",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/9/2024-12/20241210151827_0.jpg"
+    },
+    {
+      "product": 15,
+      "title": "豪星",
+      "a_name": "立地式電開水機",
+      "price": "38800, , ",
+      "sub_title": "立地式電開水機",
+      "orders": 4,
+      "roomno": "HS-50GB",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/9/2024-12/20241210151855_0.jpg"
+    },
+    {
+      "product": 16,
+      "title": "豪星",
+      "a_name": "立地式電開水機",
+      "price": "48800, , ",
+      "sub_title": "立地式電開水機",
+      "orders": 5,
+      "roomno": "HS-60GB",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/9/2024-12/20241210151938_0.jpg"
+    },
+    {
+      "product": 62,
+      "title": "豪星",
+      "a_name": "10L單熱飲水供應機",
+      "price": "16800, , ",
+      "sub_title": "",
+      "orders": 6,
+      "roomno": "HS-10L-H",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/9/2025-7/202571715327_0.jpg"
+    },
+    {
+      "product": 63,
+      "title": "豪星",
+      "a_name": "10L冷熱飲水供應機",
+      "price": "17800, , ",
+      "sub_title": "",
+      "orders": 7,
+      "roomno": "HS-10L-CH",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/9/2025-7/202571715434_0.jpg"
+    }
+  ],
+  "廚下型": [
+    {
+      "product": 17,
+      "title": "豪星",
+      "a_name": "618型四道過濾純水機",
+      "price": "6500, , ",
+      "sub_title": "618型四道過濾純水機",
+      "orders": 1,
+      "roomno": "618型四道過濾純水機",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/10/2024-12/20241210152036_0.jpg"
+    },
+    {
+      "product": 18,
+      "title": "豪星",
+      "a_name": "618型無壓式濾純水機",
+      "price": "12800, , ",
+      "sub_title": "",
+      "orders": 2,
+      "roomno": "618型無壓式濾純水機",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/10/2024-12/2024121293831_0.jpg"
+    },
+    {
+      "product": 19,
+      "title": "豪星",
+      "a_name": "620型吊片式純水機",
+      "price": "9800, , ",
+      "sub_title": "",
+      "orders": 3,
+      "roomno": "620型吊片式純水機",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/10/2024-12/2024121293857_0.jpg"
+    },
+    {
+      "product": 20,
+      "title": "豪星",
+      "a_name": "620型腳架式純水機",
+      "price": "9800, , ",
+      "sub_title": "",
+      "orders": 4,
+      "roomno": "620型腳架式純水機",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/10/2024-12/2024121293930_0.jpg"
+    },
+    {
+      "product": 21,
+      "title": "豪星",
+      "a_name": "HM-518廚下可調溫飲水機",
+      "price": "12800, , ",
+      "sub_title": "",
+      "orders": 5,
+      "roomno": "HM-518廚下可調溫飲水機",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/10/2024-12/202412129407_0.jpg"
+    },
+    {
+      "product": 23,
+      "title": "豪星",
+      "a_name": "HM-538廚下型冷熱飲水機",
+      "price": "15800, , ",
+      "sub_title": "",
+      "orders": 7,
+      "roomno": "HM-538廚下型冷熱飲水機",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/10/2024-12/2024121294126_0.jpg"
+    },
+    {
+      "product": 24,
+      "title": "豪星",
+      "a_name": "HS-170廚下型冷熱飲水機",
+      "price": "19900, , ",
+      "sub_title": "",
+      "orders": 8,
+      "roomno": "HS-170廚下型冷熱飲水機",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/10/2024-12/2024121294234_0.jpg"
+    }
+  ],
+  "廚四寶": [
+    {
+      "product": 25,
+      "title": "豪星",
+      "a_name": "廚下RO直輸淨水器",
+      "price": "18800, , ",
+      "sub_title": "",
+      "orders": 1,
+      "roomno": "HS-600G ",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/11/2024-12/20241212121323_0.jpg"
+    },
+    {
+      "product": 26,
+      "title": "豪星",
+      "a_name": " 廚下直輸RO淨水器",
+      "price": "22800, , ",
+      "sub_title": "",
+      "orders": 2,
+      "roomno": "HS-800G 廚下直輸RO淨水器",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/11/2024-12/20241212121436_0.jpg"
+    },
+    {
+      "product": 27,
+      "title": "豪星",
+      "a_name": "廚下型溫熱飲水機UV",
+      "price": "29800, , ",
+      "sub_title": "",
+      "orders": 3,
+      "roomno": "HS-M2",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/11/2024-12/20241212121713_0.jpg"
+    },
+    {
+      "product": 28,
+      "title": "豪星",
+      "a_name": "廚下型冰溫熱飲水機UV",
+      "price": "36800, , ",
+      "sub_title": "",
+      "orders": 4,
+      "roomno": "HS-M3",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/11/2024-12/2024121212182_0.jpg"
+    },
+    {
+      "product": 29,
+      "title": "豪星",
+      "a_name": "廚下型廚餘處理機",
+      "price": "23800, , ",
+      "sub_title": "",
+      "orders": 5,
+      "roomno": "S800廚下型廚餘處理機",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/11/2024-12/20241212122014_0.jpg"
+    },
+    {
+      "product": 30,
+      "title": "豪星",
+      "a_name": "臭氧水殺菌淨化系統",
+      "price": "24800, , ",
+      "sub_title": "",
+      "orders": 6,
+      "roomno": "WDS-Mini",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/11/2024-12/20241212122446_0.jpg"
+    }
+  ],
+  "濾心耗材": [
+    {
+      "product": 31,
+      "title": "豪星",
+      "a_name": "後置活性碳濾芯",
+      "price": "350, , ",
+      "sub_title": "",
+      "orders": 1,
+      "roomno": "C10DA-01-5",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/12/2024-12/20241212122520_0.jpg"
+    },
+    {
+      "product": 32,
+      "title": "豪星",
+      "a_name": "複合濾芯",
+      "price": "980, , ",
+      "sub_title": "",
+      "orders": 2,
+      "roomno": "C10HF-400G-01PPC",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/12/2024-12/20241212122551_0.jpg"
+    },
+    {
+      "product": 33,
+      "title": "豪星",
+      "a_name": "逆滲透膜",
+      "price": "3980, , ",
+      "sub_title": "",
+      "orders": 3,
+      "roomno": "C10HF-400G-02RO",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/12/2024-12/20241212123011_0.jpg"
+    },
+    {
+      "product": 34,
+      "title": "豪星",
+      "a_name": "後置活性碳濾芯",
+      "price": "980, , ",
+      "sub_title": "",
+      "orders": 4,
+      "roomno": "C10HF-400G-03",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/12/2024-12/20241212123146_0.jpg"
+    },
+    {
+      "product": 35,
+      "title": "豪星",
+      "a_name": "複合濾芯",
+      "price": "1600, , ",
+      "sub_title": "",
+      "orders": 5,
+      "roomno": "C10HF-600G-01HPPC",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/12/2024-12/20241212135310_0.jpg"
+    },
+    {
+      "product": 36,
+      "title": "離子交換樹脂濾芯",
+      "a_name": "離子交換樹脂濾芯",
+      "price": "350, , ",
+      "sub_title": "",
+      "orders": 6,
+      "roomno": "HS-0510B",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/12/2024-12/20241212135350_0.jpg"
+    },
+    {
+      "product": 37,
+      "title": "豪星",
+      "a_name": "活性碳濾芯",
+      "price": "300, , ",
+      "sub_title": "",
+      "orders": 7,
+      "roomno": "HS-CTO10ACTO",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/12/2024-12/20241212135443_0.jpg"
+    },
+    {
+      "product": 39,
+      "title": "豪星",
+      "a_name": "微米PP纖維濾芯",
+      "price": "150, , ",
+      "sub_title": "",
+      "orders": 9,
+      "roomno": "HS-PP0110A1",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/12/2024-12/2024121214332_0.jpg"
+    },
+    {
+      "product": 40,
+      "title": "豪星",
+      "a_name": "微米PP纖維濾芯",
+      "price": "120, , ",
+      "sub_title": "",
+      "orders": 10,
+      "roomno": "HS-PP0510A5",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/12/2024-12/202412121440_0.jpg"
+    },
+    {
+      "product": 41,
+      "title": "豪星",
+      "a_name": "椰殼顆粒活性碳濾芯",
+      "price": "300, , ",
+      "sub_title": "",
+      "orders": 11,
+      "roomno": "HS-T3310A",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/12/2024-12/2024121214429_0.jpg"
+    },
+    {
+      "product": 42,
+      "title": "豪星",
+      "a_name": "高效型纖維濾芯",
+      "price": "500, , ",
+      "sub_title": "",
+      "orders": 12,
+      "roomno": "S100",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/12/2024-12/202412121453_0.jpg"
+    },
+    {
+      "product": 43,
+      "title": "豪星",
+      "a_name": "高效複合型微粒碳濾芯",
+      "price": "750, , ",
+      "sub_title": "",
+      "orders": 13,
+      "roomno": "S101",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/12/2024-12/2024121214555_0.jpg"
+    },
+    {
+      "product": 44,
+      "title": "豪星",
+      "a_name": "高阻型纖維濾芯",
+      "price": "600, , ",
+      "sub_title": "",
+      "orders": 14,
+      "roomno": "S102",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/12/2024-12/2024121214625_0.jpg"
+    },
+    {
+      "product": 45,
+      "title": "豪星",
+      "a_name": "複合型中空絲膜濾芯",
+      "price": "1800, , ",
+      "sub_title": "",
+      "orders": 15,
+      "roomno": "S104",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/12/2024-12/202412121472_0.jpg"
+    },
+    {
+      "product": 46,
+      "title": "豪星",
+      "a_name": "逆滲透膜",
+      "price": "1500, , ",
+      "sub_title": "",
+      "orders": 16,
+      "roomno": "TW-1812-80G",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/12/2024-12/2024121214728_0.jpg"
+    },
+    {
+      "product": 47,
+      "title": "豪星",
+      "a_name": "奈米銀抗菌濾芯",
+      "price": "780, , ",
+      "sub_title": "",
+      "orders": 17,
+      "roomno": "小T33",
+      "imgSrc": "https://17go.com.tw/mediafile/1040/products/12/2024-12/2024121214813_0.jpg"
+    }
+  ]
+}
