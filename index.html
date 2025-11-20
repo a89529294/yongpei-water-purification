@@ -1,274 +1,306 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
     <title>湧沛淨水</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="" name="keywords" />
+    <meta content="" name="description" />
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="img/favicon.ico" rel="icon" />
 
     <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Roboto:wght@500;700&display=swap"
-        rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Roboto:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
 
     <!-- Libraries Stylesheet -->
-    <link href="lib/animate/animate.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/animate/animate.min.css" rel="stylesheet" />
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
 
     <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet" />
 
     <style>
-        /* p {
+      /* p {
             margin: 0;
         } */
 
-        .category-row {
-            margin-bottom: 10px;
-            padding: 20px;
-        }
+      .category-row {
+        margin-bottom: 10px;
+        padding: 20px;
+      }
 
-        .category-title {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #333;
-        }
+      .category-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #333;
+      }
 
-        .slider-container {
-            width: 100%;
-            position: relative;
-            background: #fff;
-            isolation: isolate;
-        }
+      .slider-container {
+        width: 100%;
+        position: relative;
+        background: #fff;
+        isolation: isolate;
+      }
 
-        .slider {
-            display: flex;
-            transition: transform 0.3s ease-in-out;
-            width: 100%;
-            overflow: hidden;
-        }
+      .slider {
+        display: flex;
+        transition: transform 0.3s ease-in-out;
+        width: 100%;
+        overflow: hidden;
+      }
 
+      .slide {
+        width: 100%;
+        height: 200px;
+        box-sizing: border-box;
+        padding: 20px;
+        text-align: center;
+        color: #333;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .slide a {
+        min-height: 0;
+        flex-grow: 1;
+        object-fit: contain;
+        position: relative;
+      }
+
+      .slide a img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .product-description {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.7) 0%,
+          rgba(0, 0, 0, 0.3) 50%,
+          rgba(0, 0, 0, 0) 100%
+        );
+        color: white;
+        padding-inline: 12px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding-bottom: 4px;
+      }
+
+      .product-title {
+        font-size: 18px;
+        font-weight: bold;
+        color: white;
+        margin-bottom: 0;
+      }
+
+      .product-title,
+      .product-description-text {
+        margin-bottom: 0;
+      }
+
+      .product-description-text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .nav-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        font-size: 1.2em;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: opacity 0.3s ease;
+        display: none;
+        z-index: 1;
+      }
+
+      .nav-button.left {
+        left: 10px;
+      }
+
+      .nav-button.right {
+        right: 10px;
+      }
+
+      @media (min-width: 769px) {
         .slide {
-            width: 100%;
-            height: 200px;
-            box-sizing: border-box;
-            padding: 20px;
-            text-align: center;
-            color: #333;
-            flex-shrink: 0;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .slide a {
-            min-height: 0;
-            flex-grow: 1;
-            object-fit: contain;
-            position: relative;
-        }
-
-        .slide a img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .product-description {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to top,
-                    rgba(0, 0, 0, 0.7) 0%,
-                    rgba(0, 0, 0, 0.3) 50%,
-                    rgba(0, 0, 0, 0) 100%);
-            color: white;
-            padding-inline: 12px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding-bottom: 4px;
-        }
-
-        .product-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: white;
-            margin-bottom: 0;
-        }
-
-        .product-title,
-        .product-description-text {
-            margin-bottom: 0;
-        }
-
-        .product-description-text {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+          width: calc(100% / 3);
         }
 
         .nav-button {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-            font-size: 1.2em;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 0.3s ease;
-            display: none;
-            z-index: 1;
+          display: flex;
         }
+      }
 
-        .nav-button.left {
-            left: 10px;
+      @media (min-width: 1025px) {
+        .slide {
+          width: calc(100% / 5);
         }
-
-        .nav-button.right {
-            right: 10px;
-        }
-
-        @media (min-width: 769px) {
-            .slide {
-                width: calc(100% / 3);
-            }
-
-            .nav-button {
-                display: flex;
-            }
-        }
-
-        @media (min-width: 1025px) {
-            .slide {
-                width: calc(100% / 5);
-            }
-        }
+      }
     </style>
+  </head>
 
-</head>
-
-<body>
+  <body>
     <!-- Spinner Start -->
-    <div id="spinner"
-        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-        <div class="spinner-grow text-primary" role="status"></div>
+    <div
+      id="spinner"
+      class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center"
+    >
+      <div class="spinner-grow text-primary" role="status"></div>
     </div>
     <!-- Spinner End -->
-
 
     <!-- Navbar Start -->
     <div id="navbar-placeholder"></div>
     <!-- Navbar End -->
 
-
     <!-- Header Start -->
     <div class="container-fluid hero-header bg-light py-2 py-md-5 mb-2">
-        <div class="container py-2">
-            <div class="row g-5">
-                <div class="col-lg-6">
-                    <h1 class="display-4 mb-3 animated slideInDown">純水，健康生活</h1>
-                    <p class="animated slideInDown" style="color:#666">
-                        我們致力於提供最先進的水處理技術，確保每一滴水都達到最高品質標準。從家庭到工業，我們為您提供全面的水質解決方案。</p>
-                    <a href="" class="btn btn-primary py-3 px-4 animated slideInDown" style="margin-top:16px;">了解更多</a>
-                </div>
-                <div class="col-lg-6 animated fadeIn justify-content-center position-relative d-none d-md-flex">
-                    <div style="position:absolute; inset:0; display: flex; justify-content: center;"><img
-                            class="animated pulse infinite" style="height:100%; width:auto; animation-duration: 3s;"
-                            src="img/custom/hero.png" alt="">
-                    </div>
-
-                </div>
+      <div class="container py-2">
+        <div class="row g-5">
+          <div class="col-lg-6">
+            <h1 class="display-4 mb-3 animated slideInDown">純水，健康生活</h1>
+            <p class="animated slideInDown" style="color: #666">
+              我們致力於提供最先進的水處理技術，確保每一滴水都達到最高品質標準。從家庭到工業，我們為您提供全面的水質解決方案。
+            </p>
+            <a
+              href=""
+              class="btn btn-primary py-3 px-4 animated slideInDown"
+              style="margin-top: 16px"
+              >了解更多</a
+            >
+          </div>
+          <div
+            class="col-lg-6 animated fadeIn justify-content-center position-relative d-none d-md-flex"
+          >
+            <div
+              style="
+                position: absolute;
+                inset: 0;
+                display: flex;
+                justify-content: center;
+              "
+            >
+              <img
+                class="animated pulse infinite"
+                style="height: 100%; width: auto; animation-duration: 3s"
+                src="img/custom/hero.png"
+                alt=""
+              />
             </div>
+          </div>
         </div>
+      </div>
     </div>
     <!-- Header End -->
 
     <!-- About Start -->
     <div class="container-xxl py-2">
-        <div class="container">
-            <div class="row g-5 align-items-center">
-                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <img class="img-fluid" src="img/custom/about-us.jpg" alt="">
-                </div>
-                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="h-100">
-                        <h1 class="display-6">關於我們</h1>
-                        <p class="text-primary fs-5 mb-4">領先的水處理專家</p>
-                        <p>我們是一家專注於水處理技術的創新企業，擁有超過20年的產業經驗。我們的使命是為城市、工業和家庭提供安全、高效的水處理解決方案。
-                        </p>
-                        <p class="mb-4">透過先進的淨水技術和嚴格的品質控制，我們確保每個客戶都能享受到最純淨的水。</p>
-                        <div class="d-flex align-items-center mb-2">
-                            <i class="fa fa-check bg-light text-primary btn-sm-square rounded-circle me-3 fw-bold"></i>
-                            <span>先進的淨水技術</span>
-                        </div>
-                        <div class="d-flex align-items-center mb-2">
-                            <i class="fa fa-check bg-light text-primary btn-sm-square rounded-circle me-3 fw-bold"></i>
-                            <span>全面的水質檢測</span>
-                        </div>
-                        <div class="d-flex align-items-center mb-4">
-                            <i class="fa fa-check bg-light text-primary btn-sm-square rounded-circle me-3 fw-bold"></i>
-                            <span>專業的售後服務</span>
-                        </div>
-                        <a class="btn btn-primary py-3 px-4" href="">詳細了解</a>
-                    </div>
-                </div>
+      <div class="container">
+        <div class="row g-5 align-items-center">
+          <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+            <img class="img-fluid" src="img/custom/about-us.jpg" alt="" />
+          </div>
+          <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
+            <div class="h-100">
+              <h1 class="display-6">關於我們</h1>
+              <p class="text-primary fs-5 mb-4">領先的水處理專家</p>
+              <p>
+                我們是一家專注於水處理技術的創新企業，擁有超過20年的產業經驗。我們的使命是為城市、工業和家庭提供安全、高效的水處理解決方案。
+              </p>
+              <p class="mb-4">
+                透過先進的淨水技術和嚴格的品質控制，我們確保每個客戶都能享受到最純淨的水。
+              </p>
+              <div class="d-flex align-items-center mb-2">
+                <i
+                  class="fa fa-check bg-light text-primary btn-sm-square rounded-circle me-3 fw-bold"
+                ></i>
+                <span>先進的淨水技術</span>
+              </div>
+              <div class="d-flex align-items-center mb-2">
+                <i
+                  class="fa fa-check bg-light text-primary btn-sm-square rounded-circle me-3 fw-bold"
+                ></i>
+                <span>全面的水質檢測</span>
+              </div>
+              <div class="d-flex align-items-center mb-4">
+                <i
+                  class="fa fa-check bg-light text-primary btn-sm-square rounded-circle me-3 fw-bold"
+                ></i>
+                <span>專業的售後服務</span>
+              </div>
+              <a class="btn btn-primary py-3 px-4" href="">詳細了解</a>
             </div>
+          </div>
         </div>
+      </div>
     </div>
     <!-- About End -->
 
     <!-- Products Start -->
-    <div id="products-placeholder" class="container-xxl py-2 ">
-        <!-- category 1 -->
-        <div class="category-row">
-            <h2 class="category-title">category name here</h2>
-            <div class="slider-container">
-                <div class="slider" id="slider">
-                    <div class="slide">Slide 1</div>
-                    <div class="slide">Slide 2</div>
-                    <div class="slide">Slide 3</div>
-                </div>
-            </div>
+    <div id="products-placeholder" class="container-xxl py-2">
+      <!-- category 1 -->
+      <div class="category-row">
+        <h2 class="category-title">category name here</h2>
+        <div class="slider-container">
+          <div class="slider" id="slider">
+            <div class="slide">Slide 1</div>
+            <div class="slide">Slide 2</div>
+            <div class="slide">Slide 3</div>
+          </div>
         </div>
+      </div>
 
-        <!-- category 2 -->
-        <div>
-            <h2>category name here</h2>
-            <div class="slider-container">
-                <div class="slider" id="slider">
-
-                </div>
-            </div>
+      <!-- category 2 -->
+      <div>
+        <h2>category name here</h2>
+        <div class="slider-container">
+          <div class="slider" id="slider"></div>
         </div>
+      </div>
 
-        <!-- more category if needed -->
+      <!-- more category if needed -->
     </div>
     <!-- Products End -->
-
 
     <!-- Facts Start -->
     <!-- <div class="container-xxl bg-light py-2 my-5">
@@ -296,7 +328,6 @@
         </div>
     </div> -->
     <!-- Facts End -->
-
 
     <!-- Features Start -->
     <!-- <div class="container-xxl py-2">
@@ -365,7 +396,6 @@
     </div> -->
     <!-- Features End -->
 
-
     <!-- Service Start -->
     <!-- <div class="container-xxl bg-light py-2">
         <div class="container py-2">
@@ -427,7 +457,6 @@
     </div> -->
     <!-- Service End -->
 
-
     <!-- Roadmap Start -->
     <!-- <div class="container-xxl py-2">
         <div class="container">
@@ -473,100 +502,155 @@
 
     <!-- FAQs Start -->
     <div class="container-xxl py-2">
-        <div class="container">
-            <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                <h1 class="display-6">常見問題</h1>
-                <p class="text-primary fs-5 mb-5">解答您對水處理的疑問</p>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-lg-10">
-                    <div class="accordion" id="accordionExample">
-                        <div class="accordion-item wow fadeInUp" data-wow-delay="0.1s">
-                            <h2 class="accordion-header" id="headingOne">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    家用淨水系統需要多久安裝？
-                                </button>
-                            </h2>
-                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-                                data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    一般家用淨水系統安裝時間約2-4小時，視家庭空間和系統類型而定。我們的專業團隊將確保安裝快速、專業和安全。
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item wow fadeInUp" data-wow-delay="0.2s">
-                            <h2 class="accordion-header" id="headingTwo">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    淨水設備的維護成本是多少？
-                                </button>
-                            </h2>
-                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                                data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    維護成本視設備類型和使用情況而異。我們提供客製化的維護方案，幫助您有效控制長期維護支出。
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item wow fadeInUp" data-wow-delay="0.3s">
-                            <h2 class="accordion-header" id="headingThree">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                    您是否提供工業水處理服務？
-                                </button>
-                            </h2>
-                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
-                                data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    是的，我們為各類工業企業提供專業水處理解決方案，包括水質檢測、系統設計、設備安裝和客製化服務。
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item wow fadeInUp" data-wow-delay="0.4s">
-                            <h2 class="accordion-header" id="headingFour">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
-                                    您的水質檢測有什麼特點？
-                                </button>
-                            </h2>
-                            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
-                                data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    我們採用最新檢測技術，提供全面、精準的水質分析。檢測範圍包括重金屬、微生物、pH值等多項指標。
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item wow fadeInUp" data-wow-delay="0.5s">
-                            <h2 class="accordion-header" id="headingFive">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                                    是否提供售後服務？
-                                </button>
-                            </h2>
-                            <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive"
-                                data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    我們提供全面的售後服務，包括設備維護、定期檢查和技術支援，確保您的水處理系統長期穩定運行。
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="container">
+        <div
+          class="text-center mx-auto wow fadeInUp"
+          data-wow-delay="0.1s"
+          style="max-width: 500px"
+        >
+          <h1 class="display-6">常見問題</h1>
+          <p class="text-primary fs-5 mb-5">解答您對水處理的疑問</p>
         </div>
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <div class="accordion" id="accordionExample">
+              <div class="accordion-item wow fadeInUp" data-wow-delay="0.1s">
+                <h2 class="accordion-header" id="headingOne">
+                  <button
+                    class="accordion-button"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseOne"
+                    aria-expanded="true"
+                    aria-controls="collapseOne"
+                  >
+                    家用淨水系統需要多久安裝？
+                  </button>
+                </h2>
+                <div
+                  id="collapseOne"
+                  class="accordion-collapse collapse show"
+                  aria-labelledby="headingOne"
+                  data-bs-parent="#accordionExample"
+                >
+                  <div class="accordion-body">
+                    一般家用淨水系統安裝時間約2-4小時，視家庭空間和系統類型而定。我們的專業團隊將確保安裝快速、專業和安全。
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item wow fadeInUp" data-wow-delay="0.2s">
+                <h2 class="accordion-header" id="headingTwo">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseTwo"
+                    aria-expanded="false"
+                    aria-controls="collapseTwo"
+                  >
+                    淨水設備的維護成本是多少？
+                  </button>
+                </h2>
+                <div
+                  id="collapseTwo"
+                  class="accordion-collapse collapse"
+                  aria-labelledby="headingTwo"
+                  data-bs-parent="#accordionExample"
+                >
+                  <div class="accordion-body">
+                    維護成本視設備類型和使用情況而異。我們提供客製化的維護方案，幫助您有效控制長期維護支出。
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item wow fadeInUp" data-wow-delay="0.3s">
+                <h2 class="accordion-header" id="headingThree">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseThree"
+                    aria-expanded="false"
+                    aria-controls="collapseThree"
+                  >
+                    您是否提供工業水處理服務？
+                  </button>
+                </h2>
+                <div
+                  id="collapseThree"
+                  class="accordion-collapse collapse"
+                  aria-labelledby="headingThree"
+                  data-bs-parent="#accordionExample"
+                >
+                  <div class="accordion-body">
+                    是的，我們為各類工業企業提供專業水處理解決方案，包括水質檢測、系統設計、設備安裝和客製化服務。
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item wow fadeInUp" data-wow-delay="0.4s">
+                <h2 class="accordion-header" id="headingFour">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseFour"
+                    aria-expanded="true"
+                    aria-controls="collapseFour"
+                  >
+                    您的水質檢測有什麼特點？
+                  </button>
+                </h2>
+                <div
+                  id="collapseFour"
+                  class="accordion-collapse collapse"
+                  aria-labelledby="headingFour"
+                  data-bs-parent="#accordionExample"
+                >
+                  <div class="accordion-body">
+                    我們採用最新檢測技術，提供全面、精準的水質分析。檢測範圍包括重金屬、微生物、pH值等多項指標。
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item wow fadeInUp" data-wow-delay="0.5s">
+                <h2 class="accordion-header" id="headingFive">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseFive"
+                    aria-expanded="false"
+                    aria-controls="collapseFive"
+                  >
+                    是否提供售後服務？
+                  </button>
+                </h2>
+                <div
+                  id="collapseFive"
+                  class="accordion-collapse collapse"
+                  aria-labelledby="headingFive"
+                  data-bs-parent="#accordionExample"
+                >
+                  <div class="accordion-body">
+                    我們提供全面的售後服務，包括設備維護、定期檢查和技術支援，確保您的水處理系統長期穩定運行。
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <!-- FAQs Start -->
-
 
     <!-- Footer Start -->
     <div id="footer-placeholder"></div>
     <!-- Footer End -->
 
-
     <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i
-            class="bi bi-arrow-up"></i></a>
+    <a
+      href="#"
+      class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"
+      ><i class="bi bi-arrow-up"></i
+    ></a>
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -582,6 +666,5 @@
     <script src="js/utils.js"></script>
     <script src="js/index-page.js"></script>
     <script src="js/components.js"></script>
-</body>
-
+  </body>
 </html>
